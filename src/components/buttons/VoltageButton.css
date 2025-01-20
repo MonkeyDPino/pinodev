@@ -2,6 +2,7 @@
 .voltage-button {
   position: relative;
   display: inline-block;
+  width: 11rem;
 }
 
 .voltage-button button {
@@ -15,6 +16,14 @@
   line-height: 1em;
   letter-spacing: 0.075em;
   transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+  }
 }
 
 .voltage-button button:hover {

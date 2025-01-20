@@ -8,7 +8,15 @@ export default function Home() {
       <div className="title2">Juan Esteban Pino</div>
       <section className="content">
         <div className="role">Full Stack Developer</div>
-        <VoltageButton />
+        <div className="buttons">
+          <VoltageButton
+            onClick={() => {}}
+            title="Download CV"
+            svg="download"
+          />
+          <VoltageButton onClick={() => {}} title="Linkedin" svg="linkedin" />
+          <VoltageButton onClick={() => {}} title="Github" svg="github" />
+        </div>
       </section>
     </main>
   );

@@ -1,8 +1,21 @@
+import { svgsConstants } from "../../constants/svgs";
+import { svgs } from "../../types/svgs.type";
 import "./VoltageButton.css";
-export default function VoltageButton() {
+export default function VoltageButton({
+  title,
+  onClick,
+  svg,
+}: {
+  title: string;
+  onClick: () => void;
+  svg?: svgs;
+}) {
   return (
     <div className="voltage-button">
-      <button>Download CV</button>
+      <button onClick={onClick}>
+        {svg ? <img src={svgsConstants[svg]} alt={title} /> : ""}
+        {title}
+      </button>
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
