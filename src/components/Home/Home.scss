@@ -1,8 +1,10 @@
+@import "../../styles/variables.scss";
+
 .home {
-  background-color: rgba(22, 22, 22, 0.7);
+  background-color: rgba(5, 7, 32, 0.7);
   .title1 {
     font-size: 4rem;
-    color: var(--color-secondary);
+    color: $secondary-color;
     text-align: center;
   }
   .title2 {

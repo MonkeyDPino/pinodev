@@ -1,23 +1,22 @@
-import "./App.css";
+import "./App.scss";
+import Experience from "./components/Experience/Experience";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
+import { PrimeReactProvider } from "primereact/api";
+import "primereact/resources/themes/lara-dark-blue/theme.css";
+import "primeicons/primeicons.css";
+import Projects from "./components/Projects/Projects";
+import AboutMe from "./components/AboutMe/AboutMe";
 
 function App() {
   return (
-    <>
-      <Header></Header>
+    <PrimeReactProvider>
+      <Header />
       <Home />
-      <main style={{ height: "200vh", padding: "1rem" }}>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-          tincidunt, ...
-        </p>
-        <p>
-          Suspendisse commodo fermentum lorem, vel convallis turpis fringilla
-          at. ...
-        </p>
-      </main>
-    </>
+      <Experience />
+      <Projects />
+      <AboutMe />
+    </PrimeReactProvider>
   );
 }
 

@@ -1,3 +1,5 @@
+@import "../../styles/variables.scss";
+
 .header {
   position: sticky;
   top: 0;
@@ -9,7 +11,7 @@
   .header__content {
     margin: 0 auto;
     padding: 6px 10px;
-    max-width: 800px;
+    max-width: $max-width-header;
     display: flex;
     justify-content: space-between;
     align-items: center;
