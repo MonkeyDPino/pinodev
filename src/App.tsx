@@ -7,6 +7,9 @@ import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primeicons/primeicons.css";
 import Projects from "./components/Projects/Projects";
 import AboutMe from "./components/AboutMe/AboutMe";
+import Technologies from "./components/Technologies/Technologies";
+import Certifications from "./components/Certifications/Certifications";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
       <Experience />
       <Projects />
       <AboutMe />
+      <Certifications />
+      <Technologies />
+      <Footer />
     </PrimeReactProvider>
   );
 }

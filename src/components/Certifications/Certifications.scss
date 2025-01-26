@@ -1,0 +1,50 @@
+@use "../../styles/variables.scss" as *;
+
+.certifications {
+  .certifications__content__list {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 20px;
+
+    .certifications__content__list__item {
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: $card-background;
+      border: 1px solid $gray-color-transparent;
+
+      .certifications__content__list__item__name {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .certifications__content__list__item__date {
+        font-size: 0.8rem;
+        color: $gray-color;
+      }
+      .certifications__content__list__item__description {
+        font-size: 0.9rem;
+      }
+      .certifications__content__list__item__link {
+        display: block;
+        margin-top: 1rem;
+        text-align: center;
+        color: $secondary-color;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+        border: 1px solid $gray-color-transparent;
+        border-radius: 30px;
+        padding: 5px;
+        &:hover {
+          color: $secondary-color-dark;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .certifications__content__list {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  }
+}

@@ -1,14 +1,14 @@
-@import "../../styles/variables.scss";
+@use "../../styles/variables.scss" as *;
 
 .home {
-  background-color: rgba(5, 7, 32, 0.7);
+  // background-color: rgba(5, 7, 32, 0.7);
   .title1 {
-    font-size: 4rem;
+    font-size: 3rem;
     color: $secondary-color;
     text-align: center;
   }
   .title2 {
-    font-size: 3rem;
+    font-size: 4rem;
     text-align: center;
     margin-top: 20px;
   }
@@ -26,6 +26,7 @@
       justify-content: center;
       align-items: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
   }
 }

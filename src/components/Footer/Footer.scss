@@ -1,0 +1,24 @@
+@use "../../styles/variables.scss" as *;
+
+.footer {
+  background-color: $primary-color;
+  padding: 2rem 0;
+  .footer__content {
+    margin: 0 auto;
+    max-width: $max-width-header;
+    padding: 0 10px;
+    display: flex;
+    .nick {
+      width: 50%;
+    }
+    .nickname {
+      font-weight: 900;
+      font-size: 1.6rem;
+      color: $secondary-color;
+    }
+    .copy {
+      width: 50%;
+      text-align: end;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@use "../../styles/variables.scss" as *;
+
+.about_me__content {
+  .profile__picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    img {
+      border-radius: 50%;
+      box-shadow: 0 0 20px 0 $secondary-color;
+    }
+  }
+}
