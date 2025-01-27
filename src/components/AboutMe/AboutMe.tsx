@@ -10,11 +10,13 @@ export default function AboutMe() {
             <img src="/images/profile.jpg" alt="Profile" />
           </div>
           <p>
-            I'm a Full-stack Developer with experience in developing web
-            applications using React, Angular, and Node.js. I have a passion for
-            learning new technologies and building scalable applications. I'm
-            always looking for new challenges and opportunities to grow as a
-            developer.
+            I am a Full-Stack Developer, passionate about technology and
+            continuous learning. I enjoy adding value to people by building
+            robust, reliable, and high-impact systems. I am driven by
+            challenges, as they provide opportunities to learn, grow, and
+            develop my professional and personal skills. I have experience in
+            front-end and back-end, enabling me to tackle projects holistically
+            and deliver efficient solutions to any technical challenge.
           </p>
         </div>
       </div>

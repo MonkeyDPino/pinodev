@@ -20,4 +20,5 @@ export type svgs =
   | "vscode"
   | "express"
   | "docker"
-  | "tailwind";
+  | "tailwind"
+  | "instagram";

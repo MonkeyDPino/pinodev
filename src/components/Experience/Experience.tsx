@@ -9,15 +9,14 @@ export default function Experience() {
       company: "Agentemotor",
       date: "2022 - Present",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
+        "I work as a full-stack developer, focusing on the implementation and support of a platform designed to assist insurance intermediaries. This role has allowed me to refine my expertise in web application development and agile methodology implementation. I leverage technologies such as React, Node.js, Express, MongoDB, PostgreSQL, Docker, AWS, and more.",
     },
     {
       icon: "pi pi-calendar",
-      role: "Full Stack Developer",
-      company: "Company A",
-      date: "2019 - Present",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
+      role: "Investigation Assistant",
+      company: "Universidad Tecnológica de Pereira",
+      date: "2021 - 2022",
+      description: `Contributed to a research group in the development of a scholarly article on quantum computing, enhancing research methodologies and technical writing skills through the proficient use of LaTeX.`,
     },
   ];
 

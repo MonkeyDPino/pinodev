@@ -2,31 +2,87 @@
 
 .home {
   // background-color: rgba(5, 7, 32, 0.7);
-  .title1 {
-    font-size: 3rem;
-    color: $secondary-color;
-    text-align: center;
-  }
-  .title2 {
-    font-size: 4rem;
-    text-align: center;
-    margin-top: 20px;
-  }
-  .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .role {
-      margin-top: 20px;
+  display: flex;
+  .info {
+    width: 50%;
+    .title1 {
+      font-size: 1.5rem;
+      color: $secondary-color;
+      text-align: start;
+      font-weight: 600;
+      font-style: italic;
     }
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
+    .title2 {
+      font-size: 1.8rem;
+      text-align: start;
+      font-weight: 800;
+    }
+    .role {
+      font-size: 1rem;
+      text-align: start;
+      font-weight: 600;
+      color: $third-color;
+      line-height: 0.8;
+    }
+    .description {
+      font-size: 1rem;
+      text-align: start;
+      font-weight: 400;
+      color: $white-light;
+    }
+    .content__buttons {
+      .buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .button_icon {
+        transition: transform 0.2s;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+  .image {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    .profile__image {
+      width: 180px;
+      transition: transform 0.5s;
+      img {
+        width: 100%;
+        border-radius: 50%;
+        box-shadow: 0 0 11px 0 $secondary-color;
+      }
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .home {
+    flex-direction: column;
+    .info {
+      width: 100%;
+    }
+    .image {
+      order: -1;
+      width: 100%;
+      .profile__image {
+        width: 130px;
+      }
     }
   }
 }

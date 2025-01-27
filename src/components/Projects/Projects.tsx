@@ -3,39 +3,12 @@ import "./Projects.scss";
 export default function Projects() {
   const projects = [
     {
-      title: "Project A",
+      title: "Giphy Piece",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "https://cristianorrego.dev/images/colraices/cover.webp",
-    },
-    {
-      title: "Project A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "https://cristianorrego.dev/images/colraices/cover.webp",
-    },
-    {
-      title: "Project A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "https://cristianorrego.dev/images/colraices/cover.webp",
-    },
-    {
-      title: "Project A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "https://cristianorrego.dev/images/colraices/cover.webp",
-    },
-    {
-      title: "Project A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt, ...",
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "https://cristianorrego.dev/images/colraices/cover.webp",
+        "A web application that allows users to search for GIFs using the Giphy API.",
+      technologies: ["React", "Node.js", "MongoDB", "Vercel"],
+      thumbnail: "/images/giphy-app.webp",
+      link: "https://giphy-pino.vercel.app",
     },
   ];
 
@@ -45,24 +18,31 @@ export default function Projects() {
         <div className="title">Projects</div>
         <div className="projects__content">
           {projects.map((project, index) => (
-            <article className="project_card" key={index}>
-              <div className="project__thumbnail">
-                <img src={project.thumbnail} alt={project.title} />
-              </div>
-              <div className="project__info">
-                <div className="project__info__title">{project.title}</div>
-                <div className="project__info__description">
-                  {project.description}
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="project_link"
+            >
+              <article className="project_card" key={index}>
+                <div className="project__thumbnail">
+                  <img src={project.thumbnail} alt={project.title} />
                 </div>
-                <div className="project__info__technologies">
-                  {project.technologies.map((technology, index) => (
-                    <span key={index} className="technology">
-                      {technology}
-                    </span>
-                  ))}
+                <div className="project__info">
+                  <div className="project__info__title">{project.title}</div>
+                  <div className="project__info__description">
+                    {project.description}
+                  </div>
+                  <div className="project__info__technologies">
+                    {project.technologies.map((technology, index) => (
+                      <span key={index} className="technology">
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </a>
           ))}
         </div>
       </div>

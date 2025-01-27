@@ -1,6 +1,6 @@
 import { svgsConstants } from "../../constants/svgs";
 import { svgs } from "../../types/svgs.type";
-import "./VoltageButton.css";
+import "./VoltageButton.scss";
 export default function VoltageButton({
   title,
   onClick,

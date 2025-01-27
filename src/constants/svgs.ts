@@ -21,6 +21,7 @@ import vscode from "../assets/vscode.svg";
 import express from "../assets/express.svg";
 import docker from "../assets/docker.svg";
 import tailwind from "../assets/tailwind.svg";
+import instagram from "../assets/instagram.svg";
 
 export const svgsConstants: {
   [key in svgs]: string;
@@ -47,4 +48,5 @@ export const svgsConstants: {
   express: express,
   docker: docker,
   tailwind: tailwind,
+  instagram: instagram,
 };
