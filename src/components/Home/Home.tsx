@@ -32,30 +32,32 @@ export default function Home() {
                   title="Download CV"
                   svg="download"
                 />
-                <a
-                  href="https://www.linkedin.com/in/juan-pino-vidal"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="button_icon"
-                >
-                  <img src={svgsConstants.linkedin} alt="LinkedIn" />
-                </a>
-                <a
-                  href="https://github.com/MonkeyDPino"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="button_icon"
-                >
-                  <img src={svgsConstants.github} alt="GitHub" />
-                </a>
-                <a
-                  href="https://www.instagram.com/juan.pino.02"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="button_icon"
-                >
-                  <img src={svgsConstants.instagram} alt="Instagram" />
-                </a>
+                <div className="social">
+                  <a
+                    href="https://www.linkedin.com/in/juan-pino-vidal"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="button_icon"
+                  >
+                    <img src={svgsConstants.linkedin} alt="LinkedIn" />
+                  </a>
+                  <a
+                    href="https://github.com/MonkeyDPino"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="button_icon"
+                  >
+                    <img src={svgsConstants.github} alt="GitHub" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/juan.pino.02"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="button_icon"
+                  >
+                    <img src={svgsConstants.instagram} alt="Instagram" />
+                  </a>
+                </div>
               </div>
             </section>
           </section>
