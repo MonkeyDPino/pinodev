@@ -10,13 +10,18 @@ export default function AboutMe() {
             <img src="/images/profile.jpg" alt="Profile" />
           </div>
           <p>
-            I am a Full-Stack Developer, passionate about technology and
-            continuous learning. I enjoy adding value to people by building
-            robust, reliable, and high-impact systems. I am driven by
-            challenges, as they provide opportunities to learn, grow, and
-            develop my professional and personal skills. I have experience in
-            front-end and back-end, enabling me to tackle projects holistically
-            and deliver efficient solutions to any technical challenge.
+            I am a <strong>Full-Stack Developer</strong>, passionate about
+            technology and continuous learning. I enjoy adding value to people
+            by building robust, reliable, and high-impact systems.
+          </p>
+          <p>
+            I am driven by challenges, as they provide opportunities to learn,
+            grow, and develop my professional and personal skills.
+          </p>
+          <p>
+            I have experience in <strong>front-end and back-end</strong>,
+            enabling me to tackle projects holistically and deliver efficient
+            solutions to any technical challenge.
           </p>
         </div>
       </div>
