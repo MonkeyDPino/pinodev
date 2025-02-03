@@ -64,10 +64,7 @@ export default function Home() {
           <section className="image">
             <a href="#about_me">
               <div className="profile__image">
-                <img
-                  src="https://www.gravatar.com/avatar/0?d=mp"
-                  alt="Profile"
-                />
+                <img src="/images/profile.webp" alt="Profile" />
               </div>
             </a>
           </section>

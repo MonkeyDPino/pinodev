@@ -7,8 +7,21 @@
     align-items: center;
     padding: 3rem;
     img {
+      width: 350px;
       border-radius: 50%;
       box-shadow: 0 0 20px 0 $secondary-color;
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .about_me__content {
+    .profile__picture {
+      img {
+        max-width: 200px;
+        border-radius: 50%;
+        box-shadow: 0 0 20px 0 $secondary-color;
+      }
     }
   }
 }

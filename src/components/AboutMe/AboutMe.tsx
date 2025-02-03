@@ -7,7 +7,7 @@ export default function AboutMe() {
         <div className="title">About Me</div>
         <div className="about_me__content">
           <div className="profile__picture">
-            <img src="/images/profile.jpg" alt="Profile" />
+            <img src="/images/profile.webp" alt="Profile" />
           </div>
           <p>
             I am a <strong>Full-Stack Developer</strong>, passionate about
