@@ -1,14 +1,15 @@
 @use "../../styles/variables.scss" as *;
 
 .home {
-  // background-color: rgba(5, 7, 32, 0.7);
   display: flex;
   min-height: 50vh;
+
   .info {
     width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     .title1 {
       font-size: 1.5rem;
       color: $secondary-color;
@@ -16,66 +17,88 @@
       font-weight: 600;
       font-style: italic;
     }
+
     .title2 {
-      font-size: 1.8rem;
+      font-size: 2.8rem;
       text-align: start;
       font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: $text-primary;
     }
+
     .role {
       font-size: 1rem;
       text-align: start;
       font-weight: 600;
       color: $third-color;
-      line-height: 0.8;
+      line-height: 1;
+      margin-top: $space-2;
     }
+
     .description {
       font-size: 1rem;
       text-align: start;
       font-weight: 400;
-      color: $white-light;
+      color: $text-secondary;
+      line-height: 1.6;
     }
+
     .content__buttons {
       .buttons {
-        margin-top: 20px;
+        margin-top: $space-5;
         display: flex;
         justify-content: start;
         align-items: center;
-        gap: 20px;
+        gap: $space-5;
         flex-wrap: wrap;
       }
+
       .social {
         display: flex;
         justify-content: start;
         align-items: center;
-        gap: 20px;
+        gap: $space-5;
+
         .button_icon {
-          transition: transform 0.2s;
+          opacity: 0.55;
+          transition: opacity 0.2s, transform 0.2s;
+
           img {
             width: 25px;
             height: 25px;
           }
+
           &:hover {
+            opacity: 1;
             transform: scale(1.1);
           }
         }
       }
     }
   }
+
   .image {
     display: flex;
     width: 50%;
     align-items: center;
     justify-content: center;
+
     .profile__image {
       width: 270px;
       transition: transform 0.5s;
+
       img {
         width: 100%;
         border-radius: 50%;
-        box-shadow: 0 0 11px 0 $secondary-color;
+        box-shadow:
+          0 0 0 1px rgba(59, 218, 212, 0.15),
+          0 0 20px rgba(59, 218, 212, 0.20),
+          0 0 60px rgba(59, 218, 212, 0.08);
       }
+
       &:hover {
-        transform: scale(1.2);
+        transform: scale(1.05);
       }
     }
   }
@@ -84,12 +107,19 @@
 @media screen and (max-width: 650px) {
   .home {
     flex-direction: column;
+
     .info {
       width: 100%;
+
+      .title2 {
+        font-size: 2rem;
+      }
     }
+
     .image {
       order: -1;
       width: 100%;
+
       .profile__image {
         width: 150px;
       }
