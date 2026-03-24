@@ -1,23 +1,25 @@
+import { useTranslation } from "react-i18next";
 import { svgsConstants } from "../../constants/svgs";
 import VoltageButton from "../buttons/VoltageButton";
 import "./Home.scss";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <main className="section" id="home">
       <div className="content">
         <div className="home">
           <section className="info">
-            <div className="title1">Hi, i'm</div>
+            <div className="title1">{t("home_greeting")}</div>
             <div className="title2">Juan Esteban Pino</div>
-            <div className="role">Full-stack Developer</div>
+            <div className="role">{t("home_role")}</div>
             <p className="description">
-              <b>+2 years of experience.</b>{" "}
+              <b>{t("home_description_bold")}</b>{" "}
               <span className="third-color-dark">
-                Systems Enginner and Full-stack Developer.
+                {t("home_description_colored")}
               </span>{" "}
-              I enjoy adding value to people by building robust, reliable, and
-              high-impact systems.
+              {t("home_description_plain")}
             </p>
             <section className="content__buttons">
               <div className="buttons">
@@ -29,7 +31,7 @@ export default function Home() {
                       "noreferrer"
                     );
                   }}
-                  title="Download CV"
+                  title={t("home_cv_button")}
                   svg="download"
                 />
                 <div className="social">
