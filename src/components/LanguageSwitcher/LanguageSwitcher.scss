@@ -1,0 +1,28 @@
+@use "../../styles/variables" as *;
+
+.language-switcher {
+  display: flex;
+  border: 1.5px solid $secondary-color;
+  border-radius: 6px;
+  overflow: hidden;
+
+  .lang-btn {
+    padding: 4px 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: $gray-color;
+    transition: background 0.2s, color 0.2s;
+
+    &.active {
+      background: $secondary-color;
+      color: $primary-color;
+    }
+
+    &:not(.active):hover {
+      color: $white-light;
+    }
+  }
+}
