@@ -1,19 +1,28 @@
 @use "../../styles/variables.scss" as *;
 
 .footer {
-  background-color: $primary-color;
-  padding: 2rem 0;
+  background-color: $surface-1;
+  border-top: 1px solid $border-subtle;
+  padding: $space-8 0;
+
   .footer__content {
     margin: 0 auto;
     max-width: $max-width-header;
-    padding: 0 10px;
+    padding: 0 $space-3;
     display: flex;
+    align-items: center;
+
     .nick {
       width: 50%;
+      color: $text-secondary;
+      font-size: 0.9rem;
     }
+
     .copy {
       width: 50%;
       text-align: end;
+      color: $text-muted;
+      font-size: 0.85rem;
     }
   }
 }
