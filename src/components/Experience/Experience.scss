@@ -1,7 +1,7 @@
 @use "../../styles/variables.scss" as *;
 
 .experience__content {
-  margin-top: 2rem;
+  margin-top: $space-8;
 
   .marker {
     display: flex;
@@ -20,7 +20,7 @@
   }
 
   .experience__item {
-    margin-bottom: 2rem;
+    margin-bottom: $space-8;
 
     .experience__item__header {
       .role {

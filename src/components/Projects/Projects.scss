@@ -1,10 +1,10 @@
 @use "../../styles/variables.scss" as *;
 
 .projects__content {
-  margin-top: 2rem;
+  margin-top: $space-8;
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: $space-8;
 
   .project_link {
     text-decoration: none;
@@ -15,7 +15,7 @@
     border-radius: 10px;
     background-color: $surface-2;
     border: 1px solid $border-subtle;
-    padding: 20px;
+    padding: $space-5;
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {

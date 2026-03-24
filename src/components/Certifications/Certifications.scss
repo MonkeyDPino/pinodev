@@ -2,7 +2,7 @@
 
 .certifications {
   .certifications__content__list {
-    margin-top: 2rem;
+    margin-top: $space-8;
     display: grid;
     grid-template-columns: repeat(2, minmax(300px, 1fr));
     gap: $space-5;
