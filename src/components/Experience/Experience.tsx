@@ -1,22 +1,24 @@
+import { useTranslation } from "react-i18next";
 import { Timeline } from "primereact/timeline";
 import "./Experience.scss";
 
 export default function Experience() {
+  const { t } = useTranslation();
+
   const events = [
     {
       icon: "pi pi-calendar",
-      role: "Full-stack Developer",
+      role: t("experience_0_role"),
       company: "Agentemotor",
       date: "2022 - Present",
-      description:
-        "I work as a full-stack developer, focusing on the implementation and support of a platform designed to assist insurance intermediaries. This role has allowed me to refine my expertise in web application development and agile methodology implementation. I leverage technologies such as React, Node.js, Express, MongoDB, PostgreSQL, Docker, AWS, and more.",
+      description: t("experience_0_description"),
     },
     {
       icon: "pi pi-calendar",
-      role: "Investigation Assistant",
+      role: t("experience_1_role"),
       company: "Universidad Tecnológica de Pereira",
       date: "2021 - 2022",
-      description: `Contributed to a research group in the development of a scholarly article on quantum computing, enhancing research methodologies and technical writing skills through the proficient use of LaTeX.`,
+      description: t("experience_1_description"),
     },
   ];
 
@@ -36,7 +38,7 @@ export default function Experience() {
   return (
     <section className="section experience" id="experience">
       <div className="content">
-        <div className="title">Experience</div>
+        <div className="title">{t("experience_title")}</div>
         <div className="experience__content">
           <Timeline
             value={events}
