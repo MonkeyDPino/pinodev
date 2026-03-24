@@ -5,31 +5,63 @@
     margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(300px, 1fr));
-    gap: 20px;
+    gap: $space-5;
 
     .technology {
-      padding: 1rem;
-      border-radius: 5px;
-      background-color: $card-background;
-      border: 1px solid $gray-color-transparent;
+      padding: $space-5;
+      border-radius: 8px;
+      background-color: $surface-2;
+      border: 1px solid $border-subtle;
+      transition: border-color 0.25s ease;
+
+      &:hover {
+        border-color: $border-default;
+      }
+
       .technology__name {
-        font-size: 1.2rem;
+        font-size: 0.8rem;
         text-align: center;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: $text-secondary;
+        border-bottom: 1px solid $border-subtle;
+        padding-bottom: $space-3;
+        margin-bottom: $space-3;
       }
 
       .technology__list {
         display: grid;
-        grid-template-columns: repeat(3, minmax(100px, 1fr));
-        gap: 10px;
-        margin-top: 10px;
+        grid-template-columns: repeat(3, minmax(80px, 1fr));
+        gap: $space-3;
+        margin-top: $space-2;
+
         .technology__item {
-          padding: 0.5rem;
-          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: $space-2;
+          padding: $space-3 $space-2;
+          border-radius: 6px;
+          background-color: $surface-1;
+          border: 1px solid $border-subtle;
+          transition: border-color 0.2s ease;
+
+          &:hover {
+            border-color: $border-accent;
+          }
+
           img {
-            width: 100%;
+            width: 36px;
+            height: 36px;
             object-fit: contain;
-            max-width: 60px;
-            max-height: 80px;
+          }
+
+          span {
+            font-size: 0.7rem;
+            color: $text-muted;
+            text-align: center;
+            line-height: 1.2;
           }
         }
       }
@@ -41,13 +73,14 @@
   .technologies__content__list {
     grid-template-columns: 1fr !important;
   }
+
   .technology__list {
-    grid-template-columns: repeat(3, minmax(100px, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(80px, 1fr)) !important;
   }
 }
 
 @media screen and (max-width: 400px) {
   .technology .technology__list {
-    grid-template-columns: repeat(2, minmax(100px, 1fr)) !important;
+    grid-template-columns: repeat(2, minmax(80px, 1fr)) !important;
   }
 }
