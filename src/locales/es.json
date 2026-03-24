@@ -1,1 +1,42 @@
-{}
+{
+  "nav_home": "Inicio",
+  "nav_experience": "Experiencia",
+  "nav_projects": "Proyectos",
+  "nav_about": "Sobre mí",
+
+  "home_greeting": "Hola, soy",
+  "home_role": "Desarrollador Full-stack",
+  "home_description_bold": "+2 años de experiencia.",
+  "home_description_colored": "Ingeniero de Sistemas y Desarrollador Full-stack.",
+  "home_description_plain": "Disfruto aportando valor a las personas construyendo sistemas robustos, confiables y de alto impacto.",
+  "home_cv_button": "Descargar CV",
+
+  "experience_title": "Experiencia",
+  "experience_0_role": "Desarrollador Full-stack",
+  "experience_0_description": "Trabajo como desarrollador full-stack, enfocado en la implementación y soporte de una plataforma diseñada para asistir a intermediarios de seguros. Este rol me ha permitido perfeccionar mi experiencia en desarrollo de aplicaciones web e implementación de metodologías ágiles. Utilizo tecnologías como React, Node.js, Express, MongoDB, PostgreSQL, Docker, AWS y más.",
+  "experience_1_role": "Asistente de Investigación",
+  "experience_1_description": "Contribuí a un grupo de investigación en el desarrollo de un artículo académico sobre computación cuántica, mejorando las metodologías de investigación y las habilidades de escritura técnica mediante el uso de LaTeX.",
+
+  "projects_title": "Proyectos",
+  "projects_0_description": "Una aplicación web que permite a los usuarios buscar GIFs usando la API de Giphy.",
+
+  "about_title": "Sobre Mí",
+  "about_p1_pre": "Soy un ",
+  "about_p1_bold": "Desarrollador Full-Stack",
+  "about_p1_post": ", apasionado por la tecnología y el aprendizaje continuo. Disfruto aportando valor a las personas construyendo sistemas robustos, confiables y de alto impacto.",
+  "about_p2": "Me motivan los desafíos, ya que brindan oportunidades para aprender, crecer y desarrollar mis habilidades profesionales y personales.",
+  "about_p3_pre": "Tengo experiencia en ",
+  "about_p3_bold": "front-end y back-end",
+  "about_p3_post": ", lo que me permite abordar proyectos de manera integral y brindar soluciones eficientes a cualquier desafío técnico.",
+
+  "certifications_title": "Títulos y Certificaciones",
+  "certifications_0_description": "Habilidades en desarrollo de software, gestión de bases de datos, integración de sistemas e infraestructura de redes, con enfoque en resolución de problemas, optimización y aplicación de principios de ingeniería a desafíos tecnológicos.",
+  "certifications_1_description": "Explicar los principios de las estructuras de datos y cómo se usan. Crear programas capaces de leer y escribir datos desde archivos. Almacenar datos como pares clave/valor usando diccionarios de Python. Completar tareas de múltiples pasos como ordenar o iterar usando tuplas.",
+  "certifications_2_description": "Dota a los individuos de habilidades de programación fundamentales y avanzadas, con enfoque en el desarrollo de aplicaciones web dinámicas y responsivas.",
+  "certifications_3_description": "Aprende a diseñar, codificar y desplegar soluciones web usando frameworks y tecnologías modernas.",
+
+  "technologies_title": "Tecnologías",
+  "technologies_category_frontend": "Frontend",
+  "technologies_category_backend": "Backend",
+  "technologies_category_tools": "Herramientas"
+}
