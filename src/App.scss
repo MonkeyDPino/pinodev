@@ -11,6 +11,11 @@
     font-size: 1.5rem;
     font-weight: 700;
     color: $secondary-color;
+    padding-left: $space-3;
+    border-left: 3px solid $secondary-color;
+    box-shadow: -4px 0 12px rgba(59, 218, 212, 0.20);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 }
 
