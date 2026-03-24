@@ -1,26 +1,51 @@
 @use "../../styles/variables.scss" as *;
 
 .about_me__content {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: $space-8;
+  align-items: start;
+  margin-top: $space-6;
+
+  // Text paragraphs naturally fill column 1
+  p {
+    color: $text-secondary;
+    line-height: 1.7;
+    margin: 0 0 $space-4;
+  }
+
   .profile__picture {
+    grid-column: 2;
+    grid-row: 1 / -1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 3rem;
+    align-items: flex-start;
+    padding-top: $space-2;
+
     img {
-      width: 350px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
-      box-shadow: 0 0 20px 0 $secondary-color;
+      object-fit: cover;
+      box-shadow:
+        0 0 0 1px rgba(59, 218, 212, 0.15),
+        0 0 24px rgba(59, 218, 212, 0.18);
     }
   }
 }
 
 @media screen and (max-width: 650px) {
   .about_me__content {
+    grid-template-columns: 1fr;
+
     .profile__picture {
+      grid-column: 1;
+      grid-row: auto;
+      justify-content: center;
+
       img {
-        max-width: 200px;
-        border-radius: 50%;
-        box-shadow: 0 0 20px 0 $secondary-color;
+        width: 150px;
+        height: 150px;
       }
     }
   }
