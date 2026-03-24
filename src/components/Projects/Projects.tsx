@@ -1,11 +1,13 @@
+import { useTranslation } from "react-i18next";
 import "./Projects.scss";
 
 export default function Projects() {
+  const { t } = useTranslation();
+
   const projects = [
     {
       title: "Giphy Piece",
-      description:
-        "A web application that allows users to search for GIFs using the Giphy API.",
+      description: t("projects_0_description"),
       technologies: ["React", "Node.js", "MongoDB", "Vercel"],
       thumbnail: "/images/giphy-app.webp",
       link: "https://giphy-pino.vercel.app",
@@ -15,16 +17,17 @@ export default function Projects() {
   return (
     <section className="section projects" id="projects">
       <div className="content">
-        <div className="title">Projects</div>
+        <div className="title">{t("projects_title")}</div>
         <div className="projects__content">
           {projects.map((project, index) => (
             <a
+              key={index}
               href={project.link}
               target="_blank"
               rel="noreferrer"
               className="project_link"
             >
-              <article className="project_card" key={index}>
+              <article className="project_card">
                 <div className="project__thumbnail">
                   <img src={project.thumbnail} alt={project.title} />
                 </div>

@@ -1,0 +1,42 @@
+{
+  "nav_home": "Home",
+  "nav_experience": "Experience",
+  "nav_projects": "Projects",
+  "nav_about": "About me",
+
+  "home_greeting": "Hi, I'm",
+  "home_role": "Full-stack Developer",
+  "home_description_bold": "+2 years of experience.",
+  "home_description_colored": "Systems Engineer and Full-stack Developer.",
+  "home_description_plain": "I enjoy adding value to people by building robust, reliable, and high-impact systems.",
+  "home_cv_button": "Download CV",
+
+  "experience_title": "Experience",
+  "experience_0_role": "Full-stack Developer",
+  "experience_0_description": "I work as a full-stack developer, focusing on the implementation and support of a platform designed to assist insurance intermediaries. This role has allowed me to refine my expertise in web application development and agile methodology implementation. I leverage technologies such as React, Node.js, Express, MongoDB, PostgreSQL, Docker, AWS, and more.",
+  "experience_1_role": "Investigation Assistant",
+  "experience_1_description": "Contributed to a research group in the development of a scholarly article on quantum computing, enhancing research methodologies and technical writing skills through the proficient use of LaTeX.",
+
+  "projects_title": "Projects",
+  "projects_0_description": "A web application that allows users to search for GIFs using the Giphy API.",
+
+  "about_title": "About Me",
+  "about_p1_pre": "I am a ",
+  "about_p1_bold": "Full-Stack Developer",
+  "about_p1_post": ", passionate about technology and continuous learning. I enjoy adding value to people by building robust, reliable, and high-impact systems.",
+  "about_p2": "I am driven by challenges, as they provide opportunities to learn, grow, and develop my professional and personal skills.",
+  "about_p3_pre": "I have experience in ",
+  "about_p3_bold": "front-end and back-end",
+  "about_p3_post": ", enabling me to tackle projects holistically and deliver efficient solutions to any technical challenge.",
+
+  "certifications_title": "Titles & Certifications",
+  "certifications_0_description": "Skilled in software development, database management, system integration, and network infrastructure, with a strong focus on problem-solving, optimization, and applying engineering principles to technological challenges.",
+  "certifications_1_description": "Explain the principles of data structures & how they are used. Create programs that are able to read and write data from files. Store data as key/value pairs using Python dictionaries. Accomplish multi-step tasks like sorting or looping using tuples.",
+  "certifications_2_description": "Equips individuals with foundational and advanced programming skills, focusing on developing dynamic and responsive web applications.",
+  "certifications_3_description": "Learn to design, code, and deploy web solutions using modern frameworks and technologies.",
+
+  "technologies_title": "Technologies",
+  "technologies_category_frontend": "Frontend",
+  "technologies_category_backend": "Backend",
+  "technologies_category_tools": "Tools"
+}
