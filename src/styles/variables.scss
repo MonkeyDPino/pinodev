@@ -3,7 +3,7 @@ $max-width-header: 1200px;
 $header-height: 70px;
 
 // Brand colors
-$primary-color: rgb(15, 23, 42);
+$primary-color: rgb(2, 2, 3);
 $secondary-color: #3bdad4;
 $secondary-color-dark: #2f9e94;
 $third-color: #bbd83a;
@@ -39,3 +39,17 @@ $space-6: 24px;
 $space-8: 32px;
 $space-12: 48px;
 $space-16: 64px;
+
+// Glassmorphism system
+$glass-bg:         rgba(255, 255, 255, 0.04);
+$glass-border:     rgba(255, 255, 255, 0.09);
+$glass-bg-dim:     rgba(255, 255, 255, 0.025);
+$glass-border-dim: rgba(255, 255, 255, 0.06);
+
+// Glow values
+$glow-teal-soft: rgba(59, 218, 212, 0.12);
+$glow-teal-med:  rgba(59, 218, 212, 0.20);
+$glow-lime-soft: rgba(187, 216, 58, 0.08);
+
+// Extra spacing token
+$space-10: 40px;
