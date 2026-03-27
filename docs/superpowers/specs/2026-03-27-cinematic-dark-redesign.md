@@ -531,7 +531,307 @@ No changes to `LanguageSwitcher.tsx`.
 
 ---
 
-## 10. Certifications
+## 10. Contact Section (New)
+
+**Position in page:** Between `<AboutMe />` and `<Technologies />` in `App.tsx`. Also added to header nav.
+
+### New files
+- `src/components/Contact/Contact.tsx`
+- `src/components/Contact/Contact.scss`
+
+### Contact.tsx
+
+Split layout: CTA + contact info on the left, glassmorphism form on the right.
+
+```tsx
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import "./Contact.scss";
+
+interface FormState {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export default function Contact() {
+  const { t } = useTranslation();
+  const [form, setForm] = useState<FormState>({ name: "", email: "", subject: "", message: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Contact form submitted:", form);
+  };
+
+  return (
+    <section className="section contact" id="contact">
+      <div className="content">
+        <div className="title">{t("contact_title")}</div>
+        <div className="contact__grid reveal" ref={revealRef}>
+          {/* Left: CTA + contact info */}
+          <div className="contact__cta">
+            <h2 className="contact__cta__heading">
+              {t("contact_cta_pre")} <span className="contact__cta__accent">{t("contact_cta_accent")}</span>
+            </h2>
+            <p className="contact__cta__sub">{t("contact_cta_sub")}</p>
+            <ul className="contact__info">
+              <li>
+                <span className="contact__info__icon contact__info__icon--teal">@</span>
+                <a href="mailto:juanrespolo@gmail.com">juanrespolo@gmail.com</a>
+              </li>
+              <li>
+                <span className="contact__info__icon contact__info__icon--lime">☎</span>
+                <a href="https://wa.me/573233927516" target="_blank" rel="noreferrer">+57 323 392 7516</a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Right: Form */}
+          <form className="contact__form" onSubmit={handleSubmit} noValidate>
+            <div className="contact__form__row">
+              <div className="contact__field">
+                <label htmlFor="contact-name">{t("contact_field_name")}</label>
+                <input id="contact-name" name="name" type="text" value={form.name} onChange={handleChange} required placeholder={t("contact_placeholder_name")} />
+              </div>
+              <div className="contact__field">
+                <label htmlFor="contact-email">{t("contact_field_email")}</label>
+                <input id="contact-email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder={t("contact_placeholder_email")} />
+              </div>
+            </div>
+            <div className="contact__field">
+              <label htmlFor="contact-subject">{t("contact_field_subject")}</label>
+              <input id="contact-subject" name="subject" type="text" value={form.subject} onChange={handleChange} required placeholder={t("contact_placeholder_subject")} />
+            </div>
+            <div className="contact__field">
+              <label htmlFor="contact-message">{t("contact_field_message")}</label>
+              <textarea id="contact-message" name="message" value={form.message} onChange={handleChange} required rows={5} placeholder={t("contact_placeholder_message")} />
+            </div>
+            <button type="submit" className="contact__submit">{t("contact_submit")} →</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+Note: `revealRef` comes from `useScrollReveal` — import and wire it the same way as other sections. The `contact__grid` div gets both `reveal` and `stagger-children` classes.
+
+### Contact.scss
+
+```scss
+@use "../../styles/variables.scss" as *;
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: $space-12;
+  margin-top: $space-8;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: $space-8;
+  }
+}
+
+// Left column
+.contact__cta {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.contact__cta__heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: $text-primary;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.contact__cta__accent { color: $secondary-color; }
+
+.contact__cta__sub {
+  color: $text-secondary;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.contact__info {
+  list-style: none;
+  padding: 0;
+  margin: $space-2 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  li { display: flex; align-items: center; gap: $space-3; }
+
+  a {
+    color: $text-secondary;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover { color: $text-primary; }
+  }
+}
+
+.contact__info__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+
+  &--teal {
+    background: rgba(59, 218, 212, 0.10);
+    border: 1px solid rgba(59, 218, 212, 0.20);
+    color: $secondary-color;
+  }
+  &--lime {
+    background: rgba(187, 216, 58, 0.08);
+    border: 1px solid rgba(187, 216, 58, 0.15);
+    color: $third-color;
+  }
+}
+
+// Right column — form
+.contact__form {
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: 12px;
+  padding: $space-8;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.contact__form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-5;
+
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  label {
+    color: $text-muted;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  input, textarea {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid $glass-border;
+    border-radius: 6px;
+    padding: $space-3 $space-4;
+    color: $text-primary;
+    font-size: 0.875rem;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    resize: none;
+
+    &::placeholder { color: $text-muted; }
+
+    &:focus {
+      border-color: $border-accent;
+      box-shadow: 0 0 0 3px rgba(59, 218, 212, 0.08);
+    }
+  }
+}
+
+.contact__submit {
+  background: linear-gradient(90deg, $secondary-color, $secondary-color-dark);
+  border: none;
+  border-radius: 6px;
+  padding: $space-4 $space-8;
+  color: rgb(2, 2, 3);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: opacity 0.2s, transform 0.2s;
+
+  &:hover { opacity: 0.9; transform: translateY(-1px); }
+  &:active { transform: translateY(0); }
+}
+```
+
+### i18n keys to add (both `en.json` and `es.json`)
+
+```json
+// en.json additions
+"nav_contact": "Contact",
+"contact_title": "Contact",
+"contact_cta_pre": "Let's work",
+"contact_cta_accent": "together.",
+"contact_cta_sub": "Have a project in mind or want to talk? I'd love to hear from you.",
+"contact_field_name": "Name",
+"contact_field_email": "Email",
+"contact_field_subject": "Subject",
+"contact_field_message": "Message",
+"contact_placeholder_name": "Your name",
+"contact_placeholder_email": "your@email.com",
+"contact_placeholder_subject": "What's this about?",
+"contact_placeholder_message": "Tell me about your project...",
+"contact_submit": "Send Message"
+
+// es.json additions
+"nav_contact": "Contacto",
+"contact_title": "Contacto",
+"contact_cta_pre": "Trabajemos",
+"contact_cta_accent": "juntos.",
+"contact_cta_sub": "¿Tienes un proyecto en mente o quieres hablar? Me encantaría escucharte.",
+"contact_field_name": "Nombre",
+"contact_field_email": "Correo",
+"contact_field_subject": "Asunto",
+"contact_field_message": "Mensaje",
+"contact_placeholder_name": "Tu nombre",
+"contact_placeholder_email": "tu@correo.com",
+"contact_placeholder_subject": "¿De qué se trata?",
+"contact_placeholder_message": "Cuéntame sobre tu proyecto...",
+"contact_submit": "Enviar mensaje"
+```
+
+### Header nav — add Contact link
+
+In `Header.tsx`, add `<HeaderSection title={t("nav_contact")} hash="contact" />` to both the desktop nav and the overlay nav (after `nav_about`).
+
+### App.tsx — insert Contact section
+
+```tsx
+import Contact from "./components/Contact/Contact";
+
+// In JSX, between <AboutMe /> and <Technologies />:
+<AboutMe />
+<Contact />       // ← new
+<Certifications />
+<Technologies />
+```
+
+---
+
+## 11. Certifications
 
 Apply glassmorphism card system to certification items (same `$glass-bg`, `$glass-border`, `border-radius: 12px`, hover lift).
 
@@ -805,6 +1105,10 @@ export default function Footer() {
 | `src/components/Projects/Projects.scss` | Glassmorphism card, hover lift |
 | `src/components/Technologies/Technologies.scss` | Glassmorphism chip items |
 | `src/components/AboutMe/AboutMe.scss` | Glow ring on photo, panel wrap |
+| `src/components/Contact/Contact.tsx` | New — split layout form with CTA left, glass form right |
+| `src/components/Contact/Contact.scss` | New — grid layout, glass form, input focus states |
+| `src/locales/en.json` | Add contact + nav_contact keys |
+| `src/locales/es.json` | Add contact + nav_contact keys |
 | `src/components/LanguageSwitcher/LanguageSwitcher.scss` | Glassmorphism toggle pill |
 | `src/components/Certifications/Certifications.scss` | Glassmorphism cards |
 | `src/components/Footer/Footer.tsx` | Full rewrite — three-column grid with brand, links, contact |
