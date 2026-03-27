@@ -1,52 +1,36 @@
 @use "../../styles/variables.scss" as *;
 
 .about_me__content {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: $space-8;
-  align-items: start;
   margin-top: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
 
-  // Text paragraphs naturally fill column 1
   p {
     color: $text-secondary;
-    line-height: 1.7;
-    margin: 0 0 $space-4;
+    font-size: 0.95rem;
+    line-height: 1.75;
   }
 
-  .profile__picture {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: $space-2;
-
-    img {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow:
-        0 0 0 1px rgba(59, 218, 212, 0.15),
-        0 0 24px rgba(59, 218, 212, 0.18);
-    }
+  strong {
+    color: $text-primary;
+    font-weight: 600;
   }
 }
 
-@media screen and (max-width: 650px) {
-  .about_me__content {
-    grid-template-columns: 1fr;
+.profile__picture {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $space-3;
 
-    .profile__picture {
-      grid-column: 1;
-      grid-row: auto;
-      justify-content: center;
-
-      img {
-        width: 150px;
-        height: 150px;
-      }
-    }
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 2px rgba(59, 218, 212, 0.25),
+      0 0 20px rgba(59, 218, 212, 0.18),
+      0 0 50px rgba(59, 218, 212, 0.08);
   }
 }
