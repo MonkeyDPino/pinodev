@@ -14,6 +14,8 @@ import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <PrimeReactProvider>
+      <div className="bg-blob bg-blob--teal" aria-hidden="true" />
+      <div className="bg-blob bg-blob--lime" aria-hidden="true" />
       <Header />
       <Home />
       <Experience />

@@ -13,9 +13,10 @@
     color: $secondary-color;
     padding-left: $space-3;
     border-left: 3px solid $secondary-color;
-    box-shadow: -4px 0 12px rgba(59, 218, 212, 0.20);
+    box-shadow: -4px 0 12px rgba(59, 218, 212, 0.2);
     letter-spacing: 0.02em;
     text-transform: uppercase;
+    padding: 0.3rem 0.3rem;
   }
 }
 
@@ -27,4 +28,37 @@
 
 .third-color-dark {
   color: $third-color-dark;
+}
+
+// Ambient background blobs
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+
+.bg-blob--teal {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -150px;
+  background: radial-gradient(circle, rgba(59, 218, 212, 0.10) 0%, transparent 70%);
+}
+
+.bg-blob--lime {
+  width: 500px;
+  height: 500px;
+  bottom: 20%;
+  left: -150px;
+  background: radial-gradient(circle, rgba(187, 216, 58, 0.07) 0%, transparent 70%);
+}
+
+// Ensure all page content sits above blobs
+.section,
+.header,
+footer {
+  position: relative;
+  z-index: 1;
 }
