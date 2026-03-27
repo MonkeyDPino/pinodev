@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 import "./Certifications.scss";
 
 export default function Certifications() {
   const { t } = useTranslation();
+  const gridRef = useScrollReveal<HTMLElement>();
 
   const certifications = [
     {
@@ -35,31 +37,36 @@ export default function Certifications() {
     <section className="section certifications" id="certifications">
       <div className="content">
         <div className="title">{t("certifications_title")}</div>
-        <div className="certifications__content">
-          <article className="certifications__content__list">
-            {certifications.map((certification, index) => (
-              <div key={index} className="certifications__content__list__item">
-                <div className="certifications__content__list__item__name">
-                  {certification.name}
-                </div>
-                <div className="certifications__content__list__item__date">
-                  {certification.date}
-                </div>
-                <div className="certifications__content__list__item__description">
-                  {certification.description}
-                </div>
-                <a
-                  href={certification.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="certifications__content__list__item__link"
-                >
-                  <i className="pi pi-external-link"></i>
-                </a>
+        <article
+          className="certifications__content__list reveal stagger-children"
+          ref={gridRef}
+        >
+          {certifications.map((cert, index) => (
+            <div
+              key={index}
+              className="certifications__content__list__item"
+              style={{ '--i': index } as React.CSSProperties}
+            >
+              <div className="certifications__content__list__item__name">
+                {cert.name}
               </div>
-            ))}
-          </article>
-        </div>
+              <div className="certifications__content__list__item__date">
+                {cert.date}
+              </div>
+              <div className="certifications__content__list__item__description">
+                {cert.description}
+              </div>
+              <a
+                href={cert.link}
+                target="_blank"
+                rel="noreferrer"
+                className="certifications__content__list__item__link"
+              >
+                <i className="pi pi-external-link"></i>
+              </a>
+            </div>
+          ))}
+        </article>
       </div>
     </section>
   );
