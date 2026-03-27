@@ -4,11 +4,10 @@ import { svgsConstants } from "../../constants/svgs";
 import { svgs } from "../../types/svgs.type";
 import "./Technologies.scss";
 
-function TechCategory({ name, nameColor, technologies, index: _catIndex }: {
+function TechCategory({ name, nameColor, technologies }: {
   name: string;
   nameColor?: string;
   technologies: { name: string; image: svgs }[];
-  index: number;
 }) {
   const { t } = useTranslation();
   const listRef = useScrollReveal<HTMLDivElement>();
@@ -89,8 +88,8 @@ export default function Technologies() {
         <div className="title">{t("technologies_title")}</div>
         <div className="technologies__content">
           <article className="technologies__content__list">
-            {technologies.map((tech, index) => (
-              <TechCategory key={tech.name} {...tech} index={index} />
+            {technologies.map((tech) => (
+              <TechCategory key={tech.name} {...tech} />
             ))}
           </article>
         </div>
