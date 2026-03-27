@@ -38,5 +38,20 @@
   "technologies_title": "Technologies",
   "technologies_category_frontend": "Frontend",
   "technologies_category_backend": "Backend",
-  "technologies_category_tools": "Tools"
+  "technologies_category_tools": "Tools",
+
+  "nav_contact": "Contact",
+  "contact_title": "Contact",
+  "contact_cta_pre": "Let's work",
+  "contact_cta_accent": "together.",
+  "contact_cta_sub": "Have a project in mind or want to talk? I'd love to hear from you.",
+  "contact_field_name": "Name",
+  "contact_field_email": "Email",
+  "contact_field_subject": "Subject",
+  "contact_field_message": "Message",
+  "contact_placeholder_name": "Your name",
+  "contact_placeholder_email": "your@email.com",
+  "contact_placeholder_subject": "What's this about?",
+  "contact_placeholder_message": "Tell me about your project...",
+  "contact_submit": "Send Message"
 }

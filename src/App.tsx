@@ -7,6 +7,7 @@ import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primeicons/primeicons.css";
 import Projects from "./components/Projects/Projects";
 import AboutMe from "./components/AboutMe/AboutMe";
+import Contact from "./components/Contact/Contact";
 import Technologies from "./components/Technologies/Technologies";
 import Certifications from "./components/Certifications/Certifications";
 import Footer from "./components/Footer/Footer";
@@ -21,6 +22,7 @@ function App() {
       <Experience />
       <Projects />
       <AboutMe />
+      <Contact />
       <Certifications />
       <Technologies />
       <Footer />

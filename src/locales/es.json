@@ -38,5 +38,20 @@
   "technologies_title": "Tecnologías",
   "technologies_category_frontend": "Frontend",
   "technologies_category_backend": "Backend",
-  "technologies_category_tools": "Herramientas"
+  "technologies_category_tools": "Herramientas",
+
+  "nav_contact": "Contacto",
+  "contact_title": "Contacto",
+  "contact_cta_pre": "Trabajemos",
+  "contact_cta_accent": "juntos.",
+  "contact_cta_sub": "¿Tienes un proyecto en mente o quieres hablar? Me encantaría escucharte.",
+  "contact_field_name": "Nombre",
+  "contact_field_email": "Correo",
+  "contact_field_subject": "Asunto",
+  "contact_field_message": "Mensaje",
+  "contact_placeholder_name": "Tu nombre",
+  "contact_placeholder_email": "tu@correo.com",
+  "contact_placeholder_subject": "¿De qué se trata?",
+  "contact_placeholder_message": "Cuéntame sobre tu proyecto...",
+  "contact_submit": "Enviar mensaje"
 }
