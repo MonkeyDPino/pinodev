@@ -153,16 +153,139 @@ Each section wraps its content container with `useScrollReveal` and applies `rev
 
 ## 3. Header
 
+**File:** `src/components/Header/Header.tsx`
+
+- Remove `Profile` import, replace with `<span className="header__logo">JP</span>`
+- Replace the `isOpen` state with a proper `const [isOpen, setIsOpen] = useState(false)`
+- When `isOpen` is true, render a `<div className="header__overlay">` that covers the full screen (portaled via a wrapping div, or just absolutely positioned and `z-index: 100`)
+- Close overlay when a nav link is clicked (pass `onClick={() => setIsOpen(false)}` to each `HeaderSection` inside the overlay)
+- Hamburger becomes an `✕` when open (already implemented, keep as-is)
+
+**Overlay structure:**
+```tsx
+{isOpen && (
+  <div className="header__overlay" onClick={() => setIsOpen(false)}>
+    <div className="header__overlay__content" onClick={e => e.stopPropagation()}>
+      <div className="header__overlay__label">MENU</div>
+      <nav className="header__overlay__nav">
+        <HeaderSection title={t("nav_home")} hash="home" onClick={() => setIsOpen(false)} />
+        <HeaderSection title={t("nav_experience")} hash="experience" onClick={() => setIsOpen(false)} />
+        <HeaderSection title={t("nav_projects")} hash="projects" onClick={() => setIsOpen(false)} />
+        <HeaderSection title={t("nav_about")} hash="about_me" onClick={() => setIsOpen(false)} />
+      </nav>
+      <LanguageSwitcher />
+    </div>
+  </div>
+)}
+```
+
+Note: `HeaderSection` already handles hash navigation. The `onClick` prop threads through to close the overlay after navigation.
+
 **File:** `src/components/Header/Header.scss`
 
-Changes:
-- `background` → `rgba(2, 2, 3, 0.7)` + `backdrop-filter: blur(16px)`
+Desktop changes:
+- `background` → `rgba(2, 2, 3, 0.85)` + `backdrop-filter: blur(16px)`
 - `border-bottom` → `1px solid rgba(255, 255, 255, 0.07)`
-- Replace `<Profile />` with inline `<span className="header__logo">JP</span>` styled: `color: $secondary-color; font-family: 'Syne'; font-weight: 900; font-size: 1.2rem; letter-spacing: -0.02em`
-- Remove `Profile` component import from Header (Profile is only used in AboutMe going forward)
+- `.header__logo`: `font-family: 'Syne'; font-weight: 900; font-size: 1.2rem; color: $secondary-color; letter-spacing: -0.02em`
 
-**File:** `src/components/Header/Header.tsx`
-- Remove `Profile` import and usage, replace with `<span className="header__logo">JP</span>`
+Mobile overlay (replaces `.header__nav_responsive`):
+```scss
+.header__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 2, 3, 0.97);
+  backdrop-filter: blur(20px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Ambient blobs inside overlay
+  &::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,218,212,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    bottom: -60px;
+    left: -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(187,216,58,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+.header__overlay__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  position: relative;
+  z-index: 1;
+}
+
+.header__overlay__label {
+  color: $text-muted;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  margin-bottom: $space-4;
+}
+
+.header__overlay__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+
+  // Override HeaderSection styles inside overlay for big type
+  .header__section a {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: $text-secondary;
+    letter-spacing: -0.02em;
+    padding: $space-2 0;
+    transition: color 0.2s;
+
+    &:hover { color: $text-primary; }
+  }
+}
+
+// Stagger-in animation for overlay links
+.header__overlay__nav .header__section {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: overlay-item-in 0.4s ease-out forwards;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) { animation-delay: #{$i * 60}ms; }
+  }
+}
+
+@keyframes overlay-item-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__overlay__nav .header__section {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+```
+
+**Note on `HeaderSection`:** The component currently accepts `title` and `hash` props. Add an optional `onClick?: () => void` prop that fires after the hash link is clicked.
 
 ---
 
@@ -673,8 +796,9 @@ export default function Footer() {
 | `src/App.scss` | Add `.bg-blob` styles |
 | `src/App.tsx` | Add two ambient blob divs |
 | `src/hooks/useScrollReveal.ts` | New file — shared IntersectionObserver hook |
-| `src/components/Header/Header.tsx` | Replace Profile with JP monogram |
-| `src/components/Header/Header.scss` | Glassmorphism backdrop, updated background |
+| `src/components/Header/Header.tsx` | JP monogram, fixed isOpen state, full-screen overlay mobile nav |
+| `src/components/Header/Header.scss` | Glassmorphism backdrop, full-screen overlay styles with stagger animation |
+| `src/components/HeaderSection/HeaderSection.tsx` | Add optional `onClick` prop |
 | `src/components/Home/Home.scss` | Full viewport hero, Syne heading, orbital ring animation |
 | `src/components/Experience/Experience.tsx` | Replace Timeline with custom glassmorphism cards |
 | `src/components/Experience/Experience.scss` | Glassmorphism card styles |
