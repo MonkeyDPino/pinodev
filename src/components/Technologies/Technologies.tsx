@@ -1,7 +1,41 @@
 import { useTranslation } from "react-i18next";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { svgsConstants } from "../../constants/svgs";
 import { svgs } from "../../types/svgs.type";
 import "./Technologies.scss";
+
+function TechCategory({ name, nameColor, technologies, index: _catIndex }: {
+  name: string;
+  nameColor?: string;
+  technologies: { name: string; image: svgs }[];
+  index: number;
+}) {
+  const { t } = useTranslation();
+  const listRef = useScrollReveal<HTMLDivElement>();
+
+  return (
+    <div className="technology">
+      <div className="technology__name" style={{ color: nameColor }}>
+        {t(`technologies_category_${name}`)}
+      </div>
+      <div
+        className="technology__list reveal stagger-children"
+        ref={listRef}
+      >
+        {technologies.map((tech, i) => (
+          <div
+            key={tech.name}
+            className="technology__item"
+            style={{ '--i': i } as React.CSSProperties}
+          >
+            <img src={svgsConstants[tech.image]} alt={tech.name} />
+            <div>{tech.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Technologies() {
   const { t } = useTranslation();
@@ -55,23 +89,8 @@ export default function Technologies() {
         <div className="title">{t("technologies_title")}</div>
         <div className="technologies__content">
           <article className="technologies__content__list">
-            {technologies.map((technology) => (
-              <div key={technology.name} className="technology">
-                <div
-                  className="technology__name"
-                  style={{ color: technology.nameColor }}
-                >
-                  {t(`technologies_category_${technology.name}`)}
-                </div>
-                <div className="technology__list">
-                  {technology.technologies.map((tech) => (
-                    <div key={tech?.name} className="technology__item">
-                      <img src={svgsConstants[tech?.image]} alt={tech?.image} />
-                      <div>{tech?.name}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {technologies.map((tech, index) => (
+              <TechCategory key={tech.name} {...tech} index={index} />
             ))}
           </article>
         </div>
