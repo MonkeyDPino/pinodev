@@ -361,7 +361,54 @@ Changes:
 
 ---
 
-## 9. Certifications & Footer
+## 9. LanguageSwitcher
+
+**File:** `src/components/LanguageSwitcher/LanguageSwitcher.scss`
+
+The current solid teal-bordered pill is replaced with a glassmorphism toggle. The container becomes a glass panel; the active button gets a filled teal inner pill, the inactive button is muted text only.
+
+```scss
+.language-switcher {
+  display: flex;
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: 6px;
+  padding: 2px;
+  backdrop-filter: blur(8px);
+  gap: 2px;
+}
+
+.lang-btn {
+  padding: 3px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $text-muted;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.05em;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+  &.active {
+    background: rgba(59, 218, 212, 0.15);
+    color: $secondary-color;
+    box-shadow: 0 0 8px rgba(59, 218, 212, 0.15);
+  }
+
+  &:not(.active):hover {
+    color: $text-secondary;
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+```
+
+No changes to `LanguageSwitcher.tsx`.
+
+---
+
+## 10. Certifications & Footer
 
 **Certifications:** Apply glassmorphism card system to certification items (same `$glass-bg`, `$glass-border`, `border-radius: 12px`, hover lift).
 
@@ -387,6 +434,7 @@ Changes:
 | `src/components/Projects/Projects.scss` | Glassmorphism card, hover lift |
 | `src/components/Technologies/Technologies.scss` | Glassmorphism chip items |
 | `src/components/AboutMe/AboutMe.scss` | Glow ring on photo, panel wrap |
+| `src/components/LanguageSwitcher/LanguageSwitcher.scss` | Glassmorphism toggle pill |
 | `src/components/Certifications/Certifications.scss` | Glassmorphism cards |
 | `src/components/Footer/Footer.scss` | Deepen background |
 
