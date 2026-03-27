@@ -408,11 +408,258 @@ No changes to `LanguageSwitcher.tsx`.
 
 ---
 
-## 10. Certifications & Footer
+## 10. Certifications
 
-**Certifications:** Apply glassmorphism card system to certification items (same `$glass-bg`, `$glass-border`, `border-radius: 12px`, hover lift).
+Apply glassmorphism card system to certification items (same `$glass-bg`, `$glass-border`, `border-radius: 12px`, hover lift).
 
-**Footer:** Keep current minimal style. Deepen background to match `#020203`. Border-top stays.
+---
+
+## 11. Footer Redesign
+
+**Layout:** Three-column grid — Brand | Quick Links | Contact. Bottom bar with copyright.
+
+**File:** `src/components/Footer/Footer.tsx` — full rewrite:
+
+```tsx
+import "./Footer.scss";
+import { svgsConstants } from "../../constants/svgs";
+
+export default function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer__content">
+        <div className="footer__grid">
+
+          {/* Column 1: Brand */}
+          <div className="footer__brand">
+            <span className="footer__logo">pinodev</span>
+            <p className="footer__tagline">
+              Building fast, thoughtful software that people enjoy.
+            </p>
+            <div className="footer__socials">
+              <a href="https://www.linkedin.com/in/juan-pino-vidal" target="_blank" rel="noreferrer" className="footer__social-icon">
+                <img src={svgsConstants.linkedin} alt="LinkedIn" />
+              </a>
+              <a href="https://github.com/MonkeyDPino" target="_blank" rel="noreferrer" className="footer__social-icon">
+                <img src={svgsConstants.github} alt="GitHub" />
+              </a>
+              <a href="https://www.instagram.com/juan.pino.02" target="_blank" rel="noreferrer" className="footer__social-icon">
+                <img src={svgsConstants.instagram} alt="Instagram" />
+              </a>
+            </div>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div className="footer__links">
+            <span className="footer__col-title">Navigate</span>
+            <nav className="footer__nav">
+              <a href="#home">Home</a>
+              <a href="#experience">Experience</a>
+              <a href="#projects">Projects</a>
+              <a href="#about_me">About Me</a>
+            </nav>
+          </div>
+
+          {/* Column 3: Contact */}
+          <div className="footer__contact">
+            <span className="footer__col-title">Contact</span>
+            <ul className="footer__contact-list">
+              <li>
+                <span className="footer__contact-icon footer__contact-icon--teal">@</span>
+                <a href="mailto:juanrespolo@gmail.com">juanrespolo@gmail.com</a>
+              </li>
+              <li>
+                <span className="footer__contact-icon footer__contact-icon--lime">☎</span>
+                <a href="https://wa.me/573233927516" target="_blank" rel="noreferrer">+57 323 392 7516</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* Bottom bar */}
+        <div className="footer__bottom">
+          <span>© 2026 Juan Pino. All rights reserved.</span>
+          <span className="footer__made-with">Made with ♥</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+```
+
+**File:** `src/components/Footer/Footer.scss` — full rewrite:
+
+```scss
+@use "../../styles/variables.scss" as *;
+
+.footer {
+  background: rgb(2, 2, 3);
+  border-top: 1px solid $border-subtle;
+  margin-top: $space-16;
+
+  .footer__content {
+    margin: 0 auto;
+    max-width: $max-width-header;
+    padding: $space-12 $space-6 0;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: $space-12;
+    padding-bottom: $space-12;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: $space-8;
+    }
+  }
+
+  // Column 1: Brand
+  .footer__logo {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: $secondary-color;
+    letter-spacing: -0.02em;
+    margin-bottom: $space-3;
+  }
+
+  .footer__tagline {
+    color: $text-muted;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: $space-5;
+    max-width: 220px;
+  }
+
+  .footer__socials {
+    display: flex;
+    gap: $space-3;
+  }
+
+  .footer__social-icon {
+    opacity: 0.45;
+    transition: opacity 0.2s, transform 0.2s;
+
+    img { width: 22px; height: 22px; }
+
+    &:hover { opacity: 1; transform: translateY(-2px); }
+  }
+
+  // Column labels
+  .footer__col-title {
+    display: block;
+    color: $text-muted;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: $space-5;
+  }
+
+  // Column 2: Quick links
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+
+    a {
+      color: $text-secondary;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &::before {
+        content: '› ';
+        color: $secondary-color;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+
+      &:hover {
+        color: $text-primary;
+        &::before { opacity: 1; }
+      }
+    }
+  }
+
+  // Column 3: Contact
+  .footer__contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: $space-3;
+    }
+
+    a {
+      color: $text-secondary;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      word-break: break-all;
+      &:hover { color: $text-primary; }
+    }
+  }
+
+  .footer__contact-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+
+    &--teal {
+      background: rgba(59, 218, 212, 0.1);
+      border: 1px solid rgba(59, 218, 212, 0.2);
+      color: $secondary-color;
+    }
+
+    &--lime {
+      background: rgba(187, 216, 58, 0.08);
+      border: 1px solid rgba(187, 216, 58, 0.15);
+      color: $third-color;
+    }
+  }
+
+  // Bottom bar
+  .footer__bottom {
+    border-top: 1px solid $border-subtle;
+    padding: $space-5 0 $space-8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      color: $text-muted;
+      font-size: 0.78rem;
+    }
+
+    .footer__made-with {
+      color: rgba(59, 218, 212, 0.35);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: $space-2;
+      text-align: center;
+    }
+  }
+}
+```
 
 ---
 
@@ -436,7 +683,8 @@ No changes to `LanguageSwitcher.tsx`.
 | `src/components/AboutMe/AboutMe.scss` | Glow ring on photo, panel wrap |
 | `src/components/LanguageSwitcher/LanguageSwitcher.scss` | Glassmorphism toggle pill |
 | `src/components/Certifications/Certifications.scss` | Glassmorphism cards |
-| `src/components/Footer/Footer.scss` | Deepen background |
+| `src/components/Footer/Footer.tsx` | Full rewrite — three-column grid with brand, links, contact |
+| `src/components/Footer/Footer.scss` | Full rewrite — three-column layout, contact icons, bottom bar |
 
 ---
 
