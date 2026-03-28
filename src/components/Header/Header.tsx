@@ -5,10 +5,17 @@ import HeaderSection from "../HeaderSection/HeaderSection";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import "./Header.scss";
 
+const CV_URLS: Record<string, string> = {
+  en: "https://drive.google.com/file/d/1-CoRG3TYBhG3yUNETM18URDIOI_2vxm-/view?usp=sharing",
+  es: "https://drive.google.com/file/d/1aRormKMmnFhqUGz-m2UZaVnH5MvuRo8S/view?usp=sharing",
+};
+
 export default function Header() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
+
+  const cvUrl = CV_URLS[i18n.language] ?? CV_URLS.en;
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -47,8 +54,22 @@ export default function Header() {
             <LanguageSwitcher />
           </div>
 
-          <div className="header__breadcrumb" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <i className="pi pi-times" /> : <i className="pi pi-bars" />}
+          <div className="header__right">
+            <a href="#contact" className="header__contact-btn">
+              {t("nav_contact")}
+            </a>
+            <a
+              href={cvUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="header__cv-btn"
+            >
+              <i className="pi pi-download" />
+              {t("home_cv_button")}
+            </a>
+            <div className="header__breadcrumb" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <i className="pi pi-times" /> : <i className="pi pi-bars" />}
+            </div>
           </div>
         </div>
       </header>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { svgsConstants } from "../../constants/svgs";
-import VoltageButton from "../buttons/VoltageButton";
 import "./Home.scss";
 
 export default function Home() {
@@ -30,17 +29,6 @@ export default function Home() {
             </p>
             <section className="content__buttons home-item" style={{ "--delay": "4" } as React.CSSProperties}>
               <div className="buttons">
-                <VoltageButton
-                  onClick={() => {
-                    window.open(
-                      "https://drive.google.com/file/d/1siS250uxdThB-UY0KvOyzffu_w2XiRtF/view?usp=sharing",
-                      "_blank",
-                      "noreferrer"
-                    );
-                  }}
-                  title={t("home_cv_button")}
-                  svg="download"
-                />
                 <div className="social">
                   <a
                     href="https://www.linkedin.com/in/juan-pino-vidal"
@@ -69,6 +57,7 @@ export default function Home() {
                 </div>
               </div>
             </section>
+
           </section>
           <section className="image home-item" style={{ "--delay": "5" } as React.CSSProperties}>
             <a href="#about_me">

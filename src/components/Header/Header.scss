@@ -26,6 +26,7 @@
     font-size: 1.2rem;
     color: $secondary-color;
     letter-spacing: -0.02em;
+    flex-shrink: 0;
   }
 
   .header__nav {
@@ -35,6 +36,67 @@
 
     .header__section {
       display: inline-block;
+    }
+  }
+
+  // Right cluster: buttons + breadcrumb (hamburger)
+  .header__right {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
+
+  // CV button — filled teal pill
+  .header__cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: $secondary-color;
+    color: #040d0c;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+    box-shadow: 0 0 0 0 rgba(59, 218, 212, 0);
+
+    i {
+      font-size: 0.72rem;
+    }
+
+    &:hover {
+      background: #52e8e2;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(59, 218, 212, 0.30);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // Contact button — ghost pill
+  .header__contact-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    background: transparent;
+    color: $secondary-color;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    border: 1px solid rgba(59, 218, 212, 0.30);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: border-color 0.18s, background 0.18s, color 0.18s;
+
+    &:hover {
+      border-color: $secondary-color;
+      background: rgba(59, 218, 212, 0.08);
     }
   }
 
@@ -149,5 +211,17 @@
 
   .header__nav {
     display: none !important;
+  }
+
+  // Compact pills on mobile
+  .header__cv-btn,
+  .header__contact-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .header__cv-btn i {
+    font-size: 0.68rem;
   }
 }
