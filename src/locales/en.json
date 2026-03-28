@@ -22,12 +22,12 @@
 
   "about_title": "About Me",
   "about_p1_pre": "I am a ",
-  "about_p1_bold": "Full-Stack Developer",
+  "about_p1_bold": "Software Engineer",
   "about_p1_post": ", passionate about technology and continuous learning. I enjoy adding value to people by building robust, reliable, and high-impact systems.",
   "about_p2": "I am driven by challenges, as they provide opportunities to learn, grow, and develop my professional and personal skills.",
   "about_p3_pre": "I have experience in ",
-  "about_p3_bold": "front-end and back-end",
-  "about_p3_post": ", enabling me to tackle projects holistically and deliver efficient solutions to any technical challenge.",
+  "about_p3_bold": "backend and cloud",
+  "about_p3_post": ", applying Agile methodologies to deliver efficient solutions to any technical challenge.",
 
   "certifications_title": "Titles & Certifications",
   "certifications_0_name": "Systems and Computer Engineering — Universidad Tecnológica de Pereira",
