@@ -8,25 +8,25 @@ export default function Certifications() {
 
   const certifications = [
     {
-      name: "Systems and Computer Engineering - Universidad Tecnológica de Pereira",
+      name: t("certifications_0_name"),
       description: t("certifications_0_description"),
       link: "https://drive.google.com/file/d/1jCxd31DtJvMZhq6dY6m17JTouOe4Azjh/view?usp=sharing",
       date: "2019 - 2024",
     },
     {
-      name: "Python Data Structures - University of Michigan",
+      name: t("certifications_1_name"),
       description: t("certifications_1_description"),
       link: "https://drive.google.com/file/d/1UPztyTsnUnd7OuKXb3sxDuSnUPnSWGSO/view?usp=sharing",
       date: "2020",
     },
     {
-      name: "Programming Skills - Universidad de Antioquia",
+      name: t("certifications_2_name"),
       description: t("certifications_2_description"),
       link: "https://drive.google.com/file/d/1164MDZckr6mvy-LDCfvr9iK-34MZb6k5/view?usp=sharing",
       date: "2021",
     },
     {
-      name: "Web Application Development - Universidad de Antioquia",
+      name: t("certifications_3_name"),
       description: t("certifications_3_description"),
       link: "https://drive.google.com/file/d/1jSdNX-ZlHEPFfsfWIHKT-3rU1JpjQz1S/view?usp=sharing",
       date: "2021",

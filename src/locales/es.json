@@ -30,6 +30,10 @@
   "about_p3_post": ", lo que me permite abordar proyectos de manera integral y brindar soluciones eficientes a cualquier desafío técnico.",
 
   "certifications_title": "Títulos y Certificaciones",
+  "certifications_0_name": "Ingeniería de Sistemas y Computación — Universidad Tecnológica de Pereira",
+  "certifications_1_name": "Estructuras de Datos en Python — University of Michigan",
+  "certifications_2_name": "Diplomado en Habilidades de Programación — Universidad de Antioquia",
+  "certifications_3_name": "Desarrollo de Aplicaciones Web — Universidad de Antioquia",
   "certifications_0_description": "Habilidades en desarrollo de software, gestión de bases de datos, integración de sistemas e infraestructura de redes, con enfoque en resolución de problemas, optimización y aplicación de principios de ingeniería a desafíos tecnológicos.",
   "certifications_1_description": "Explicar los principios de las estructuras de datos y cómo se usan. Crear programas capaces de leer y escribir datos desde archivos. Almacenar datos como pares clave/valor usando diccionarios de Python. Completar tareas de múltiples pasos como ordenar o iterar usando tuplas.",
   "certifications_2_description": "Dota a los individuos de habilidades de programación fundamentales y avanzadas, con enfoque en el desarrollo de aplicaciones web dinámicas y responsivas.",

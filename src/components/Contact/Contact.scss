@@ -2,7 +2,7 @@
 
 .contact__grid {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
   gap: $space-12;
   margin-top: $space-8;
   align-items: center;
@@ -127,6 +127,8 @@
 
   input,
   textarea {
+    width: 100%;
+    box-sizing: border-box;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid $glass-border;
     border-radius: 6px;

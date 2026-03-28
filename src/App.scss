@@ -8,15 +8,15 @@
     max-width: $max-width;
   }
   .title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: $secondary-color;
-    padding-left: $space-3;
-    border-left: 3px solid $secondary-color;
-    box-shadow: -4px 0 12px rgba(59, 218, 212, 0.2);
-    letter-spacing: 0.02em;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: $text-primary;
+    letter-spacing: -0.02em;
     text-transform: uppercase;
-    padding: 0.3rem 0.3rem;
+    border-left: 2px solid $third-color;
+    padding: 0.2rem 0 0.2rem $space-4;
+    box-shadow: none;
   }
 }
 

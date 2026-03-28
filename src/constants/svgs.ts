@@ -22,6 +22,9 @@ import express from "../assets/express.svg";
 import docker from "../assets/docker.svg";
 import tailwind from "../assets/tailwind.svg";
 import instagram from "../assets/instagram.svg";
+import vite from "../assets/vite.svg";
+import linux from "../assets/linux.svg";
+import odoo from "../assets/odoo.svg";
 
 export const svgsConstants: {
   [key in svgs]: string;
@@ -49,4 +52,7 @@ export const svgsConstants: {
   docker: docker,
   tailwind: tailwind,
   instagram: instagram,
+  vite: vite,
+  linux: linux,
+  odoo: odoo,
 };

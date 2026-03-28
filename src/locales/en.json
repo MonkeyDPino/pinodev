@@ -30,6 +30,10 @@
   "about_p3_post": ", enabling me to tackle projects holistically and deliver efficient solutions to any technical challenge.",
 
   "certifications_title": "Titles & Certifications",
+  "certifications_0_name": "Systems and Computer Engineering — Universidad Tecnológica de Pereira",
+  "certifications_1_name": "Python Data Structures — University of Michigan",
+  "certifications_2_name": "Programming Skills Diploma — Universidad de Antioquia",
+  "certifications_3_name": "Web Application Development — Universidad de Antioquia",
   "certifications_0_description": "Skilled in software development, database management, system integration, and network infrastructure, with a strong focus on problem-solving, optimization, and applying engineering principles to technological challenges.",
   "certifications_1_description": "Explain the principles of data structures & how they are used. Create programs that are able to read and write data from files. Store data as key/value pairs using Python dictionaries. Accomplish multi-step tasks like sorting or looping using tuples.",
   "certifications_2_description": "Equips individuals with foundational and advanced programming skills, focusing on developing dynamic and responsive web applications.",
