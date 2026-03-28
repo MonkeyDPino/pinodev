@@ -53,5 +53,11 @@
   "contact_placeholder_email": "tu@correo.com",
   "contact_placeholder_subject": "¿De qué se trata?",
   "contact_placeholder_message": "Cuéntame sobre tu proyecto...",
-  "contact_submit": "Enviar mensaje"
+  "contact_submit": "Enviar mensaje",
+
+  "footer_tagline": "Construyendo software rápido y reflexivo que la gente disfruta.",
+  "footer_navigate": "Navegar",
+  "footer_contact_col": "Contacto",
+  "footer_copyright": "© 2026 Juan Pino. Todos los derechos reservados.",
+  "footer_made_with": "Hecho con ♥"
 }

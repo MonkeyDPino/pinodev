@@ -53,5 +53,11 @@
   "contact_placeholder_email": "your@email.com",
   "contact_placeholder_subject": "What's this about?",
   "contact_placeholder_message": "Tell me about your project...",
-  "contact_submit": "Send Message"
+  "contact_submit": "Send Message",
+
+  "footer_tagline": "Building fast, thoughtful software that people enjoy.",
+  "footer_navigate": "Navigate",
+  "footer_contact_col": "Contact",
+  "footer_copyright": "© 2026 Juan Pino. All rights reserved.",
+  "footer_made_with": "Made with ♥"
 }

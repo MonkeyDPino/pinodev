@@ -1,7 +1,9 @@
 import "./Footer.scss";
+import { useTranslation } from "react-i18next";
 import { svgsConstants } from "../../constants/svgs";
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="footer">
       <div className="footer__content">
@@ -11,7 +13,7 @@ export default function Footer() {
           <div className="footer__brand">
             <span className="footer__logo">pinodev</span>
             <p className="footer__tagline">
-              Building fast, thoughtful software that people enjoy.
+              {t("footer_tagline")}
             </p>
             <div className="footer__socials">
               <a
@@ -46,19 +48,19 @@ export default function Footer() {
 
           {/* Column 2: Quick Links */}
           <div className="footer__links">
-            <span className="footer__col-title">Navigate</span>
+            <span className="footer__col-title">{t("footer_navigate")}</span>
             <nav className="footer__nav">
-              <a href="#home">Home</a>
-              <a href="#experience">Experience</a>
-              <a href="#projects">Projects</a>
-              <a href="#about_me">About Me</a>
-              <a href="#contact">Contact</a>
+              <a href="#home">{t("nav_home")}</a>
+              <a href="#experience">{t("nav_experience")}</a>
+              <a href="#projects">{t("nav_projects")}</a>
+              <a href="#about_me">{t("nav_about")}</a>
+              <a href="#contact">{t("nav_contact")}</a>
             </nav>
           </div>
 
           {/* Column 3: Contact */}
           <div className="footer__contact">
-            <span className="footer__col-title">Contact</span>
+            <span className="footer__col-title">{t("footer_contact_col")}</span>
             <ul className="footer__contact-list">
               <li>
                 <span className="footer__contact-icon footer__contact-icon--teal">@</span>
@@ -77,8 +79,8 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer__bottom">
-          <span>© 2026 Juan Pino. All rights reserved.</span>
-          <span className="footer__made-with">Made with ♥</span>
+          <span>{t("footer_copyright")}</span>
+          <span className="footer__made-with">{t("footer_made_with")}</span>
         </div>
       </div>
     </footer>
