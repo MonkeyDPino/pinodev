@@ -56,6 +56,9 @@
   "contact_placeholder_subject": "What's this about?",
   "contact_placeholder_message": "Tell me about your project...",
   "contact_submit": "Send Message",
+  "contact_sending": "Sending...",
+  "contact_success": "Message sent! I'll get back to you soon.",
+  "contact_error": "Something went wrong. Please try again.",
 
   "footer_tagline": "Building fast, thoughtful software that people enjoy.",
   "footer_navigate": "Navigate",

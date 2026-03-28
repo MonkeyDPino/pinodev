@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useEmailJS } from "../../hooks/useEmailJS";
 import "./Contact.scss";
 
 interface FormState {
@@ -10,15 +11,19 @@ interface FormState {
   message: string;
 }
 
+const EMPTY_FORM: FormState = { name: "", email: "", subject: "", message: "" };
+
 export default function Contact() {
   const { t } = useTranslation();
   const gridRef = useScrollReveal<HTMLDivElement>();
-  const [form, setForm] = useState<FormState>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const { send, status } = useEmailJS();
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+
+  useEffect(() => {
+    if (status === "success") {
+      setForm(EMPTY_FORM);
+    }
+  }, [status]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,7 +33,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", form);
+    send(form);
   };
 
   return (
@@ -117,8 +122,24 @@ export default function Contact() {
                 placeholder={t("contact_placeholder_message")}
               />
             </div>
-            <button type="submit" className="contact__submit">
-              {t("contact_submit")} →
+
+            {status === "success" && (
+              <p className="contact__feedback contact__feedback--success">
+                {t("contact_success")}
+              </p>
+            )}
+            {status === "error" && (
+              <p className="contact__feedback contact__feedback--error">
+                {t("contact_error")}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="contact__submit"
+              disabled={status === "loading"}
+            >
+              {status === "loading" ? t("contact_sending") : `${t("contact_submit")} →`}
             </button>
           </form>
         </div>
