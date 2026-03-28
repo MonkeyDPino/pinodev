@@ -1,25 +1,37 @@
+@use "../../styles/variables.scss" as *;
+
 .profile {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: $space-2;
+
+  .profile__image {
+    img {
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      box-shadow: 0 0 8px rgba(59, 218, 212, 0.30);
+    }
+  }
+
   .profile__info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+
     .nickname {
       line-height: 1;
+      font-size: 1.1rem;
     }
+
     .description {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 500;
-    }
-  }
-  .profile__image {
-    img {
-      border-radius: 50%;
-      width: 50px;
-      margin-right: 5px;
+      color: $text-secondary;
+      letter-spacing: 0.02em;
     }
   }
 }

@@ -1,27 +1,36 @@
 @use "../../styles/variables.scss" as *;
 
 .about_me__content {
-  .profile__picture {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem;
-    img {
-      width: 350px;
-      border-radius: 50%;
-      box-shadow: 0 0 20px 0 $secondary-color;
-    }
+  margin-top: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  p {
+    color: $text-secondary;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  strong {
+    color: $text-primary;
+    font-weight: 600;
   }
 }
 
-@media screen and (max-width: 650px) {
-  .about_me__content {
-    .profile__picture {
-      img {
-        max-width: 200px;
-        border-radius: 50%;
-        box-shadow: 0 0 20px 0 $secondary-color;
-      }
-    }
+.profile__picture {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $space-3;
+
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 2px rgba(59, 218, 212, 0.25),
+      0 0 20px rgba(59, 218, 212, 0.18),
+      0 0 50px rgba(59, 218, 212, 0.08);
   }
 }

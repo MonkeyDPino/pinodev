@@ -1,7 +1,35 @@
+@use "../../styles/variables.scss" as *;
+
 .header__section {
   cursor: pointer;
+  position: relative;
+
   a {
-    color: white;
+    position: relative;
+    color: $text-secondary;
     text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: color 0.2s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: $secondary-color;
+      transition: width 0.25s ease;
+    }
+
+    &:hover {
+      color: $text-primary;
+
+      &::after {
+        width: 100%;
+      }
+    }
   }
 }

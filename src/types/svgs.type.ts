@@ -21,4 +21,7 @@ export type svgs =
   | "express"
   | "docker"
   | "tailwind"
-  | "instagram";
+  | "instagram"
+  | "vite"
+  | "linux"
+  | "odoo";

@@ -7,6 +7,7 @@ import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primeicons/primeicons.css";
 import Projects from "./components/Projects/Projects";
 import AboutMe from "./components/AboutMe/AboutMe";
+import Contact from "./components/Contact/Contact";
 import Technologies from "./components/Technologies/Technologies";
 import Certifications from "./components/Certifications/Certifications";
 import Footer from "./components/Footer/Footer";
@@ -14,11 +15,14 @@ import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <PrimeReactProvider>
+      <div className="bg-blob bg-blob--teal" aria-hidden="true" />
+      <div className="bg-blob bg-blob--lime" aria-hidden="true" />
       <Header />
       <Home />
       <Experience />
       <Projects />
       <AboutMe />
+      <Contact />
       <Certifications />
       <Technologies />
       <Footer />

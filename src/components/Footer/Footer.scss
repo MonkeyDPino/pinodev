@@ -1,19 +1,182 @@
 @use "../../styles/variables.scss" as *;
 
 .footer {
-  background-color: $primary-color;
-  padding: 2rem 0;
-  .footer__content {
-    margin: 0 auto;
-    max-width: $max-width-header;
-    padding: 0 10px;
+  background: rgb(2, 2, 3);
+  border-top: 1px solid $border-subtle;
+  margin-top: $space-16;
+  position: relative;
+  z-index: 1;
+}
+
+.footer__content {
+  margin: 0 auto;
+  max-width: $max-width-header;
+  padding: $space-12 $space-6 0;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: $space-12;
+  padding-bottom: $space-12;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: $space-8;
+  }
+}
+
+// Column 1: Brand
+.footer__logo {
+  display: block;
+  font-family: 'Syne', sans-serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: $secondary-color;
+  letter-spacing: -0.02em;
+  margin-bottom: $space-3;
+}
+
+.footer__tagline {
+  color: $text-muted;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: $space-5;
+  max-width: 220px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: $space-3;
+}
+
+.footer__social-icon {
+  opacity: 0.45;
+  transition: opacity 0.2s, transform 0.2s;
+
+  img {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+// Column labels
+.footer__col-title {
+  display: block;
+  color: $text-muted;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: $space-5;
+}
+
+// Column 2: Quick links
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  a {
+    color: $text-secondary;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.2s, padding-left 0.2s;
+
+    &::before {
+      content: '› ';
+      color: $secondary-color;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    &:hover {
+      color: $text-primary;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Column 3: Contact
+.footer__contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  li {
     display: flex;
-    .nick {
-      width: 50%;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  a {
+    color: $text-secondary;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    word-break: break-all;
+
+    &:hover {
+      color: $text-primary;
     }
-    .copy {
-      width: 50%;
-      text-align: end;
-    }
+  }
+}
+
+.footer__contact-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+
+  &--teal {
+    background: rgba(59, 218, 212, 0.10);
+    border: 1px solid rgba(59, 218, 212, 0.20);
+    color: $secondary-color;
+  }
+
+  &--lime {
+    background: rgba(187, 216, 58, 0.08);
+    border: 1px solid rgba(187, 216, 58, 0.15);
+    color: $third-color;
+  }
+}
+
+// Bottom bar
+.footer__bottom {
+  border-top: 1px solid $border-subtle;
+  padding: $space-5 0 $space-8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    color: $text-muted;
+    font-size: 0.78rem;
+  }
+
+  .footer__made-with {
+    color: rgba(59, 218, 212, 0.35);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: $space-2;
+    text-align: center;
   }
 }

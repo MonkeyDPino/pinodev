@@ -2,13 +2,54 @@ $max-width: 800px;
 $max-width-header: 1200px;
 $header-height: 70px;
 
-// colors
-$primary-color: rgb(26, 26, 26);
+// Brand colors
+$primary-color: rgb(2, 2, 3);
 $secondary-color: #3bdad4;
 $secondary-color-dark: #2f9e94;
 $third-color: #bbd83a;
 $third-color-dark: #a3b52d;
+
+// Surface elevation
+$surface-1: rgb(15, 23, 42);
+$surface-2: rgb(20, 30, 54);
+
+// Text hierarchy
+$text-primary: rgba(255, 255, 255, 0.92);
+$text-secondary: rgba(255, 255, 255, 0.60);
+$text-muted: rgba(255, 255, 255, 0.35);
+
+// Legacy aliases (keep for backwards compat with existing components)
 $gray-color: #9c9c9c;
 $gray-color-transparent: rgba(156, 156, 156, 0.5);
-$card-background: rgb(15 23 42 / 1);
-$white-light: #b3b3b3;
+$card-background: rgb(20, 30, 54);
+$white-light: rgba(255, 255, 255, 0.60);
+
+// Border system
+$border-subtle: rgba(255, 255, 255, 0.06);
+$border-default: rgba(255, 255, 255, 0.10);
+$border-accent: rgba(59, 218, 212, 0.25);
+
+// Spacing scale
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+$space-12: 48px;
+$space-16: 64px;
+
+// Glassmorphism system
+$glass-bg:         rgba(255, 255, 255, 0.04);
+$glass-border:     rgba(255, 255, 255, 0.09);
+$glass-bg-dim:     rgba(255, 255, 255, 0.025);
+$glass-border-dim: rgba(255, 255, 255, 0.06);
+
+// Glow values
+$glow-teal-soft: rgba(59, 218, 212, 0.12);
+$glow-teal-med:  rgba(59, 218, 212, 0.20);
+$glow-lime-soft: rgba(187, 216, 58, 0.08);
+
+// Extra spacing token
+$space-10: 40px;

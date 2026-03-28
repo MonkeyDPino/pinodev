@@ -1,7 +1,40 @@
 import { useTranslation } from "react-i18next";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { svgsConstants } from "../../constants/svgs";
 import { svgs } from "../../types/svgs.type";
 import "./Technologies.scss";
+
+function TechCategory({ name, nameColor, technologies }: {
+  name: string;
+  nameColor?: string;
+  technologies: { name: string; image: svgs }[];
+}) {
+  const { t } = useTranslation();
+  const listRef = useScrollReveal<HTMLDivElement>();
+
+  return (
+    <div className="technology">
+      <div className="technology__name" style={{ color: nameColor }}>
+        {t(`technologies_category_${name}`)}
+      </div>
+      <div
+        className="technology__list reveal stagger-children"
+        ref={listRef}
+      >
+        {technologies.map((tech, i) => (
+          <div
+            key={tech.name}
+            className="technology__item"
+            style={{ '--i': i } as React.CSSProperties}
+          >
+            <img src={svgsConstants[tech.image]} alt={tech.name} />
+            <div>{tech.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Technologies() {
   const { t } = useTranslation();
@@ -20,8 +53,6 @@ export default function Technologies() {
         { name: "JavaScript", image: "javascript" },
         { name: "TypeScript", image: "typescript" },
         { name: "React", image: "react" },
-        { name: "Sass", image: "sass" },
-        { name: "Tailwind", image: "tailwind" },
       ],
     },
     {
@@ -32,7 +63,6 @@ export default function Technologies() {
         { name: "Python", image: "python" },
         { name: "PostgreSQL", image: "postgresql" },
         { name: "MongoDB", image: "mongodb" },
-        { name: "Express.js", image: "express" },
         { name: "Docker", image: "docker" },
       ],
     },
@@ -41,10 +71,11 @@ export default function Technologies() {
       nameColor: "#f5965a",
       technologies: [
         { name: "AWS", image: "aws" },
-        { name: "Npm", image: "npm" },
-        { name: "Postman", image: "postman" },
-        { name: "Terminal", image: "terminal" },
-        { name: "VScode", image: "vscode" },
+        { name: "Git", image: "git" },
+        { name: "GitHub", image: "github" },
+        { name: "Vite", image: "vite" },
+        { name: "Linux", image: "linux" },
+        { name: "Odoo", image: "odoo" },
       ],
     },
   ];
@@ -55,23 +86,8 @@ export default function Technologies() {
         <div className="title">{t("technologies_title")}</div>
         <div className="technologies__content">
           <article className="technologies__content__list">
-            {technologies.map((technology) => (
-              <div key={technology.name} className="technology">
-                <div
-                  className="technology__name"
-                  style={{ color: technology.nameColor }}
-                >
-                  {t(`technologies_category_${technology.name}`)}
-                </div>
-                <div className="technology__list">
-                  {technology.technologies.map((tech) => (
-                    <div key={tech?.name} className="technology__item">
-                      <img src={svgsConstants[tech?.image]} alt={tech?.image} />
-                      <div>{tech?.name}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {technologies.map((tech) => (
+              <TechCategory key={tech.name} {...tech} />
             ))}
           </article>
         </div>

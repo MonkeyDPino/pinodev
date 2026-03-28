@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 import "./Projects.scss";
 
 export default function Projects() {
   const { t } = useTranslation();
+  const gridRef = useScrollReveal<HTMLDivElement>();
 
   const projects = [
     {
@@ -18,7 +20,10 @@ export default function Projects() {
     <section className="section projects" id="projects">
       <div className="content">
         <div className="title">{t("projects_title")}</div>
-        <div className="projects__content">
+        <div
+          className="projects__content reveal stagger-children"
+          ref={gridRef}
+        >
           {projects.map((project, index) => (
             <a
               key={index}
@@ -26,6 +31,7 @@ export default function Projects() {
               target="_blank"
               rel="noreferrer"
               className="project_link"
+              style={{ '--i': index } as React.CSSProperties}
             >
               <article className="project_card">
                 <div className="project__thumbnail">
@@ -37,8 +43,8 @@ export default function Projects() {
                     {project.description}
                   </div>
                   <div className="project__info__technologies">
-                    {project.technologies.map((technology, index) => (
-                      <span key={index} className="technology">
+                    {project.technologies.map((technology, i) => (
+                      <span key={i} className="technology">
                         {technology}
                       </span>
                     ))}
