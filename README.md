@@ -2,20 +2,20 @@
 
 Personal portfolio site showcasing my experience, projects, and skills as a Software Engineer specialized in Backend & Cloud.
 
-Live at: **[juanpino.dev](https://juanpino.dev)**
+Live at: **[pinodev.app](https://pinodev.app)**
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | React 18 + TypeScript |
-| Build tool | Vite + SWC |
-| Styling | SCSS + PrimeReact (lara-dark-blue) |
-| i18n | react-i18next (English / Spanish) |
-| Contact | EmailJS |
-| Hosting | — |
+| Layer      | Technology                         |
+| ---------- | ---------------------------------- |
+| Framework  | React 18 + TypeScript              |
+| Build tool | Vite + SWC                         |
+| Styling    | SCSS + PrimeReact (lara-dark-blue) |
+| i18n       | react-i18next (English / Spanish)  |
+| Contact    | EmailJS                            |
+| Hosting    | —                                  |
 
 ---
 
@@ -87,5 +87,6 @@ npm run lint      # ESLint
 ## Contact
 
 **Juan Esteban Pino**
+
 - Email: juanrespolo@gmail.com
 - WhatsApp: +57 323 392 7516
