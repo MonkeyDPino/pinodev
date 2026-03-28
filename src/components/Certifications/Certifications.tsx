@@ -16,18 +16,12 @@ export default function Certifications() {
     {
       name: t("certifications_1_name"),
       description: t("certifications_1_description"),
-      link: "https://drive.google.com/file/d/1UPztyTsnUnd7OuKXb3sxDuSnUPnSWGSO/view?usp=sharing",
-      date: "2020",
-    },
-    {
-      name: t("certifications_2_name"),
-      description: t("certifications_2_description"),
       link: "https://drive.google.com/file/d/1164MDZckr6mvy-LDCfvr9iK-34MZb6k5/view?usp=sharing",
       date: "2021",
     },
     {
-      name: t("certifications_3_name"),
-      description: t("certifications_3_description"),
+      name: t("certifications_2_name"),
+      description: t("certifications_2_description"),
       link: "https://drive.google.com/file/d/1jSdNX-ZlHEPFfsfWIHKT-3rU1JpjQz1S/view?usp=sharing",
       date: "2021",
     },
