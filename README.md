@@ -1,50 +1,92 @@
-# React + TypeScript + Vite
+# Juan Pino — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio site showcasing my experience, projects, and skills as a Software Engineer specialized in Backend & Cloud.
 
-Currently, two official plugins are available:
+Live at: **[pinodev.app](https://pinodev.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+| Layer      | Technology                         |
+| ---------- | ---------------------------------- |
+| Framework  | React 18 + TypeScript              |
+| Build tool | Vite + SWC                         |
+| Styling    | SCSS + PrimeReact (lara-dark-blue) |
+| i18n       | react-i18next (English / Spanish)  |
+| Contact    | EmailJS                            |
+| Hosting    | —                                  |
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Features
+
+- **Bilingual** — full English/Spanish support with automatic browser language detection
+- **Contact form** — sends emails directly from the browser via EmailJS, no backend required
+- **Scroll animations** — reveal-on-scroll with staggered children using a custom `useScrollReveal` hook
+- **Responsive** — mobile-first layout across all sections
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/       # One folder per section (component + SCSS)
+│   ├── Header/
+│   ├── Home/
+│   ├── Experience/
+│   ├── Projects/
+│   ├── AboutMe/
+│   ├── Contact/
+│   ├── Certifications/
+│   ├── Technologies/
+│   └── Footer/
+├── hooks/            # useScrollReveal, useEmailJS
+├── locales/          # en.json, es.json
+├── styles/           # variables.scss (shared tokens)
+├── assets/           # SVG icons
+└── App.tsx
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Getting Started
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### Prerequisites
+
+- Node.js 18+
+
+### Install & run
+
+```bash
+npm install
+npm run dev
 ```
+
+### Environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+### Other commands
+
+```bash
+npm run build     # Type-check + production build
+npm run preview   # Preview production build
+npm run lint      # ESLint
+```
+
+---
+
+## Contact
+
+**Juan Esteban Pino**
+
+- Email: juanrespolo@gmail.com
+- WhatsApp: +57 323 392 7516

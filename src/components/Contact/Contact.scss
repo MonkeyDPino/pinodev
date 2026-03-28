@@ -151,6 +151,19 @@
   }
 }
 
+.contact__feedback {
+  font-size: 0.8rem;
+  margin: 0;
+
+  &--success {
+    color: $secondary-color;
+  }
+
+  &--error {
+    color: #ff6b6b;
+  }
+}
+
 .contact__submit {
   background: linear-gradient(90deg, $secondary-color, $secondary-color-dark);
   border: none;
@@ -164,12 +177,17 @@
   align-self: flex-end;
   transition: opacity 0.2s, transform 0.2s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 0.9;
     transform: translateY(-1px);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
