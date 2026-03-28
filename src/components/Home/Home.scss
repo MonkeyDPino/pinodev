@@ -128,6 +128,28 @@
   }
 }
 
+.home-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+  transition-delay: calc(var(--delay, 0) * 100ms + 80ms);
+}
+
+.home--visible .home-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @media screen and (max-width: 650px) {
   .home {
     flex-direction: column;
