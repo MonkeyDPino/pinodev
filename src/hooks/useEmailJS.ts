@@ -20,12 +20,12 @@ export function useEmailJS() {
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          from_name: form.name,
-          from_email: form.email,
-          subject: form.subject,
+          title: form.subject,
+          name: form.name,
           message: form.message,
+          email: form.email,
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
       )
       .then(() => setStatus("success"))
       .catch(() => setStatus("error"));
