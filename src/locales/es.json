@@ -5,17 +5,17 @@
   "nav_about": "Sobre mí",
 
   "home_greeting": "Hola, soy",
-  "home_role": "Desarrollador Full-stack",
-  "home_description_bold": "+2 años de experiencia.",
-  "home_description_colored": "Ingeniero de Sistemas y Desarrollador Full-stack.",
+  "home_role": "Ingeniero de Software",
+  "home_description_bold": "+4 años de experiencia.",
+  "home_description_colored": "Especializado en Backend & Cloud.",
   "home_description_plain": "Disfruto aportando valor a las personas construyendo sistemas robustos, confiables y de alto impacto.",
   "home_cv_button": "CV",
 
   "experience_title": "Experiencia",
-  "experience_0_role": "Desarrollador Full-stack",
-  "experience_0_description": "Trabajo como desarrollador full-stack, enfocado en la implementación y soporte de una plataforma diseñada para asistir a intermediarios de seguros. Este rol me ha permitido perfeccionar mi experiencia en desarrollo de aplicaciones web e implementación de metodologías ágiles. Utilizo tecnologías como React, Node.js, Express, MongoDB, PostgreSQL, Docker, AWS y más.",
+  "experience_0_role": "Desarrollador Backend & Cloud",
+  "experience_0_description": "Desarrollador Backend & Cloud en una startup enfocada en asistir a intermediarios de seguros. Diseñé infraestructura escalable en AWS usando EC2 detrás de Application Load Balancers, combinado con soluciones serverless (Lambda, API Gateway). Lideré integraciones de ventas externas—incluyendo el formulario SOAT—con comunicación bidireccional al ERP corporativo (Odoo 18) mediante APIs en Python. Construí interfaces dinámicas con React y Vite, respaldadas por Node.js y Express. Gestioné bases de datos PostgreSQL y MongoDB. Mantuve pipelines CI/CD con GitHub Actions y Docker.",
   "experience_1_role": "Asistente de Investigación",
-  "experience_1_description": "Contribuí a un grupo de investigación en el desarrollo de un artículo académico sobre computación cuántica, mejorando las metodologías de investigación y las habilidades de escritura técnica mediante el uso de LaTeX.",
+  "experience_1_description": "Colaboré con un grupo de investigación en tecnologías emergentes, contribuyendo al desarrollo de algoritmos y estructuración de metodologías en el campo de la Computación Cuántica. Redacté y formateé documentos científicos de alta complejidad matemática usando LaTeX.",
 
   "projects_title": "Proyectos",
   "projects_0_description": "Una aplicación web que permite a los usuarios buscar GIFs usando la API de Giphy.",

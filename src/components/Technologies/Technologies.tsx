@@ -53,8 +53,6 @@ export default function Technologies() {
         { name: "JavaScript", image: "javascript" },
         { name: "TypeScript", image: "typescript" },
         { name: "React", image: "react" },
-        { name: "Sass", image: "sass" },
-        { name: "Tailwind", image: "tailwind" },
       ],
     },
     {
@@ -65,7 +63,6 @@ export default function Technologies() {
         { name: "Python", image: "python" },
         { name: "PostgreSQL", image: "postgresql" },
         { name: "MongoDB", image: "mongodb" },
-        { name: "Express.js", image: "express" },
         { name: "Docker", image: "docker" },
       ],
     },
@@ -74,10 +71,11 @@ export default function Technologies() {
       nameColor: "#f5965a",
       technologies: [
         { name: "AWS", image: "aws" },
-        { name: "Npm", image: "npm" },
-        { name: "Postman", image: "postman" },
-        { name: "Terminal", image: "terminal" },
-        { name: "VScode", image: "vscode" },
+        { name: "Git", image: "git" },
+        { name: "GitHub", image: "github" },
+        { name: "Vite", image: "vite" },
+        { name: "Linux", image: "linux" },
+        { name: "Odoo", image: "odoo" },
       ],
     },
   ];
