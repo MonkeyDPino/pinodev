@@ -52,8 +52,7 @@
 .header__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(2, 2, 3, 0.97);
-  backdrop-filter: blur(20px);
+  background: rgb(2, 2, 3);
   z-index: 100;
   display: flex;
   align-items: center;
