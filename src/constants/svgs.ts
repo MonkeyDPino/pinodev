@@ -25,7 +25,6 @@ import instagram from "../assets/instagram.svg";
 import vite from "../assets/vite.svg";
 import linux from "../assets/linux.svg";
 import odoo from "../assets/odoo.svg";
-import vercel from "../assets/vercel.svg";
 import nextjs from "../assets/nextjs.svg";
 
 export const svgsConstants: {
@@ -57,6 +56,5 @@ export const svgsConstants: {
   vite: vite,
   linux: linux,
   odoo: odoo,
-  vercel: vercel,
   nextjs: nextjs,
 };
