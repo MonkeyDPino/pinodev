@@ -24,4 +24,6 @@ export type svgs =
   | "instagram"
   | "vite"
   | "linux"
-  | "odoo";
+  | "odoo"
+  | "vercel"
+  | "nextjs";

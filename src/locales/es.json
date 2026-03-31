@@ -19,6 +19,14 @@
 
   "projects_title": "Proyectos",
   "projects_0_description": "Una aplicación web que permite a los usuarios buscar GIFs usando la API de Giphy.",
+  "projects_1_title": "Comparador de Cotizaciones",
+  "projects_1_description": "Comparador de cotizaciones en tiempo real para asesores de seguros. Tras completar un formulario del cliente, las ofertas de las principales aseguradoras colombianas — Sura, Allianz, HDI, Mapfre y más — se obtienen y actualizan en vivo por WebSocket.",
+  "projects_2_title": "Configuración de Plataforma",
+  "projects_2_description": "Panel de configuración backoffice para la plataforma de asesores. Gestiona credenciales de API de aseguradoras, personaliza el comparador, controla la disponibilidad de productos y administra usuarios desde un único panel.",
+  "projects_3_title": "Portal del Cliente",
+  "projects_3_description": "Aplicación web y PWA para clientes de seguros. Los usuarios pueden solicitar cotizaciones, hacer seguimiento a sus pólizas con el asesor y recibir notificaciones push para renovaciones de SOAT, revisión tecnomecánica y vencimientos.",
+  "projects_4_title": "Cotización y Pago de SOAT",
+  "projects_4_description": "Formulario de cotización SOAT integrado en un portal de clientes, con MercadoPago para el pago y la API de Previsora para la emisión de la póliza — del formulario a la póliza emitida en un solo flujo.",
 
   "about_title": "Sobre Mí",
   "about_p1_pre": "Soy un ",
