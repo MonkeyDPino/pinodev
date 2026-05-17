@@ -60,6 +60,7 @@ export default function Technologies() {
       nameColor: "#ffc136",
       technologies: [
         { name: "Node.js", image: "nodejs" },
+        { name: "NestJS", image: "nestjs" },
         { name: "Python", image: "python" },
         { name: "PostgreSQL", image: "postgresql" },
         { name: "MongoDB", image: "mongodb" },
