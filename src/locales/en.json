@@ -27,6 +27,7 @@
   "projects_3_description": "Full-featured web app and PWA for insurance clients. Users can request quotes, track policy issuance with their advisor, and receive push notifications for SOAT renewals, technomechanical inspections, and other policy deadlines.",
   "projects_4_title": "SOAT Quotation & Payment",
   "projects_4_description": "SOAT insurance quotation form embedded in a customer portal, integrated end-to-end with MercadoPago for payment and Previsora's API for policy issuance — from quote to issued policy in a single seamless flow.",
+  "projects_5_description": "Full-stack blog platform with AI-generated summaries and category suggestions powered by Gemini. Features cookie-based auth, role-based access, full-text search, and a Markdown editor — built with NestJS, Next.js, and PostgreSQL.",
 
   "about_title": "About Me",
   "about_p1_pre": "I am a ",

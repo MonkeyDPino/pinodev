@@ -59,6 +59,14 @@ export default function Projects() {
       images: ["/images/p_comp_1.webp"],
     },
     {
+      type: "link",
+      title: "Pino Blog",
+      description: t("projects_5_description"),
+      technologies: ["Next.js", "Node.js", "PostgreSQL", "Docker", "TypeScript"],
+      thumbnail: "/images/pino-blog.webp",
+      link: "https://blog.pinodev.app",
+    },
+    {
       type: "gallery",
       title: t("projects_2_title"),
       description: t("projects_2_description"),

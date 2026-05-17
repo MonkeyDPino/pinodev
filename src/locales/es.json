@@ -27,6 +27,7 @@
   "projects_3_description": "Aplicación web y PWA para clientes de seguros. Los usuarios pueden solicitar cotizaciones, hacer seguimiento a sus pólizas con el asesor y recibir notificaciones push para renovaciones de SOAT, revisión tecnomecánica y vencimientos.",
   "projects_4_title": "Cotización y Pago de SOAT",
   "projects_4_description": "Formulario de cotización SOAT integrado en un portal de clientes, con MercadoPago para el pago y la API de Previsora para la emisión de la póliza — del formulario a la póliza emitida en un solo flujo.",
+  "projects_5_description": "Plataforma de blog full-stack con resúmenes y sugerencias de categorías generados por IA (Gemini). Autenticación con cookies, roles, búsqueda full-text y editor Markdown — construido con NestJS, Next.js y PostgreSQL.",
 
   "about_title": "Sobre Mí",
   "about_p1_pre": "Soy un ",
