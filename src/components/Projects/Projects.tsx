@@ -61,6 +61,14 @@ export default function Projects() {
     },
     {
       type: "link",
+      title: "Giphy Piece",
+      description: t("projects_0_description"),
+      technologies: ["React", "Node.js", "MongoDB"],
+      thumbnail: "/images/giphy-app.webp",
+      link: "https://giphy.pinodev.app",
+    },
+    {
+      type: "link",
       title: "Pino Blog",
       description: t("projects_5_description"),
       technologies: ["Next.js", "NestJS", "PostgreSQL", "Docker", "TypeScript"],
@@ -103,14 +111,6 @@ export default function Projects() {
         "/images/p_soat_3.webp",
         "/images/p_soat_4.webp",
       ],
-    },
-    {
-      type: "link",
-      title: "Giphy Piece",
-      description: t("projects_0_description"),
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "/images/giphy-app.webp",
-      link: "https://giphy.pinodev.app",
     },
   ];
 
