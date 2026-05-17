@@ -26,6 +26,7 @@ import vite from "../assets/vite.svg";
 import linux from "../assets/linux.svg";
 import odoo from "../assets/odoo.svg";
 import nextjs from "../assets/nextjs.svg";
+import nestjs from "../assets/nestjs.svg";
 
 export const svgsConstants: {
   [key in svgs]: string;
@@ -57,4 +58,5 @@ export const svgsConstants: {
   linux: linux,
   odoo: odoo,
   nextjs: nextjs,
+  nestjs: nestjs,
 };

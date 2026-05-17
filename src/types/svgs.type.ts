@@ -25,4 +25,5 @@ export type svgs =
   | "vite"
   | "linux"
   | "odoo"
-  | "nextjs";
+  | "nextjs"
+  | "nestjs";

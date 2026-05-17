@@ -9,6 +9,7 @@ import "./Projects.scss";
 const techLogoMap: Record<string, svgs> = {
   React: "react",
   "Next.js": "nextjs",
+  "NestJS": "nestjs",
   "Node.js": "nodejs",
   MongoDB: "mongodb",
   TypeScript: "typescript",
@@ -62,9 +63,9 @@ export default function Projects() {
       type: "link",
       title: "Pino Blog",
       description: t("projects_5_description"),
-      technologies: ["Next.js", "Node.js", "PostgreSQL", "Docker", "TypeScript"],
+      technologies: ["Next.js", "NestJS", "PostgreSQL", "Docker", "TypeScript"],
       thumbnail: "/images/pino-blog.webp",
-      link: "https://blog.pinodev.app",
+      link: "https://blog-app.pinodev.app",
     },
     {
       type: "gallery",
