@@ -11,38 +11,35 @@ function formatYearMonth(value: YearMonth): string {
 
 export default function Certifications() {
   const { t } = useTranslation();
-  const gridRef = useScrollReveal<HTMLElement>();
+  const gridRef = useScrollReveal<HTMLDivElement>();
 
   return (
     <section className="section certifications" id="certifications">
       <div className="content">
-        <div className="title">{t("certifications_title")}</div>
-        <article
-          className="certifications__content__list reveal stagger-children"
+        <h2 className="title">{t("certifications_title")}</h2>
+        <div
+          className="certifications__grid reveal stagger-children"
           ref={gridRef}
         >
           {cv.certifications.map((cert, index) => (
-            <div
+            <article
               key={cert.nameKey}
-              className="certifications__content__list__item"
-              style={{ '--i': index } as React.CSSProperties}
+              className="certifications__entry"
+              style={{ "--i": index } as React.CSSProperties}
             >
-              <div className="certifications__content__list__item__name">
-                {t(cert.nameKey)}
-              </div>
-              <div className="certifications__content__list__item__date">
+              <h3 className="certifications__entry__issuer">{cert.issuer}</h3>
+              <p className="certifications__entry__name">{t(cert.nameKey)}</p>
+              <p className="certifications__entry__date">
                 {formatYearMonth(cert.awarded)}
-              </div>
-              <div className="certifications__content__list__item__description">
-                {t(`certifications_${index}_description`)}
-              </div>
+              </p>
               {cert.verifyUrl && (
                 <a
                   href={cert.verifyUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="certifications__content__list__item__link"
+                  className="certifications__entry__verify"
                 >
+                  {t("certifications_action_verify")}
                   <svg
                     width="14"
                     height="14"
@@ -60,9 +57,9 @@ export default function Certifications() {
                   </svg>
                 </a>
               )}
-            </div>
+            </article>
           ))}
-        </article>
+        </div>
       </div>
     </section>
   );
