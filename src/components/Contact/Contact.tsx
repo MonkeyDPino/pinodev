@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { useEmailJS } from "../../hooks/useEmailJS";
+import { cv } from "../../data/cv";
 import "./Contact.scss";
 
 interface FormState {
@@ -18,6 +19,7 @@ export default function Contact() {
   const gridRef = useScrollReveal<HTMLDivElement>();
   const { send, status } = useEmailJS();
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const whatsappHref = `https://wa.me/${cv.phone.replace(/\D/g, "")}`;
 
   useEffect(() => {
     if (status === "success") {
@@ -54,12 +56,12 @@ export default function Contact() {
             <ul className="contact__info">
               <li>
                 <span className="contact__info__icon contact__info__icon--teal">@</span>
-                <a href="mailto:juanrespolo@gmail.com">juanrespolo@gmail.com</a>
+                <a href={`mailto:${cv.email}`}>{cv.email}</a>
               </li>
               <li>
                 <span className="contact__info__icon contact__info__icon--lime">☎</span>
-                <a href="https://wa.me/573233927516" target="_blank" rel="noreferrer">
-                  +57 323 392 7516
+                <a href={whatsappHref} target="_blank" rel="noreferrer">
+                  {cv.phone}
                 </a>
               </li>
             </ul>

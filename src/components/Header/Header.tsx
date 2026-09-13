@@ -3,19 +3,15 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../HeaderSection/HeaderSection";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
+import { cv } from "../../data/cv";
 import "./Header.scss";
-
-const CV_URLS: Record<string, string> = {
-  en: "https://drive.google.com/file/d/1-CoRG3TYBhG3yUNETM18URDIOI_2vxm-/view?usp=sharing",
-  es: "https://drive.google.com/file/d/1aRormKMmnFhqUGz-m2UZaVnH5MvuRo8S/view?usp=sharing",
-};
 
 export default function Header() {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
 
-  const cvUrl = CV_URLS[i18n.language] ?? CV_URLS.en;
+  const cvUrl = cv.cvUrls[i18n.language as "en" | "es"] ?? cv.cvUrls.en;
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
