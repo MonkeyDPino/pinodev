@@ -1,303 +1,283 @@
 @use "../../styles/variables.scss" as *;
 
-// ─── Section carousel ────────────────────────────────────────────────────────
-
-.projects__carousel {
-  margin-top: $space-6;
+// ============================================================
+// D4 — Projects: the Plate. One of exactly two full-bleed bands on the
+// page (the other is the Footer). The section heading stays in the
+// standard `--width-content` column; the band below it breaks out to
+// full viewport width with a wider `--width-wide` inner container.
+// ============================================================
+.projects__band {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: var(--space-12);
+  padding-block: var(--space-12);
+  background: var(--surface-sunken);
 }
 
-.projects__carousel__track {
-  overflow: hidden;
-  border-radius: 12px;
-  height: 260px;
-
-  @media (max-width: 560px) {
-    height: auto;
-  }
+.projects__band__inner {
+  width: min(100% - (var(--space-6) * 2), var(--width-wide));
+  margin-inline: auto;
 }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+// ─── Carousel shell — the per-view configuration itself is unchanged;
+// only the visual recipe (tokens, no glass, no width-animation) moves. ───
 
 .projects__carousel__slide {
-  height: 100%;
-
-  &.slide-in-right {
-    animation: slideInRight 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  &.slide-in-left {
-    animation: slideInLeft 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  @media (prefers-reduced-motion: no-preference) {
+    &.slide-in-right {
+      animation: slide-in-right var(--dur-2) var(--ease-out);
+    }
+    &.slide-in-left {
+      animation: slide-in-left var(--dur-2) var(--ease-out);
+    }
   }
 }
 
-// Navigation row: arrow | dots | arrow
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(var(--space-8));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      transform: translateX(calc(var(--space-8) * -1));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
 .projects__carousel__nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $space-4;
-  margin-top: $space-5;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
 }
 
+// Controls match the site's established icon-button language (theme
+// toggle, menu toggle): `--radius-control`, 1px `--line-strong`, no
+// circular/glass recipe.
 .projects__carousel__arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: $glass-bg;
-  border: 1px solid $glass-border;
-  color: $text-secondary;
-  cursor: pointer;
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  color: var(--text-body);
+  cursor: pointer;
+  transition: color var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out);
 
-  &:hover {
-    color: $secondary-color;
-    border-color: $border-accent;
-    background: rgba(59, 218, 212, 0.06);
+  &:hover,
+  &:focus-visible {
+    color: var(--text-strong);
+    border-color: var(--accent);
   }
 }
 
 .projects__carousel__dots {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .projects__carousel__dot {
-  height: 6px;
-  width: 6px;
-  border-radius: 3px;
-  background: $text-muted;
-  border: none;
-  cursor: pointer;
+  width: 8px;
+  height: 8px;
   padding: 0;
-  transition:
-    background 0.3s ease,
-    width 0.3s ease;
+  border: none;
+  border-radius: 50%;
+  background: var(--line-strong);
+  cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out);
 
   &.active {
-    background: $secondary-color;
-    width: 18px;
+    background: var(--accent);
   }
 }
 
-// ─── Project card ─────────────────────────────────────────────────────────────
-
-.project_link {
-  text-decoration: none;
+// ============================================================
+// The Plate itself.
+// ============================================================
+.plate__trigger {
   display: block;
-  height: 100%;
-
-  &--gallery {
-    cursor: pointer;
-  }
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
 }
 
-.project_card {
+.plate {
   display: flex;
-  flex-direction: row;
-  background: $glass-bg;
-  border: 1px solid $glass-border;
-  border-radius: 12px;
-  overflow: hidden;
-  backdrop-filter: blur(12px);
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-  height: 100%;
-
-  &:hover {
-    border-color: rgba(59, 218, 212, 0.3);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(59, 218, 212, 0.08);
-  }
-
-  @media (max-width: 560px) {
-    flex-direction: column;
-    min-height: unset;
-  }
+  flex-direction: column;
+  gap: var(--space-6);
 }
 
-.project__thumbnail {
+.plate__frame {
   position: relative;
-  width: 300px;
-  flex-shrink: 0;
   overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--surface-raised);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--radius-plate);
+  transition: border-color var(--dur-2) var(--ease-out);
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-  }
-
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  @media (max-width: 560px) {
-    width: 100%;
-
-    img {
-      height: 180px;
-    }
+    transform: scale(1);
+    transition: transform var(--dur-3) var(--ease-out);
   }
 }
 
-.project_link--gallery:hover .project__thumbnail__overlay {
-  opacity: 1;
-}
-
-.project__gallery-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(59, 218, 212, 0.12);
-  border: 1px solid rgba(59, 218, 212, 0.35);
-  color: $secondary-color;
-  font-size: 0.75rem;
-  font-family: monospace;
-  padding: 5px 12px;
-  border-radius: 20px;
-}
-
-.project__info {
-  flex: 1;
-  padding: $space-6;
+.plate__caption {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: var(--space-2);
 }
 
-.project__info__title {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: $text-primary;
+.plate__title {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text-strong);
+  // E5a-style underline, grown on hover/focus of the whole plate — see
+  // `.plate__trigger:hover .plate__title` below.
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 0.2em;
+  transition: background-size var(--dur-2) var(--ease-out);
 }
 
-.project__info__description {
-  color: $text-secondary;
-  font-size: 0.875rem;
+.plate__description {
+  max-width: 54ch;
+  font-size: var(--fs-base);
   line-height: 1.6;
-  margin-top: $space-2;
+  color: var(--text-body);
 }
 
-.project__info__technologies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-2;
-  margin-top: $space-4;
+// Technologies as wrapped inline text — no chips, no badges, no
+// monospace.
+.plate__tech {
+  max-width: 54ch;
+  font-size: var(--fs-base);
+  color: var(--text-muted);
 }
 
-.technology {
+.plate__action {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(59, 218, 212, 0.08);
-  border: 1px solid rgba(59, 218, 212, 0.18);
-  color: $secondary-color;
-  font-size: 0.75rem;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-family: monospace;
+  gap: var(--space-2);
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  color: var(--accent);
+  font-size: var(--fs-base);
+  font-weight: 600;
 
-  &__logo {
-    width: 14px;
-    height: 14px;
-    object-fit: contain;
+  svg {
     flex-shrink: 0;
   }
 }
 
-// ─── Image gallery modal ──────────────────────────────────────────────────────
+// E5c — hover/focus-within: the image scales inside its frame (which
+// does not itself move), the frame border strengthens, the title
+// underline grows. No lift, no shadow, no transform on the plate.
+.plate__trigger:hover,
+.plate__trigger:focus-visible {
+  .plate__frame {
+    border-color: var(--line-strong);
+  }
 
+  .plate__frame img {
+    transform: scale(1.03);
+  }
+
+  .plate__title {
+    background-size: 100% 1.5px;
+  }
+}
+
+// ============================================================
+// Image gallery modal — mirrors the mobile nav overlay's structure
+// (opaque scrim + a raised, shadowed panel), the site's only other user
+// of `--shadow-overlay`.
+// ============================================================
 .project-modal__overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $space-4;
+  padding: var(--space-6);
+  background: var(--surface-page);
 }
 
 .project-modal {
   position: relative;
-  background: $surface-2;
-  border: 1px solid $glass-border;
-  border-radius: 16px;
-  overflow: hidden;
   width: 100%;
-  max-width: 680px;
+  max-width: 42rem;
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  background: var(--surface-raised);
+  border-radius: var(--radius-surface);
+  box-shadow: var(--shadow-overlay);
 
   &__close {
     position: absolute;
-    top: $space-3;
-    right: $space-3;
+    top: var(--space-3);
+    right: var(--space-3);
     z-index: 10;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid $glass-border;
-    color: $text-secondary;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: var(--surface-raised);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-control);
+    color: var(--text-body);
     cursor: pointer;
-    transition:
-      color 0.2s ease,
-      border-color 0.2s ease;
+    transition: color var(--dur-2) var(--ease-out),
+      border-color var(--dur-2) var(--ease-out);
 
-    &:hover {
-      color: $text-primary;
-      border-color: $border-accent;
+    &:hover,
+    &:focus-visible {
+      color: var(--text-strong);
+      border-color: var(--accent);
     }
   }
 
   &__carousel {
     position: relative;
-    height: 360px;
-    background: $surface-1;
+    aspect-ratio: 16 / 10;
+    background: var(--surface-sunken);
     overflow: hidden;
 
     img {
@@ -307,7 +287,7 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity var(--dur-3) var(--ease-out);
 
       &.active {
         opacity: 1;
@@ -320,83 +300,80 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    background: rgba(0, 0, 0, 0.45);
-    border: 1px solid $glass-border;
-    color: $text-primary;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: var(--surface-raised);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-control);
+    color: var(--text-body);
     cursor: pointer;
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease;
+    transition: color var(--dur-2) var(--ease-out),
+      border-color var(--dur-2) var(--ease-out);
 
-    &:hover {
-      background: rgba(0, 0, 0, 0.7);
-      border-color: $border-accent;
+    &:hover,
+    &:focus-visible {
+      color: var(--text-strong);
+      border-color: var(--accent);
     }
 
     &--prev {
-      left: $space-3;
+      left: var(--space-3);
     }
     &--next {
-      right: $space-3;
+      right: var(--space-3);
     }
   }
 
   &__dots {
     position: absolute;
-    bottom: $space-3;
+    bottom: var(--space-3);
     left: 50%;
     transform: translateX(-50%);
+    z-index: 10;
     display: flex;
-    gap: 6px;
     align-items: center;
+    gap: var(--space-2);
   }
 
   &__dot {
-    height: 6px;
-    width: 6px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.35);
-    border: none;
-    cursor: pointer;
+    width: 8px;
+    height: 8px;
     padding: 0;
-    transition:
-      background 0.3s ease,
-      width 0.3s ease;
+    border: none;
+    border-radius: 50%;
+    background: var(--text-muted);
+    cursor: pointer;
+    transition: background-color var(--dur-2) var(--ease-out);
 
     &.active {
-      background: $secondary-color;
-      width: 18px;
+      background: var(--accent);
     }
   }
 
   &__info {
-    padding: $space-5;
+    padding: var(--space-6);
   }
 
   &__title {
-    font-family: "Syne", sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: $text-primary;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--text-strong);
   }
 
   &__description {
-    color: $text-secondary;
-    font-size: 0.875rem;
+    margin-top: var(--space-2);
+    font-size: var(--fs-base);
     line-height: 1.6;
-    margin-top: $space-2;
+    color: var(--text-body);
   }
 
   &__technologies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-2;
-    margin-top: $space-3;
+    margin-top: var(--space-3);
+    font-size: var(--fs-base);
+    color: var(--text-muted);
   }
 }

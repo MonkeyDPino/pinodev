@@ -16,38 +16,51 @@ export default function Experience() {
   return (
     <section className="section experience" id="experience">
       <div className="content">
-        <div className="title">{t("experience_title")}</div>
+        <h2 className="title">{t("experience_title")}</h2>
         <div
-          className="experience__list reveal stagger-children"
+          className="experience__rail reveal stagger-children"
           ref={listRef}
         >
           {cv.experience.map((item, index) => (
-            <div
+            <article
               key={item.company}
-              className="experience__card"
-              style={{ '--i': index } as React.CSSProperties}
+              className="experience__entry"
+              style={{ "--i": index } as React.CSSProperties}
             >
-              <div className="experience__card__header">
-                <div>
-                  <span className="role">{t(item.roleKey)}</span>
-                  <span className="company"> — {item.company}</span>
-                </div>
-                <span className="date">
-                  {formatYearMonth(item.start)} -{" "}
+              <div className="experience__entry__rail">
+                <span className="experience__entry__date">
+                  {formatYearMonth(item.start)} –{" "}
                   {item.end ? formatYearMonth(item.end) : t("experience_current")}
                 </span>
+                {item.end === null && (
+                  <span className="experience__entry__marker">
+                    {t("experience_current_marker")}
+                  </span>
+                )}
               </div>
-              <p className="description">{t(item.descriptionKey)}</p>
-              {item.outcomes.length > 0 && (
-                <ul className="experience__card__outcomes">
-                  {item.outcomes.map((outcome) => (
-                    <li key={outcome.labelKey}>
-                      <strong>{outcome.figure}</strong> {t(outcome.labelKey)}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+
+              <div className="experience__entry__content">
+                <h3 className="experience__entry__company">{item.company}</h3>
+                <p className="experience__entry__role">{t(item.roleKey)}</p>
+                <p className="experience__entry__description">
+                  {t(item.descriptionKey)}
+                </p>
+                {item.outcomes.length > 0 && (
+                  <ul className="experience__entry__outcomes">
+                    {item.outcomes.map((outcome) => (
+                      <li key={outcome.labelKey} className="experience__entry__outcome">
+                        <span className="experience__entry__outcome__figure">
+                          {outcome.figure}
+                        </span>
+                        <span className="experience__entry__outcome__label">
+                          {t(outcome.labelKey)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </article>
           ))}
         </div>
       </div>

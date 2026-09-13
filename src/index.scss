@@ -64,6 +64,13 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  // Guards against the 1px-ish horizontal scrollbar some browsers
+  // introduce for a `100vw`-based full-bleed element (D — the Projects
+  // and Footer full-bleed bands) once the vertical scrollbar's own
+  // width is subtracted from the viewport. Content is never clipped
+  // horizontally by this — nothing in the layout intentionally
+  // overflows the inline axis.
+  overflow-x: hidden;
   background: var(--surface-page);
   color: var(--text-body);
   font-family:
