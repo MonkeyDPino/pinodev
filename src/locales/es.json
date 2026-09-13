@@ -4,6 +4,9 @@
   "nav_projects": "Proyectos",
   "nav_about": "Sobre mí",
 
+  "theme_to_light": "Cambiar al tema claro",
+  "theme_to_dark": "Cambiar al tema oscuro",
+
   "home_greeting": "Hola, soy",
   "home_role": "Desarrollador Full Stack",
   "home_description_bold": "4 años de experiencia.",

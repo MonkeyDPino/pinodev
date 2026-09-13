@@ -38,10 +38,22 @@
       content="https://www.pinodev.app/images/preview.webp"
     />
     <title>pinodev 👨‍💻 | Full Stack Developer</title>
-    <style>body { visibility: hidden; }</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Theme bootstrap — APPROVED #1869. Restores a previously chosen
+         LIGHT preference before first paint; dark needs no JS at all,
+         since :root already carries the dark tokens (A2). Runs before
+         the stylesheet link so the attribute is set before CSS resolves
+         custom properties. System color-scheme preference is
+         deliberately not consulted when nothing is stored (dark-first
+         is an identity decision, not an OS mirror). -->
+    <script>
+      try {
+        var t = localStorage.getItem("pinodev-theme");
+        if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87..112,400..700&family=Newsreader:wght@400&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
