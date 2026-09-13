@@ -1,106 +1,118 @@
 @use "../../styles/variables.scss" as *;
 
+// ============================================================
+// D9 — Footer: the Colophon. A sunken band in BOTH themes, not an
+// inverted one — the design removed the inverted-region concept (and
+// its four `*-invert-*` tokens) entirely, so there is no "which text
+// token works on the inverted ground" question here. `position:
+// relative; z-index: 1` for the spine is already applied globally to
+// `footer` by App.scss's shared selector list.
+// ============================================================
 .footer {
-  background: rgb(2, 2, 3);
-  border-top: 1px solid $border-subtle;
-  margin-top: $space-16;
-  position: relative;
-  z-index: 1;
+  background: var(--surface-sunken);
+  border-top: 1px solid var(--line-hairline);
+  padding-block: var(--space-16);
 }
 
 .footer__content {
-  margin: 0 auto;
-  max-width: $max-width-header;
-  padding: $space-12 $space-6 0;
+  margin-inline: auto;
+  width: min(100% - (var(--space-6) * 2), var(--width-wide));
 }
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: $space-12;
-  padding-bottom: $space-12;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  padding-bottom: var(--space-12);
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: $space-8;
+  @include from($bp-md) {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: var(--space-12);
   }
 }
 
-// Column 1: Brand
+// Column 1: Brand — mirrors the header wordmark (`--fs-md` 600,
+// `--text-strong`), not the removed Syne/teal treatment.
 .footer__logo {
   display: block;
-  font-family: 'Syne', sans-serif;
-  font-weight: 900;
-  font-size: 1.3rem;
-  color: $secondary-color;
-  letter-spacing: -0.02em;
-  margin-bottom: $space-3;
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
 }
 
 .footer__tagline {
-  color: $text-muted;
-  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
   line-height: 1.6;
-  margin-bottom: $space-5;
+  margin-bottom: var(--space-5);
   max-width: 220px;
 }
 
 .footer__socials {
   display: flex;
-  gap: $space-3;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.footer__social-icon {
-  opacity: 0.45;
-  transition: opacity 0.2s, transform 0.2s;
+// Icon PLUS visible label (D9) — the existing `aria-label`s stay
+// correct rather than load-bearing, matching the facts-list language
+// already used for `.contact__info` / `.footer__contact-list`.
+.footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: fit-content;
+  color: var(--text-muted);
+  font-size: var(--fs-base);
+  text-decoration: none;
+  transition: color var(--dur-2) var(--ease-out);
 
-  img {
-    width: 22px;
-    height: 22px;
+  svg {
+    flex-shrink: 0;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
   }
 
-  &:hover {
-    opacity: 1;
-    transform: translateY(-2px);
+  &:hover,
+  &:focus-visible {
+    color: var(--text-strong);
   }
 }
 
-// Column labels
+// Column labels — sentence case (the strings themselves already are;
+// only the forced-uppercase treatment is removed here), `--fs-base` 600.
 .footer__col-title {
   display: block;
-  color: $text-muted;
-  font-size: 0.7rem;
+  color: var(--text-strong);
+  font-size: var(--fs-base);
   font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: $space-5;
+  margin-bottom: var(--space-5);
 }
 
-// Column 2: Quick links
+// Column 2: Quick links — `--accent` with the growing underline (E5a).
 .footer__nav {
   display: flex;
   flex-direction: column;
-  gap: $space-3;
+  gap: var(--space-3);
 
   a {
-    color: $text-secondary;
-    font-size: 0.875rem;
+    display: inline-block;
+    width: fit-content;
+    color: var(--accent);
+    font-size: var(--fs-base);
     text-decoration: none;
-    transition: color 0.2s, padding-left 0.2s;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 0.2em;
+    transition: background-size var(--dur-2) var(--ease-out);
 
-    &::before {
-      content: '› ';
-      color: $secondary-color;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    &:hover {
-      color: $text-primary;
-
-      &::before {
-        opacity: 1;
-      }
+    &:hover,
+    &:focus-visible {
+      background-size: 100% 1.5px;
     }
   }
 }
@@ -112,71 +124,54 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: $space-4;
+  gap: var(--space-4);
 
   li {
     display: flex;
     align-items: center;
-    gap: $space-3;
+    gap: var(--space-3);
+    color: var(--text-muted);
   }
 
   a {
-    color: $text-secondary;
-    font-size: 0.8rem;
+    color: var(--text-body);
+    font-size: var(--fs-base);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color var(--dur-2) var(--ease-out);
     word-break: break-all;
 
-    &:hover {
-      color: $text-primary;
+    &:hover,
+    &:focus-visible {
+      color: var(--text-strong);
     }
   }
-}
 
-.footer__contact-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.65rem;
-  flex-shrink: 0;
-
-  &--teal {
-    background: rgba(59, 218, 212, 0.10);
-    border: 1px solid rgba(59, 218, 212, 0.20);
-    color: $secondary-color;
-  }
-
-  &--lime {
-    background: rgba(187, 216, 58, 0.08);
-    border: 1px solid rgba(187, 216, 58, 0.15);
-    color: $third-color;
+  svg {
+    flex-shrink: 0;
   }
 }
 
 // Bottom bar
 .footer__bottom {
-  border-top: 1px solid $border-subtle;
-  padding: $space-5 0 $space-8;
+  border-top: 1px solid var(--line-hairline);
+  padding-top: var(--space-5);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+
+  @include from($bp-sm) {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
 
   span {
-    color: $text-muted;
-    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
   }
 
   .footer__made-with {
-    color: rgba(59, 218, 212, 0.35);
-    font-size: 0.75rem;
-  }
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-    gap: $space-2;
-    text-align: center;
+    color: var(--text-muted);
   }
 }
