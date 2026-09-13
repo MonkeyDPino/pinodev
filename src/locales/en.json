@@ -1,8 +1,12 @@
 {
+  "skip_to_content": "Skip to main content",
+
   "nav_home": "Home",
   "nav_experience": "Experience",
   "nav_projects": "Projects",
   "nav_about": "About me",
+  "nav_main_label": "Main",
+  "nav_menu_label": "Menu",
 
   "theme_to_light": "Switch to light theme",
   "theme_to_dark": "Switch to dark theme",

@@ -1,8 +1,12 @@
 {
+  "skip_to_content": "Saltar al contenido principal",
+
   "nav_home": "Inicio",
   "nav_experience": "Experiencia",
   "nav_projects": "Proyectos",
   "nav_about": "Sobre mí",
+  "nav_main_label": "Principal",
+  "nav_menu_label": "Menú",
 
   "theme_to_light": "Cambiar al tema claro",
   "theme_to_dark": "Cambiar al tema oscuro",
