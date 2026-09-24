@@ -47,6 +47,7 @@ $bp-xl: 80rem;  // 1280px  max widths comfortably reached
     rgba(110, 42, 140, 0.1) 0%,
     transparent 62%
   );
+  --grain-opacity: 0.07;
   --shadow-overlay: 0 24px 64px rgba(0, 0, 0, 0.55);
 
   // --- A3: spacing — 4px unit expressed in rem so it scales with the
@@ -139,6 +140,7 @@ $bp-xl: 80rem;  // 1280px  max widths comfortably reached
     rgba(155, 27, 110, 0.05) 0%,
     transparent 62%
   );
+  --grain-opacity: 0.05;
   --shadow-overlay: 0 24px 64px rgba(17, 23, 38, 0.18);
 }
 
