@@ -1,47 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { svgsConstants } from "../../constants/svgs";
+import { techLabels } from "../../constants/techLabels";
 import { svgs } from "../../types/svgs.type";
+import type { CvProject } from "../../types/cv.type";
+import { cv } from "../../data/cv";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./Projects.scss";
 
-const techLogoMap: Record<string, svgs> = {
-  React: "react",
-  "Next.js": "nextjs",
-  "NestJS": "nestjs",
-  "Node.js": "nodejs",
-  MongoDB: "mongodb",
-  TypeScript: "typescript",
-  JavaScript: "javascript",
-  PostgreSQL: "postgresql",
-  Docker: "docker",
-  Python: "python",
-  AWS: "aws",
-  Tailwind: "tailwind",
-  Express: "express",
-  Vite: "vite",
-  Postman: "postman",
-};
-
-type LinkProject = {
-  type: "link";
-  title: string;
-  description: string;
-  technologies: string[];
-  thumbnail: string;
-  link: string;
-};
-
-type GalleryProject = {
-  type: "gallery";
-  title: string;
-  description: string;
-  technologies: string[];
-  images: string[];
-};
-
-type Project = LinkProject | GalleryProject;
+type GalleryProject = Extract<CvProject, { kind: "gallery" }>;
 
 export default function Projects() {
   const { t } = useTranslation();
@@ -51,68 +19,7 @@ export default function Projects() {
   const [currentProject, setCurrentProject] = useState(0);
   const [slideClass, setSlideClass] = useState("slide-in-right");
 
-  const projects: Project[] = [
-    {
-      type: "gallery",
-      title: t("projects_1_title"),
-      description: t("projects_1_description"),
-      technologies: ["React", "Vite", "AWS", "PostgreSQL", "Python"],
-      images: ["/images/p_comp_1.webp"],
-    },
-    {
-      type: "link",
-      title: "Giphy Piece",
-      description: t("projects_0_description"),
-      technologies: ["React", "Node.js", "MongoDB"],
-      thumbnail: "/images/giphy-app.webp",
-      link: "https://giphy.pinodev.app",
-    },
-    {
-      type: "link",
-      title: "Pino Blog",
-      description: t("projects_5_description"),
-      technologies: ["Next.js", "NestJS", "PostgreSQL", "Docker", "TypeScript"],
-      thumbnail: "/images/pino-blog.webp",
-      link: "https://blog-app.pinodev.app",
-    },
-    {
-      type: "gallery",
-      title: t("projects_2_title"),
-      description: t("projects_2_description"),
-      technologies: ["React", "Vite", "AWS", "PostgreSQL", "Python"],
-      images: [
-        "/images/p_config_1.webp",
-        "/images/p_config_2.webp",
-        "/images/p_config_3.webp",
-      ],
-    },
-    {
-      type: "gallery",
-      title: t("projects_3_title"),
-      description: t("projects_3_description"),
-      technologies: ["Next.js", "React", "AWS", "Python", "PostgreSQL"],
-      images: [
-        "/images/p_portal_1.webp",
-        "/images/p_portal_2.webp",
-        "/images/p_portal_3.webp",
-        "/images/p_portal_4.webp",
-        "/images/p_portal_5.webp",
-        "/images/p_portal_6.webp",
-      ],
-    },
-    {
-      type: "gallery",
-      title: t("projects_4_title"),
-      description: t("projects_4_description"),
-      technologies: ["React", "Vite", "AWS", "PostgreSQL", "Python", "Postman"],
-      images: [
-        "/images/p_soat_1.webp",
-        "/images/p_soat_2.webp",
-        "/images/p_soat_3.webp",
-        "/images/p_soat_4.webp",
-      ],
-    },
-  ];
+  const projects = cv.projects;
 
   // Image carousel auto-advance
   useEffect(() => {
@@ -159,28 +66,23 @@ export default function Projects() {
     setCurrentProject(index);
   };
 
-  const getThumbnail = (project: Project) =>
-    project.type === "link" ? project.thumbnail : project.images[0];
-
-  const renderTechBadges = (technologies: string[]) =>
-    technologies.map((technology, i) => (
-      <span key={i} className="technology">
-        {techLogoMap[technology] && (
-          <img
-            src={svgsConstants[techLogoMap[technology]]}
-            alt={technology}
-            className="technology__logo"
-          />
-        )}
-        {technology}
+  const renderTechBadges = (technologies: readonly svgs[]) =>
+    technologies.map((technology) => (
+      <span key={technology} className="technology">
+        <img
+          src={svgsConstants[technology]}
+          alt={techLabels[technology]}
+          className="technology__logo"
+        />
+        {techLabels[technology]}
       </span>
     ));
 
-  const renderCard = (project: Project) => (
+  const renderCard = (project: CvProject) => (
     <article className="project_card">
       <div className="project__thumbnail">
-        <img src={getThumbnail(project)} alt={project.title} />
-        {project.type === "gallery" && (
+        <img src={project.image} alt={project.title} />
+        {project.kind === "gallery" && (
           <div className="project__thumbnail__overlay">
             <span className="project__gallery-badge">
               <svg
@@ -203,9 +105,9 @@ export default function Projects() {
       </div>
       <div className="project__info">
         <div className="project__info__title">{project.title}</div>
-        <div className="project__info__description">{project.description}</div>
+        <div className="project__info__description">{t(project.descriptionKey)}</div>
         <div className="project__info__technologies">
-          {renderTechBadges(project.technologies)}
+          {renderTechBadges(project.tech)}
         </div>
       </div>
     </article>
@@ -224,9 +126,9 @@ export default function Projects() {
               key={currentProject}
               className={`projects__carousel__slide ${slideClass}`}
             >
-              {project.type === "link" ? (
+              {project.kind === "link" ? (
                 <a
-                  href={project.link}
+                  href={project.url}
                   target="_blank"
                   rel="noreferrer"
                   className="project_link"
@@ -388,10 +290,10 @@ export default function Projects() {
               <div className="project-modal__info">
                 <div className="project-modal__title">{activeModal.title}</div>
                 <div className="project-modal__description">
-                  {activeModal.description}
+                  {t(activeModal.descriptionKey)}
                 </div>
                 <div className="project-modal__technologies">
-                  {renderTechBadges(activeModal.technologies)}
+                  {renderTechBadges(activeModal.tech)}
                 </div>
               </div>
             </div>

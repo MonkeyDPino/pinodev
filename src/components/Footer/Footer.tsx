@@ -1,9 +1,11 @@
 import "./Footer.scss";
 import { useTranslation } from "react-i18next";
 import { svgsConstants } from "../../constants/svgs";
+import { cv } from "../../data/cv";
 
 export default function Footer() {
   const { t } = useTranslation();
+  const whatsappHref = `https://wa.me/${cv.phone.replace(/\D/g, "")}`;
   return (
     <footer className="footer">
       <div className="footer__content">
@@ -16,33 +18,18 @@ export default function Footer() {
               {t("footer_tagline")}
             </p>
             <div className="footer__socials">
-              <a
-                href="https://www.linkedin.com/in/juan-pino-vidal"
-                target="_blank"
-                rel="noreferrer"
-                className="footer__social-icon"
-                aria-label="LinkedIn"
-              >
-                <img src={svgsConstants.linkedin} alt="LinkedIn" />
-              </a>
-              <a
-                href="https://github.com/MonkeyDPino"
-                target="_blank"
-                rel="noreferrer"
-                className="footer__social-icon"
-                aria-label="GitHub"
-              >
-                <img src={svgsConstants.github} alt="GitHub" />
-              </a>
-              <a
-                href="https://www.instagram.com/juan.pino.02"
-                target="_blank"
-                rel="noreferrer"
-                className="footer__social-icon"
-                aria-label="Instagram"
-              >
-                <img src={svgsConstants.instagram} alt="Instagram" />
-              </a>
+              {cv.socials.map((social) => (
+                <a
+                  key={social.kind}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer__social-icon"
+                  aria-label={t(social.labelKey)}
+                >
+                  <img src={svgsConstants[social.kind]} alt={t(social.labelKey)} />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -64,12 +51,12 @@ export default function Footer() {
             <ul className="footer__contact-list">
               <li>
                 <span className="footer__contact-icon footer__contact-icon--teal">@</span>
-                <a href="mailto:juanrespolo@gmail.com">juanrespolo@gmail.com</a>
+                <a href={`mailto:${cv.email}`}>{cv.email}</a>
               </li>
               <li>
                 <span className="footer__contact-icon footer__contact-icon--lime">☎</span>
-                <a href="https://wa.me/573233927516" target="_blank" rel="noreferrer">
-                  +57 323 392 7516
+                <a href={whatsappHref} target="_blank" rel="noreferrer">
+                  {cv.phone}
                 </a>
               </li>
             </ul>
@@ -79,7 +66,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer__bottom">
-          <span>{t("footer_copyright")}</span>
+          <span>{t("footer_copyright", { name: cv.shortName })}</span>
           <span className="footer__made-with">{t("footer_made_with")}</span>
         </div>
       </div>

@@ -26,4 +26,5 @@ export type svgs =
   | "linux"
   | "odoo"
   | "nextjs"
-  | "nestjs";
+  | "nestjs"
+  | "cicd";
