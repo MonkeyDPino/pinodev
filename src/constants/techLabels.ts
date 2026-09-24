@@ -36,4 +36,11 @@ export const techLabels: Record<svgs, string> = {
   nextjs: "Next.js",
   nestjs: "NestJS",
   cicd: "CI/CD",
+  claudecode: "Claude Code",
+  codex: "Codex",
+  opencode: "OpenCode",
+  herdr: "herdr",
+  gentleai: "Gentle AI",
+  speckit: "Spec Kit",
+  openspec: "OpenSpec",
 };

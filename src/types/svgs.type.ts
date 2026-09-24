@@ -27,4 +27,11 @@ export type svgs =
   | "odoo"
   | "nextjs"
   | "nestjs"
-  | "cicd";
+  | "cicd"
+  | "claudecode"
+  | "codex"
+  | "opencode"
+  | "herdr"
+  | "gentleai"
+  | "speckit"
+  | "openspec";

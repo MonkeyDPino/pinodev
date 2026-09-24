@@ -174,6 +174,18 @@ export const cv = {
       labelKey: "technologies_category_tools",
       items: ["aws", "git", "github", "vite", "linux", "odoo", "cicd"],
     },
+    {
+      labelKey: "technologies_category_ai",
+      items: [
+        "claudecode",
+        "codex",
+        "opencode",
+        "herdr",
+        "gentleai",
+        "speckit",
+        "openspec",
+      ],
+    },
   ],
 
   extendedSkills: [
