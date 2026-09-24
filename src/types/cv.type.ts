@@ -93,7 +93,6 @@ export interface CvProfile {
     readonly labelKey: I18nKey;
   }>;
   readonly cvUrls: Readonly<Record<"en" | "es", Url>>;
-  readonly stack: NonEmpty<{ readonly layerKey: I18nKey; readonly items: NonEmpty<svgs> }>;
   readonly experience: NonEmpty<CvExperience>;
   readonly projects: NonEmpty<CvProject>;
   readonly education: NonEmpty<CvEducation>;

@@ -13,7 +13,7 @@ export const cv = {
   nameLines: ["Juan Esteban", "Pino Vidal"],
   email: "juanrespolo@gmail.com",
   phone: "+57 323 392 7516",
-  portrait: "/images/profile.webp",
+  portrait: "/images/profile-384.webp",
 
   socials: [
     {
@@ -37,14 +37,6 @@ export const cv = {
     en: "https://drive.google.com/file/d/1-CoRG3TYBhG3yUNETM18URDIOI_2vxm-/view?usp=sharing",
     es: "https://drive.google.com/file/d/1aRormKMmnFhqUGz-m2UZaVnH5MvuRo8S/view?usp=sharing",
   },
-
-  stack: [
-    { layerKey: "stack_layer_frontend", items: ["react", "nextjs", "typescript"] },
-    { layerKey: "stack_layer_backend", items: ["nodejs", "express", "python"] },
-    { layerKey: "stack_layer_data", items: ["postgresql", "mongodb"] },
-    { layerKey: "stack_layer_cloud", items: ["aws", "docker"] },
-    { layerKey: "stack_layer_delivery", items: ["cicd"] },
-  ],
 
   experience: [
     {

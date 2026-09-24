@@ -13,20 +13,12 @@
 
   "home_greeting": "Hola, soy",
   "home_role": "Desarrollador Full Stack",
-  "home_description_bold": "4 años de experiencia.",
-  "home_description_colored": "Especializado en Backend & Cloud.",
-  "home_description_plain": "Disfruto aportando valor a las personas construyendo sistemas robustos, confiables y de alto impacto.",
+  "home_positioning": "Llevo cada funcionalidad desde la pantalla en React hasta el despliegue en AWS; con ellas se vincularon cerca de 200 aliados comerciales.",
   "home_cv_button": "CV",
 
   "social_linkedin": "Perfil de LinkedIn",
   "social_github": "Perfil de GitHub",
   "social_instagram": "Perfil de Instagram",
-
-  "stack_layer_frontend": "Frontend",
-  "stack_layer_backend": "Backend",
-  "stack_layer_data": "Datos",
-  "stack_layer_cloud": "Nube e infraestructura",
-  "stack_layer_delivery": "Entrega continua",
 
   "experience_title": "Experiencia",
   "experience_current": "Actualidad",
