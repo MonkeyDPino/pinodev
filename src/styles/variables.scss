@@ -53,3 +53,160 @@ $glow-lime-soft: rgba(187, 216, 58, 0.08);
 
 // Extra spacing token
 $space-10: 40px;
+
+// ============================================================
+// LEGACY TOKENS ABOVE THIS LINE — kept for backward compatibility.
+//
+// Components not yet migrated to the design-token system below still
+// `@use` this file `as *` and reference these Sass variables directly
+// (teal/lime brand colors, glass-card recipe, px spacing). They are
+// intentionally left untouched here so `npm run build` keeps compiling
+// while PR3-PR6 migrate each section, one at a time, to the semantic
+// custom-property tokens below. Do not delete a legacy variable until
+// every component that references it has been repointed.
+// ============================================================
+
+// ============================================================
+// DESIGN TOKENS — A1 (palette), A3 (breakpoints/spacing/widths/radius/
+// icons), A4 (motion architecture). Semantic names only: component SCSS
+// references a token by role, never a raw hex/px value duplicating an
+// already-tokenized concept.
+// ============================================================
+
+// --- A3: breakpoints (Sass variables — `@media` cannot read custom
+// properties, which is why these live outside the `:root` blocks below).
+// Mobile-first, min-width only. No raw pixel `@media` query belongs
+// anywhere in `src/`; every one goes through `from()`.
+$bp-sm: 34rem;  // 544px   large phone
+$bp-md: 48rem;  // 768px   stack ladder gains its label column
+$bp-lg: 64rem;  // 1024px  inline nav; the spine appears
+$bp-xl: 80rem;  // 1280px  max widths comfortably reached
+
+@mixin from($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+:root {
+  // --- A1: dark palette — the default, no JS required. A visitor with
+  // no stored theme preference gets this on first paint with zero JS.
+  color-scheme: dark;
+  --surface-page: #0c0f1a;
+  --surface-raised: #141a2b;
+  --surface-sunken: #070a12;
+  --surface-tint: #231a33;
+  --text-strong: #f2f4f8;
+  --text-body: #c3c9d6;
+  --text-muted: #8e99b0;
+  --accent: #f0b454;
+  --accent-hover: #f8c77a;
+  --on-accent: #0c0f1a;
+  --text-error: #f49b9b;
+  --text-success: #8fd9a8;
+  --line-strong: #6b7590;
+  --line-hairline: #262f45;
+  --focus-ring: #f0b454;
+  --ramp-a: #6e2a8c;
+  --ramp-mid: #9b1b6e;
+  --ramp-b: #f0b454;
+  --field: radial-gradient(
+    ellipse 140% 95% at 12% -12%,
+    rgba(110, 42, 140, 0.1) 0%,
+    transparent 62%
+  );
+  --shadow-overlay: 0 24px 64px rgba(0, 0, 0, 0.55);
+
+  // --- A3: spacing — 4px unit expressed in rem so it scales with the
+  // user's font-size preference.
+  --space-1: 0.25rem; // 4px
+  --space-2: 0.5rem; // 8px
+  --space-3: 0.75rem; // 12px
+  --space-4: 1rem; // 16px
+  --space-5: 1.25rem; // 20px
+  --space-6: 1.5rem; // 24px
+  --space-8: 2rem; // 32px
+  --space-10: 2.5rem; // 40px
+  --space-12: 3rem; // 48px
+  --space-16: 4rem; // 64px
+  --space-20: 5rem; // 80px
+  --space-24: 6rem; // 96px
+  --space-32: 8rem; // 128px
+  --section-gap: clamp(4.5rem, 2rem + 7vw, 9rem);
+
+  // --- A3: widths
+  --width-content: 54rem; // 864px
+  --width-wide: 75rem; // 1200px
+  --measure-prose: 68ch;
+  --header-h: 4.5rem; // 72px
+
+  // --- A3: radius is semantic, not decorative — each token names what
+  // it applies to, not a shared "roundness" value.
+  --radius-control: 8px; // buttons, inputs, toggles, portrait
+  --radius-plate: 3px; // project images
+  --radius-surface: 14px; // gallery modal, mobile nav panel
+
+  // --- A3: icons — all inline SVG, sized by role, `currentColor`.
+  --icon-sm: 1rem;
+  --icon-md: 1.25rem;
+  --icon-lg: 1.75rem;
+
+  // --- A4: motion architecture. Reduced motion is the BASE rendering —
+  // every duration below is 0ms until explicitly opted into by
+  // `prefers-reduced-motion: no-preference`. Any rule may write
+  // `transition: color var(--dur-2) var(--ease-out)` unconditionally
+  // and it is inert at 0ms; no `!important`, no duplicated blocks.
+  --dur-1: 0ms;
+  --dur-2: 0ms;
+  --dur-3: 0ms;
+  --dur-4: 0ms;
+  --stagger: 0ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-settle: cubic-bezier(0.34, 1.28, 0.64, 1);
+}
+
+:root[data-theme="light"] {
+  // --- A1: light palette. The attribute is ABSENT for dark — this
+  // selector only ever matches an explicit, persisted choice.
+  color-scheme: light;
+  --surface-page: #f4f6fb;
+  --surface-raised: #ffffff;
+  --surface-sunken: #e7ebf4;
+  --surface-tint: #efe6fa;
+  --text-strong: #111726;
+  --text-body: #3a4256;
+  --text-muted: #555e72;
+  --accent: #9b1b6e;
+  --accent-hover: #7d1458;
+  --on-accent: #ffffff;
+  --text-error: #a3121f;
+  --text-success: #12603a;
+  --line-strong: #6f7a91;
+  --line-hairline: #d3dae8;
+  --focus-ring: #9b1b6e;
+  --ramp-a: #3a1866;
+  --ramp-mid: #6a196a;
+  --ramp-b: #9b1b6e;
+  --field: radial-gradient(
+    ellipse 140% 95% at 12% -12%,
+    rgba(155, 27, 110, 0.05) 0%,
+    transparent 62%
+  );
+  --shadow-overlay: 0 24px 64px rgba(17, 23, 38, 0.18);
+}
+
+// --- A4: full motion is a progressive enhancement, layered on only
+// when the reader has not asked for less of it.
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --dur-1: 120ms;
+    --dur-2: 240ms;
+    --dur-3: 480ms;
+    --dur-4: 900ms;
+    --stagger: 70ms;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}

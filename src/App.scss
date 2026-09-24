@@ -1,12 +1,15 @@
 @use "./styles/variables.scss" as *;
 
 .section {
-  padding: 1.5rem 0;
-  margin: 0 10px;
+  // A3 rhythm — replaces the fixed `padding: 1.5rem 0`.
+  padding-block: var(--section-gap);
+
   .content {
-    margin: 0 auto;
-    max-width: $max-width;
+    // A3 container — replaces `margin: 0 10px` + a fixed `max-width`.
+    width: min(100% - (var(--space-6) * 2), var(--width-content));
+    margin-inline: auto;
   }
+
   .title {
     font-family: 'Syne', sans-serif;
     font-size: 1.625rem;
@@ -14,8 +17,10 @@
     color: $text-primary;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    border-left: 2px solid $third-color;
-    padding: 0.2rem 0 0.2rem $space-4;
+    // `border-left` removed (#1869 / D9) — the left rule was scoped
+    // out along with the rest of the eyebrow-card treatment; the
+    // left padding it existed to clear goes with it.
+    padding: 0.2rem 0;
     box-shadow: none;
   }
 }
@@ -30,32 +35,68 @@
   color: $third-color-dark;
 }
 
-// Ambient background blobs
-.bg-blob {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(80px);
+// ============================================================
+// D1 — The spine: the page's one structural mark, replacing the two
+// ambient blur blobs. Below `$bp-lg` there is no gutter for it and it
+// carries no information a heading doesn't already, so it simply isn't
+// rendered there.
+// ============================================================
+.spine {
+  display: none;
+
+  @include from($bp-lg) {
+    display: block;
+    position: fixed;
+    pointer-events: none;
+    left: calc(50% - (var(--width-content) / 2) - var(--space-8));
+    top: var(--header-h);
+    bottom: 0;
+    width: 2px;
+    background: var(--line-hairline);
+  }
 }
 
-.bg-blob--teal {
-  width: 600px;
-  height: 600px;
-  top: -200px;
-  right: -150px;
-  background: radial-gradient(circle, rgba(59, 218, 212, 0.10) 0%, transparent 70%);
+.spine__fill {
+  height: 100%;
+  transform-origin: top;
+  transform: scaleY(1);
+  // The mid-stop is required, not slack: a two-stop gradient between
+  // these two ends interpolates through a muted brownish-rose with no
+  // magenta in it. With `--ramp-mid` at 45% this traverses the full
+  // violet -> magenta -> amber ramp in dark, and the ramp's dark half
+  // only in light — the half that reads on a pale ground.
+  background: linear-gradient(
+    180deg,
+    var(--ramp-a) 0%,
+    var(--ramp-mid) 45%,
+    var(--ramp-b) 100%
+  );
 }
 
-.bg-blob--lime {
-  width: 500px;
-  height: 500px;
-  bottom: 20%;
-  left: -150px;
-  background: radial-gradient(circle, rgba(187, 216, 58, 0.07) 0%, transparent 70%);
+// E4 — the spine fills as the reader scrolls down the document. Its
+// resting state (above) is already a full-length gradient rule, a
+// complete rendering on its own per A4 — this is additive only.
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    @include from($bp-lg) {
+      .spine__fill {
+        animation: spine-fill linear both;
+        animation-timeline: scroll(root block);
+      }
+
+      @keyframes spine-fill {
+        from {
+          transform: scaleY(0);
+        }
+        to {
+          transform: scaleY(1);
+        }
+      }
+    }
+  }
 }
 
-// Ensure all page content sits above blobs
+// Ensure all page content sits above the spine.
 .section,
 .header,
 footer {

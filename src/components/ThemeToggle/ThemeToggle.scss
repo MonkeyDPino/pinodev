@@ -1,0 +1,45 @@
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  color: var(--text-body);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text-strong);
+  }
+}
+
+.theme-toggle__glyphs {
+  position: relative;
+  display: block;
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.theme-toggle__glyph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: rotate(-90deg);
+  // E5e — the glyph crossfades and rotates; --ease-settle's slight
+  // overshoot is what makes the swap read as a physical click. Inert
+  // at 0ms under reduced motion (A4 mechanism 1: a token-driven
+  // `transition`, never an unconditional resting-state offset).
+  transition:
+    opacity var(--dur-2) var(--ease-settle),
+    transform var(--dur-2) var(--ease-settle);
+
+  &--active {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}

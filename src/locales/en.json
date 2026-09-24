@@ -4,6 +4,9 @@
   "nav_projects": "Projects",
   "nav_about": "About me",
 
+  "theme_to_light": "Switch to light theme",
+  "theme_to_dark": "Switch to dark theme",
+
   "home_greeting": "Hi, I'm",
   "home_role": "Full Stack Developer",
   "home_description_bold": "4 years of experience.",

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../HeaderSection/HeaderSection";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { cv } from "../../data/cv";
 import "./Header.scss";
 
@@ -29,6 +30,7 @@ export default function Header() {
           <HeaderSection title={t("nav_about")} hash="about_me" onClick={close} />
           <HeaderSection title={t("nav_contact")} hash="contact" onClick={close} />
         </nav>
+        <ThemeToggle />
         <LanguageSwitcher />
       </div>
     </div>,
@@ -47,6 +49,7 @@ export default function Header() {
             <HeaderSection title={t("nav_projects")} hash="projects" />
             <HeaderSection title={t("nav_about")} hash="about_me" />
             <HeaderSection title={t("nav_contact")} hash="contact" />
+            <ThemeToggle />
             <LanguageSwitcher />
           </div>
 
@@ -60,11 +63,54 @@ export default function Header() {
               rel="noreferrer"
               className="header__cv-btn"
             >
-              <i className="pi pi-download" />
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 3v13" />
+                <path d="M6 11l6 6 6-6" />
+                <path d="M4 21h16" />
+              </svg>
               {t("home_cv_button")}
             </a>
             <div className="header__breadcrumb" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <i className="pi pi-times" /> : <i className="pi pi-bars" />}
+              {isOpen ? (
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 6l12 12" />
+                  <path d="M18 6L6 18" />
+                </svg>
+              ) : (
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 7h16" />
+                  <path d="M4 12h16" />
+                  <path d="M4 17h16" />
+                </svg>
+              )}
             </div>
           </div>
         </div>
