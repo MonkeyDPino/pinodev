@@ -1,5 +1,26 @@
 @use "../../styles/variables.scss" as *;
 
+// The hero owns the first view: it fills the viewport below the sticky
+// header (which sits in flow, so its height is subtracted) and centers
+// its content vertically, so the next section never peeks in above the
+// fold. `svh` keeps mobile browser chrome from pushing it past the fold.
+// Centering replaces the shared `--section-gap` padding, which only
+// remains as a floor on viewports too short to fit the hero.
+.home-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  padding-block: var(--space-8);
+
+  // Restated because `margin-inline: auto` on a flex item shrinks it to
+  // its content width instead of stretching it.
+  > .content {
+    width: min(100% - (var(--space-6) * 2), var(--width-content));
+  }
+}
+
 // A single child (`.home__hero`) since Change 1 removed the Stack —
 // no gap needed between siblings that no longer exist.
 .home {

@@ -88,7 +88,7 @@ export default function Home() {
   const cvUrl = cv.cvUrls[i18n.language as "en" | "es"] ?? cv.cvUrls.en;
 
   return (
-    <section className="section" id="home">
+    <section className="section home-section" id="home">
       <div className="content">
         <div className={`home ${mounted ? "home--visible" : ""}`}>
           <div className="home__hero">
