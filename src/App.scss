@@ -10,18 +10,18 @@
     margin-inline: auto;
   }
 
+  // Section chrome (C2/C3, D) — every section's `<h2>`. Sentence case,
+  // Archivo 600 (inherited from `body`) at its display width, at the
+  // section clamp, `--text-strong`. No eyebrow, no rule beneath;
+  // `--space-12` carries the gap to the section's own content below.
   .title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.625rem;
-    font-weight: 800;
-    color: $text-primary;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    // `border-left` removed (#1869 / D9) — the left rule was scoped
-    // out along with the rest of the eyebrow-card treatment; the
-    // left padding it existed to clear goes with it.
-    padding: 0.2rem 0;
-    box-shadow: none;
+    margin-bottom: var(--space-12);
+    font-size: clamp(var(--fs-xl), 1.2rem + 1.8vw, var(--fs-2xl));
+    font-weight: 600;
+    font-variation-settings: "wdth" 112;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--text-strong);
   }
 }
 
