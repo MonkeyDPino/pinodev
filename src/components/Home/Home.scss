@@ -2,176 +2,328 @@
 
 .home {
   display: flex;
-  min-height: calc(100vh - #{$header-height});
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+// ============================================================
+// D2 — the hero block. Mobile-first: single column, portrait first;
+// `$bp-md`+ introduces the two-column grid (text / portrait).
+// ============================================================
+.home__hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--space-8);
+
+  @include from($bp-md) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.home__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.home__greeting {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+// E1 — "the name resolves". Static styling only; the entrance itself
+// (name-wipe / name-resolve) lives below, entirely inside the
+// `no-preference` query, so the resting state below already is the
+// final, correct rendering with zero JS and zero motion.
+.home__name {
+  font-size: clamp(var(--fs-2xl), 1.2rem + 5.85vw, var(--fs-display));
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  font-variation-settings: "wdth" 112;
+}
+
+// One block-level `<span>` per `cv.nameLines` entry — this is what makes
+// the no-reflow guarantee structural: a block can never merge with its
+// sibling, so the two-line -> one-line collapse E1 depends on avoiding
+// is impossible at every axis position, at every viewport.
+.home__name-line {
+  display: block;
+}
+
+.home__role {
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+// The positioning sentence — Newsreader marks "Juan speaking", the same
+// semantic device D5 uses for the AboutMe column.
+.home__positioning {
+  max-width: 34ch;
+  font-family: "Newsreader", "Newsreader Fallback", Georgia, serif;
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-body);
+
+  b {
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+}
+
+.home__location {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.home__actions {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-3);
+}
 
-  .info {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: $space-3;
+.home__socials {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
 
-    .title1 {
-      font-size: 1.1rem;
-      color: $secondary-color;
-      font-weight: 600;
-      font-style: italic;
-      font-family: 'Space Grotesk', sans-serif;
-    }
+.home__social-link {
+  display: inline-flex;
+  color: var(--text-muted);
+  transition: color var(--dur-2) var(--ease-out);
 
-    .title2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 3.5rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.0;
-      color: $text-primary;
-    }
-
-    .role {
-      font-size: 1rem;
-      font-weight: 600;
-      color: $third-color;
-      letter-spacing: 0.04em;
-      line-height: 1;
-    }
-
-    .description {
-      font-size: 1rem;
-      color: $text-secondary;
-      line-height: 1.6;
-      max-width: 420px;
-    }
-
-    .content__buttons {
-      .buttons {
-        margin-top: $space-3;
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        gap: $space-5;
-        flex-wrap: wrap;
-      }
-
-      .social {
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        gap: $space-5;
-
-        .button_icon {
-          opacity: 0.55;
-          transition: opacity 0.2s, transform 0.2s;
-
-          img {
-            width: 25px;
-            height: 25px;
-          }
-
-          &:hover {
-            opacity: 1;
-            transform: scale(1.1);
-          }
-        }
-      }
-    }
+  svg {
+    width: var(--icon-md);
+    height: var(--icon-md);
   }
 
-  .image {
-    display: flex;
-    width: 50%;
-    align-items: center;
-    justify-content: center;
-
-    .profile__image {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      transition: transform 0.5s;
-
-      img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow:
-          0 0 0 2px rgba(59, 218, 212, 0.25),
-          0 0 30px rgba(59, 218, 212, 0.20),
-          0 0 80px rgba(59, 218, 212, 0.08);
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: -12px;
-        border-radius: 50%;
-        border: 1px dashed rgba(59, 218, 212, 0.25);
-        animation: orbit-spin 12s linear infinite;
-      }
-
-      &:hover {
-        transform: scale(1.03);
-      }
-    }
+  &:hover,
+  &:focus-visible {
+    color: var(--text-strong);
   }
 }
 
-@keyframes orbit-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .profile__image::before {
-    animation: none;
-  }
-}
-
-.home-item {
-  opacity: 0;
-  transform: translateY(20px);
+// Everything that isn't one of the two filled `--accent` buttons (D8) is
+// a text link or an outlined control — this is the latter.
+.home__cv-button {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  color: var(--text-strong);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
   transition:
-    opacity 0.5s ease-out,
-    transform 0.5s ease-out;
-  transition-delay: calc(var(--delay, 0) * 100ms + 80ms);
-}
+    border-color var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
 
-.home--visible .home-item {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-item {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 }
 
-@media screen and (max-width: 650px) {
-  .home {
-    flex-direction: column;
-    padding-top: $space-8;
-    gap: $space-8;
+// Squared portrait, not circular — a document photograph, not a social
+// avatar. Explicit width/height guard against CLS.
+.home__portrait {
+  justify-self: center;
 
-    .info {
-      width: 100%;
+  @include from($bp-md) {
+    justify-self: end;
+  }
 
-      .title2 {
-        font-size: 2.2rem;
-      }
+  a {
+    display: inline-block;
+    border-radius: var(--radius-control);
+  }
+
+  img {
+    display: block;
+    width: 128px;
+    height: 128px;
+    object-fit: cover;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--line-strong);
+    transition: border-color var(--dur-2) var(--ease-out);
+  }
+
+  a:hover img,
+  a:focus-visible img {
+    border-color: var(--accent);
+  }
+}
+
+// ============================================================
+// D2 — the Stack. Full width beneath the hero block. Mobile-first:
+// single column, label above items; `$bp-md`+ introduces the
+// label / technologies grid.
+// ============================================================
+.home__stack {
+  position: relative;
+  padding-left: var(--space-5);
+
+  @include from($bp-md) {
+    padding-left: var(--space-6);
+  }
+}
+
+// The continuous 2px `--ramp` rule down the left edge, spanning all
+// five rows — the same gradient the spine (D1) uses, at a different
+// scale. E2a animates this from `scaleY(0)`; its resting state here is
+// already the complete, full-length rule (A4).
+.home__stack__rule {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform-origin: top;
+  transform: scaleY(1);
+  background: linear-gradient(
+    180deg,
+    var(--ramp-a) 0%,
+    var(--ramp-mid) 45%,
+    var(--ramp-b) 100%
+  );
+}
+
+.home__stack__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--space-1);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line-hairline);
+
+  @include from($bp-md) {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    column-gap: var(--space-6);
+  }
+}
+
+.home__stack__layer {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.home__stack__technologies {
+  font-size: var(--fs-base);
+  font-weight: 400;
+  color: var(--text-body);
+}
+
+// ============================================================
+// Motion — reduced motion is the base rendering (A4). Nothing above
+// this query has a resting opacity/transform offset; every entrance
+// below runs from an offset keyframe to the already-correct resting
+// state, so content is never dependent on this block to be visible.
+// ============================================================
+@media (prefers-reduced-motion: no-preference) {
+  // Generic hero-text entrance — the same `arrive` language every other
+  // section uses (index.scss), triggered by `.home--visible` (load,
+  // via the existing `mounted` state) rather than scroll, since the
+  // hero is always initially in view. E1's `<h1>` and E2's stack use
+  // their own bespoke moments below instead of this generic fade.
+  @keyframes home-arrive {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .home--visible .home-item {
+    animation: home-arrive var(--dur-3) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * var(--stagger));
+  }
+
+  // E1 — "the name resolves". Below `$bp-md` this is the `name-wipe`
+  // fallback (no axis animation); the reflow risk that gate exists for
+  // is now structurally impossible either way (see `.home__name-line`).
+  .home--visible .home__name {
+    animation: name-wipe var(--dur-4) var(--ease-out) both;
+  }
+
+  @keyframes name-wipe {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 45% 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @include from($bp-md) {
+    // The one variable-axis animation on the page (A4/C1) — one
+    // element, one run, never looping, never scroll-linked.
+    .home--visible .home__name {
+      animation: name-resolve var(--dur-4) var(--ease-out) both;
     }
 
-    .image {
-      order: -1;
-      width: 100%;
-
-      .profile__image {
-        width: 160px;
-        height: 160px;
+    @keyframes name-resolve {
+      from {
+        opacity: 0;
+        clip-path: inset(0 0 45% 0);
+        font-variation-settings: "wdth" 87, "wght" 400;
       }
+      to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+        font-variation-settings: "wdth" 112, "wght" 700;
+      }
+    }
+  }
+
+  // E2 — "the stack assembles".
+  :root {
+    --seq-rule: 350ms;
+    --seq-rows: 400ms;
+  }
+
+  .home--visible .home__stack__rule {
+    animation: rule-draw var(--dur-4) var(--ease-inout) var(--seq-rule) both;
+  }
+
+  @keyframes rule-draw {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  .home--visible .home__stack__row {
+    animation: row-in var(--dur-3) var(--ease-out) both;
+    animation-delay: calc(var(--seq-rows) + var(--i, 0) * var(--stagger));
+  }
+
+  @keyframes row-in {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
     }
   }
 }

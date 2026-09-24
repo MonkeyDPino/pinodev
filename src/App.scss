@@ -31,8 +31,42 @@
   color: $secondary-color;
 }
 
-.third-color-dark {
-  color: $third-color-dark;
+// ============================================================
+// Skip link (2.4.1) — the first focusable element on the page. Hidden
+// off-screen at rest, brought fully into view on focus so a keyboard
+// user can see and activate it before the header's own nav.
+// ============================================================
+.skip-link {
+  position: absolute;
+  z-index: 200;
+  top: var(--space-4);
+  left: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  background: var(--surface-raised);
+  color: var(--text-strong);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+  // Same clipping technique as `.visually-hidden` (index.scss) — width/
+  // height/clip, never `opacity`/`transform`/`visibility`. This has
+  // nothing to do with A4's motion guarantee: reachability here is keyed
+  // to `:focus-visible`, identical in every reduced-motion state, and
+  // needs no animation or JS to work.
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  &:focus-visible {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
 }
 
 // ============================================================

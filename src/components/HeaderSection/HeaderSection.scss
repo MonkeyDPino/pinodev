@@ -1,35 +1,11 @@
-@use "../../styles/variables.scss" as *;
-
+// `HeaderSection` is a thin structural wrapper exclusively consumed by
+// `Header` (desktop nav + mobile overlay). All colour, size, and the
+// E5a hover/focus underline now live in `Header.scss`, scoped to each
+// context (`.header__nav .header__section a` /
+// `.header__overlay__nav .header__section a`) — this file previously
+// duplicated that with its own legacy-token underline (`::after`,
+// animating `width`, banned by A4), which would have rendered
+// underneath the new one and never adapted to the light theme.
 .header__section {
   cursor: pointer;
-  position: relative;
-
-  a {
-    position: relative;
-    color: $text-secondary;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    transition: color 0.2s ease;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: $secondary-color;
-      transition: width 0.25s ease;
-    }
-
-    &:hover {
-      color: $text-primary;
-
-      &::after {
-        width: 100%;
-      }
-    }
-  }
 }

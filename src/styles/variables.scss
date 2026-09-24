@@ -151,6 +151,20 @@ $bp-xl: 80rem;  // 1280px  max widths comfortably reached
   --icon-md: 1.25rem;
   --icon-lg: 1.75rem;
 
+  // --- C2: type scale — dual ratio (1.333 perfect-fourth above 1rem,
+  // 1.125 major-second at and below), same in both themes. Specified in
+  // the design's typography section but never wired into this file by
+  // PR1/PR2 — added here as PR3 is the first slice to actually consume
+  // it. `--fs-display` is never assigned statically; it exists only as
+  // the ceiling of the hero `<h1>`'s `clamp()`.
+  --fs-sm: 0.889rem; // 14.22px — dates, meta labels, footer copyright
+  --fs-base: 1rem; // 16px — body prose, nav links
+  --fs-md: 1.125rem; // 18px — wordmark, credential issuer in a grid
+  --fs-lg: 1.333rem; // 21.33px — role line, project titles, stack layer names
+  --fs-xl: 1.777rem; // 28.43px — hero positioning line, full-column <h3>
+  --fs-2xl: 2.369rem; // 37.90px — <h2> ceiling, hero clamp floor
+  --fs-display: 4.209rem; // 67.34px — hero clamp ceiling only
+
   // --- A4: motion architecture. Reduced motion is the BASE rendering —
   // every duration below is 0ms until explicitly opted into by
   // `prefers-reduced-motion: no-preference`. Any rule may write
