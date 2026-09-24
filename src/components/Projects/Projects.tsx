@@ -53,11 +53,9 @@ function GalleryIcon() {
 
 export default function Projects() {
   const { t } = useTranslation();
-  const carouselRef = useScrollReveal<HTMLDivElement>();
+  const rosterRef = useScrollReveal<HTMLDivElement>();
   const [activeModal, setActiveModal] = useState<GalleryProject | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [currentProject, setCurrentProject] = useState(0);
-  const [slideClass, setSlideClass] = useState("slide-in-right");
   const modalPanelRef = useRef<HTMLDivElement>(null);
   const modalTriggerRef = useRef<HTMLElement | null>(null);
   const modalLabelId = useId();
@@ -127,33 +125,25 @@ export default function Projects() {
     setActiveModal(project);
   };
 
-  const navigateProject = (dir: "prev" | "next") => {
-    setSlideClass(dir === "next" ? "slide-in-right" : "slide-in-left");
-    setCurrentProject((prev) =>
-      dir === "next"
-        ? (prev + 1) % projects.length
-        : (prev - 1 + projects.length) % projects.length,
-    );
-  };
-
-  const goToProject = (index: number) => {
-    setSlideClass(index > currentProject ? "slide-in-right" : "slide-in-left");
-    setCurrentProject(index);
-  };
-
   const renderTechList = (technologies: readonly svgs[]) =>
     technologies.map((technology) => techLabels[technology]).join(" ");
 
-  const renderPlate = (project: CvProject) => (
-    <article className="plate">
-      <div className="plate__frame">
+  // The Roster (D4 revised) — a compact index-style card: thumbnail,
+  // title, a 2-line-clamped description, a wrapped tech line, action
+  // link. Distinguished from Certifications' Index by the thumbnail,
+  // the absence of any cell-dividing border, and the Plate's own hover
+  // signature (image scale + growing title underline) — see
+  // Projects.scss for the full rationale.
+  const renderCard = (project: CvProject) => (
+    <article className="roster__card">
+      <div className="roster__frame">
         <img src={project.image} alt={project.title} loading="lazy" />
       </div>
-      <div className="plate__caption">
-        <h3 className="plate__title">{project.title}</h3>
-        <p className="plate__description">{t(project.descriptionKey)}</p>
-        <p className="plate__tech">{renderTechList(project.tech)}</p>
-        <span className="plate__action">
+      <div className="roster__body">
+        <h3 className="roster__title">{project.title}</h3>
+        <p className="roster__description">{t(project.descriptionKey)}</p>
+        <p className="roster__tech">{renderTechList(project.tech)}</p>
+        <span className="roster__action">
           {project.kind === "link"
             ? t("projects_action_visit")
             : t("projects_action_gallery")}
@@ -163,93 +153,38 @@ export default function Projects() {
     </article>
   );
 
-  const project = projects[currentProject];
-
   return (
     <section className="section projects" id="projects">
       <div className="content">
         <h2 className="title">{t("projects_title")}</h2>
-      </div>
 
-      <div className="projects__band">
-        <div className="projects__band__inner">
-          <div className="projects__carousel reveal" ref={carouselRef}>
-            <div
-              key={currentProject}
-              className={`projects__carousel__slide ${slideClass}`}
-            >
-              {project.kind === "link" ? (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="plate__trigger"
-                >
-                  {renderPlate(project)}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  className="plate__trigger"
-                  aria-haspopup="dialog"
-                  aria-label={t("projects_gallery_open", { title: project.title })}
-                  onClick={(event) => openModal(project, event.currentTarget)}
-                >
-                  {renderPlate(project)}
-                </button>
-              )}
-            </div>
-
-            <div className="projects__carousel__nav">
-              <button
-                className="projects__carousel__arrow"
-                onClick={() => navigateProject("prev")}
-                aria-label={t("projects_carousel_prev")}
+        <div className="roster reveal stagger-children" ref={rosterRef}>
+          {projects.map((project, index) =>
+            project.kind === "link" ? (
+              <a
+                key={project.title}
+                href={project.url}
+                target="_blank"
+                rel="noreferrer"
+                className="roster__trigger"
+                style={{ "--i": index } as React.CSSProperties}
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  aria-hidden="true"
-                >
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
-              </button>
-
-              <div className="projects__carousel__dots">
-                {projects.map((_, i) => (
-                  <button
-                    key={i}
-                    className={`projects__carousel__dot${i === currentProject ? " active" : ""}`}
-                    onClick={() => goToProject(i)}
-                    aria-label={t("projects_carousel_goto", { index: i + 1 })}
-                    aria-current={i === currentProject ? "true" : undefined}
-                  />
-                ))}
-              </div>
-
+                {renderCard(project)}
+              </a>
+            ) : (
               <button
-                className="projects__carousel__arrow"
-                onClick={() => navigateProject("next")}
-                aria-label={t("projects_carousel_next")}
+                key={project.title}
+                type="button"
+                className="roster__trigger"
+                style={{ "--i": index } as React.CSSProperties}
+                aria-haspopup="dialog"
+                aria-label={t("projects_gallery_open", { title: project.title })}
+                onClick={(event) => openModal(project, event.currentTarget)}
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  aria-hidden="true"
-                >
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
+                {renderCard(project)}
               </button>
-            </div>
-          </div>
+            ),
+          )}
         </div>
       </div>
 

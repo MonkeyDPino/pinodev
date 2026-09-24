@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { techLabels } from "../../constants/techLabels";
 import { cv } from "../../data/cv";
 import "./Home.scss";
 
@@ -89,7 +88,7 @@ export default function Home() {
   const cvUrl = cv.cvUrls[i18n.language as "en" | "es"] ?? cv.cvUrls.en;
 
   return (
-    <section className="section" id="home">
+    <section className="section home-section" id="home">
       <div className="content">
         <div className={`home ${mounted ? "home--visible" : ""}`}>
           <div className="home__hero">
@@ -109,9 +108,7 @@ export default function Home() {
               </p>
 
               <p className="home__positioning home-item" style={{ "--i": 2 } as React.CSSProperties}>
-                <b>{t("home_description_bold")}</b>{" "}
-                {t("home_description_colored")}{" "}
-                {t("home_description_plain")}
+                {t("home_positioning")}
               </p>
 
               <p className="home__location home-item" style={{ "--i": 3 } as React.CSSProperties}>
@@ -146,25 +143,17 @@ export default function Home() {
 
             <div className="home__portrait home-item" style={{ "--i": 5 } as React.CSSProperties}>
               <a href="#about_me">
-                <img src={cv.portrait} alt={cv.fullName} width={128} height={128} />
+                <span className="home__portrait-frame">
+                  <img
+                    src={cv.portrait}
+                    alt={cv.fullName}
+                    width={128}
+                    height={128}
+                    className="home__portrait-image"
+                  />
+                </span>
               </a>
             </div>
-          </div>
-
-          <div className="home__stack">
-            <span className="home__stack__rule" aria-hidden="true" />
-            {cv.stack.map((layer, index) => (
-              <div
-                key={layer.layerKey}
-                className="home__stack__row"
-                style={{ "--i": index } as React.CSSProperties}
-              >
-                <span className="home__stack__layer">{t(layer.layerKey)}</span>
-                <span className="home__stack__technologies">
-                  {layer.items.map((item) => techLabels[item]).join(" ")}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </div>

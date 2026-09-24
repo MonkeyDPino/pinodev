@@ -28,6 +28,13 @@ import odoo from "../assets/odoo.svg";
 import nextjs from "../assets/nextjs.svg";
 import nestjs from "../assets/nestjs.svg";
 import cicd from "../assets/cicd.svg";
+import claudecode from "../assets/claudecode.svg";
+import codex from "../assets/codex.svg";
+import opencode from "../assets/opencode.svg";
+import herdr from "../assets/herdr.svg";
+import gentleai from "../assets/gentleai.svg";
+import speckit from "../assets/speckit.svg";
+import openspec from "../assets/openspec.svg";
 
 export const svgsConstants: {
   [key in svgs]: string;
@@ -61,4 +68,11 @@ export const svgsConstants: {
   nextjs: nextjs,
   nestjs: nestjs,
   cicd: cicd,
+  claudecode: claudecode,
+  codex: codex,
+  opencode: opencode,
+  herdr: herdr,
+  gentleai: gentleai,
+  speckit: speckit,
+  openspec: openspec,
 };

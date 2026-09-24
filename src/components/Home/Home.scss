@@ -1,9 +1,30 @@
 @use "../../styles/variables.scss" as *;
 
-.home {
+// The hero owns the first view: it fills the viewport below the sticky
+// header (which sits in flow, so its height is subtracted) and centers
+// its content vertically, so the next section never peeks in above the
+// fold. `svh` keeps mobile browser chrome from pushing it past the fold.
+// Centering replaces the shared `--section-gap` padding, which only
+// remains as a floor on viewports too short to fit the hero.
+.home-section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  justify-content: center;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  padding-block: var(--space-8);
+
+  // Restated because `margin-inline: auto` on a flex item shrinks it to
+  // its content width instead of stretching it.
+  > .content {
+    width: min(100% - (var(--space-6) * 2), var(--width-content));
+  }
+}
+
+// A single child (`.home__hero`) since Change 1 removed the Stack —
+// no gap needed between siblings that no longer exist.
+.home {
+  display: block;
 }
 
 // ============================================================
@@ -137,7 +158,7 @@
 }
 
 // Squared portrait, not circular — a document photograph, not a social
-// avatar. Explicit width/height guard against CLS.
+// avatar.
 .home__portrait {
   justify-self: center;
 
@@ -147,82 +168,41 @@
 
   a {
     display: inline-block;
-    border-radius: var(--radius-control);
-  }
-
-  img {
-    display: block;
-    width: 128px;
-    height: 128px;
-    object-fit: cover;
-    border-radius: var(--radius-control);
-    border: 1px solid var(--line-strong);
-    transition: border-color var(--dur-2) var(--ease-out);
-  }
-
-  a:hover img,
-  a:focus-visible img {
-    border-color: var(--accent);
   }
 }
 
-// ============================================================
-// D2 — the Stack. Full width beneath the hero block. Mobile-first:
-// single column, label above items; `$bp-md`+ introduces the
-// label / technologies grid.
-// ============================================================
-.home__stack {
-  position: relative;
-  padding-left: var(--space-5);
-
-  @include from($bp-md) {
-    padding-left: var(--space-6);
-  }
+// Change 2 — matted-photograph treatment, built only from existing
+// tokens. The new portrait has a near-black background with a soft
+// radial glow, which would otherwise read as a hard dark block against
+// the light theme's pale ground (#F4F6FB). A mat (padding in
+// `--surface-raised`) plus a hard 1px outer frame gives it a deliberate
+// border in both themes instead. No shadow (content never casts one,
+// A3), no hover lift — only a border-color shift on hover/focus,
+// matching the same feedback the rest of the page gives on links.
+.home__portrait-frame {
+  display: inline-flex;
+  padding: var(--space-2);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  transition: border-color var(--dur-2) var(--ease-out);
 }
 
-// The continuous 2px `--ramp` rule down the left edge, spanning all
-// five rows — the same gradient the spine (D1) uses, at a different
-// scale. E2a animates this from `scaleY(0)`; its resting state here is
-// already the complete, full-length rule (A4).
-.home__stack__rule {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  transform-origin: top;
-  transform: scaleY(1);
-  background: linear-gradient(
-    180deg,
-    var(--ramp-a) 0%,
-    var(--ramp-mid) 45%,
-    var(--ramp-b) 100%
-  );
+// Explicit width/height on the `<img>` (JSX) still guards against CLS;
+// `--radius-plate` here reads as "the printed photo", `--radius-control`
+// above as "the frame holding it" — the same two-radius language D4
+// uses for a project image inside its own frame.
+.home__portrait-image {
+  display: block;
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: var(--radius-plate);
 }
 
-.home__stack__row {
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: var(--space-1);
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--line-hairline);
-
-  @include from($bp-md) {
-    grid-template-columns: 9rem minmax(0, 1fr);
-    column-gap: var(--space-6);
-  }
-}
-
-.home__stack__layer {
-  font-size: var(--fs-lg);
-  font-weight: 600;
-  color: var(--text-strong);
-}
-
-.home__stack__technologies {
-  font-size: var(--fs-base);
-  font-weight: 400;
-  color: var(--text-body);
+.home__portrait a:hover .home__portrait-frame,
+.home__portrait a:focus-visible .home__portrait-frame {
+  border-color: var(--accent);
 }
 
 // ============================================================
@@ -235,8 +215,8 @@
   // Generic hero-text entrance — the same `arrive` language every other
   // section uses (index.scss), triggered by `.home--visible` (load,
   // via the existing `mounted` state) rather than scroll, since the
-  // hero is always initially in view. E1's `<h1>` and E2's stack use
-  // their own bespoke moments below instead of this generic fade.
+  // hero is always initially in view. E1's `<h1>` uses its own bespoke
+  // moment below instead of this generic fade.
   @keyframes home-arrive {
     from {
       opacity: 0;
@@ -289,41 +269,6 @@
         clip-path: inset(0 0 0 0);
         font-variation-settings: "wdth" 112, "wght" 700;
       }
-    }
-  }
-
-  // E2 — "the stack assembles".
-  :root {
-    --seq-rule: 350ms;
-    --seq-rows: 400ms;
-  }
-
-  .home--visible .home__stack__rule {
-    animation: rule-draw var(--dur-4) var(--ease-inout) var(--seq-rule) both;
-  }
-
-  @keyframes rule-draw {
-    from {
-      transform: scaleY(0);
-    }
-    to {
-      transform: scaleY(1);
-    }
-  }
-
-  .home--visible .home__stack__row {
-    animation: row-in var(--dur-3) var(--ease-out) both;
-    animation-delay: calc(var(--seq-rows) + var(--i, 0) * var(--stagger));
-  }
-
-  @keyframes row-in {
-    from {
-      opacity: 0;
-      transform: translateX(-12px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
     }
   }
 }
