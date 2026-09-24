@@ -67,10 +67,12 @@
   "about_p3_post": ", desde la conversación con el cliente hasta producción.",
 
   "education_title": "Educación",
+  "education_action_verify": "Verificar",
   "education_0_name": "Ingeniería de Sistemas y Computación",
   "education_0_status": "Título obtenido",
 
   "certifications_title": "Títulos y Certificados",
+  "certifications_action_verify": "Verificar",
   "certifications_0_name": "Diplomado en Habilidades de Programación",
   "certifications_1_name": "Desarrollo de Aplicaciones Web",
   "certifications_2_name": "Estructuras de Datos en Python",

@@ -1,36 +1,35 @@
 @use "../../styles/variables.scss" as *;
 
+// ============================================================
+// D5 — AboutMe: the Column. Left-aligned Newsreader prose, no card,
+// no border, no indent. Newsreader marks "Juan speaking" — the same
+// semantic device Home's positioning sentence (D2) uses — a different
+// voice from the Archivo grotesque every other section renders in.
+//
+// The section previously duplicated Home's own portrait here as a
+// second, circular, glow-lit photo (`box-shadow` teal glow — the
+// rejected palette, and A3's "no glow anywhere" rule). D2 is explicit
+// that the portrait stays in Home; a second copy here would exceed
+// the same-skeleton constraint that line names, so it is removed
+// rather than retokenized in place.
+// ============================================================
 .about_me__content {
-  margin-top: $space-6;
+  margin-top: var(--space-6);
+  max-width: var(--measure-prose);
   display: flex;
   flex-direction: column;
-  gap: $space-5;
+  gap: var(--space-6);
 
   p {
-    color: $text-secondary;
-    font-size: 0.95rem;
-    line-height: 1.75;
+    font-family: "Newsreader", "Newsreader Fallback", Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-body);
   }
 
   strong {
-    color: $text-primary;
+    color: var(--text-strong);
     font-weight: 600;
-  }
-}
-
-.profile__picture {
-  display: flex;
-  justify-content: center;
-  margin-bottom: $space-3;
-
-  img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow:
-      0 0 0 2px rgba(59, 218, 212, 0.25),
-      0 0 20px rgba(59, 218, 212, 0.18),
-      0 0 50px rgba(59, 218, 212, 0.08);
   }
 }

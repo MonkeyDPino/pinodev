@@ -1,77 +1,75 @@
 @use "../../styles/variables.scss" as *;
 
-.certifications__content__list {
-  margin-top: $space-8;
+// ============================================================
+// D6 — Certifications: the Index. `repeat(auto-fit, minmax(16rem,1fr))`
+// with a `--space-8` (32px) gap in the 864px container: 3x256 + 2x32 =
+// 832 <= 864, so three columns at >=912px viewport; 2x256 + 32 = 544 <=
+// 720px content (768px viewport) gives two; below that, one. `auto-fit`
+// so a future fourth entry redistributes sanely — no column count here
+// is asserted, `auto-fit` computes it the same way at every width.
+// ============================================================
+.certifications__grid {
+  margin-top: var(--space-6);
   display: grid;
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
-  gap: $space-5;
-
-  @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-
-  @media screen and (max-width: 305px) {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-8);
 }
 
-.certifications__content__list__item {
-  padding: $space-5;
-  border-radius: 12px;
-  background: $glass-bg;
-  border: 1px solid $glass-border;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+.certifications__entry {
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--line-hairline);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    border-color: $border-accent;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 218, 212, 0.08);
-  }
+  gap: var(--space-2);
 }
 
-.certifications__content__list__item__name {
-  font-size: 1rem;
-  font-weight: 700;
-  color: $text-primary;
-  line-height: 1.3;
-}
-
-.certifications__content__list__item__date {
-  display: inline-block;
-  margin-top: $space-2;
-  font-size: 0.75rem;
-  color: $text-muted;
-  font-family: monospace;
-  letter-spacing: 0.05em;
-}
-
-.certifications__content__list__item__description {
-  font-size: 0.875rem;
-  color: $text-secondary;
-  line-height: 1.6;
-  margin: $space-3 0 $space-4;
-  flex: 1;
-}
-
-.certifications__content__list__item__link {
-  display: block;
-  margin-top: auto;
-  text-align: center;
-  color: $secondary-color;
-  text-decoration: none;
+// `--fs-md` (18px), not `--fs-lg` — re-derived from the measured column
+// fit. At the desktop column of (864-64)/3 = 266.7px, 21.33px issuers
+// sit at the edge and wrap unpredictably across locales; 18px holds one
+// line with margin (D6).
+.certifications__entry__issuer {
+  font-size: var(--fs-md);
   font-weight: 600;
-  font-size: 0.875rem;
-  border: 1px solid $border-accent;
-  border-radius: 30px;
-  padding: $space-2 $space-4;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--text-strong);
+}
 
-  &:hover {
-    background-color: rgba(59, 218, 212, 0.08);
-    color: $secondary-color-dark;
+.certifications__entry__name {
+  font-size: var(--fs-base);
+  color: var(--text-body);
+}
+
+.certifications__entry__date {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+// The visible "Verify" text link replaces the previous icon-only <a>
+// (`pi-external-link` glyph, no accessible name at all — SC 4.1.2).
+.certifications__entry__verify {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  width: fit-content;
+  color: var(--accent);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+
+  // E5a — link underline grows from the left on hover/focus.
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-2) var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1.5px;
+  }
+
+  svg {
+    flex-shrink: 0;
   }
 }

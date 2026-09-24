@@ -7,11 +7,8 @@ export default function AboutMe() {
   return (
     <section className="section about_me" id="about_me">
       <div className="content">
-        <div className="title">{t("about_title")}</div>
+        <h2 className="title">{t("about_title")}</h2>
         <div className="about_me__content">
-          <div className="profile__picture">
-            <img src="/images/profile.webp" alt="Profile" />
-          </div>
           <p>
             {t("about_p1_pre")}
             <strong>{t("about_p1_bold")}</strong>

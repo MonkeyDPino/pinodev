@@ -1,63 +1,151 @@
 @use "../../styles/variables.scss" as *;
 
-.technologies__content__list {
-  margin-top: $space-6;
+// ============================================================
+// D7 — Technologies: the Register. Three tiers, no chips, no cards,
+// no borders around items — the icons and the typography carry the
+// weight.
+// ============================================================
+
+// --- Tier 1: core stack -------------------------------------------------
+.technologies__core {
+  margin-top: var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: $space-10;
+  gap: var(--space-10);
 }
 
-.technology {
-  padding-top: $space-2;
-  padding-bottom: $space-2;
+// Sentence-case group heading (Frontend / Backend / Infrastructure &
+// tooling) — kills the previous uppercase eyebrow.
+.technologies__group__label {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text-strong);
 }
 
-.technology__name {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: $space-4;
+// `minmax(9rem,1fr)` (144px) with a `--space-5` (20px) gap: n columns
+// need `164n - 20 <= content column`. At the 864px cap that is 5
+// (164x5-20=800<=864, 6 needs 964); at 720px (768 viewport) it's 4
+// (636<=720); at 432px (480 viewport) it's 2 (308<=432); below that, 1.
+// `auto-fit` computes this natively — no breakpoint asserts a count.
+.technologies__group__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-5);
 }
 
-.technology__list {
+.technologies__group__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+
+  span {
+    font-size: var(--fs-base);
+    color: var(--text-body);
+  }
+}
+
+// Sizes both the `<img>` (vendored, self-contained-color logos) and the
+// inline `currentColor` `<svg>` (the seven marks the audit found baking
+// a theme-breaking fixed fill) through the same token — neither ever
+// gets a baked-in pixel dimension. `color` here is what the inline SVGs'
+// `currentColor` resolves against; matched to the label's own tone.
+.technologies__group__item__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  color: var(--text-body);
+
+  img,
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// --- Tier 2: "also experienced with" -----------------------------------
+.technologies__extended {
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--line-hairline);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+// Mobile-first: label above its items; `$bp-md`+ introduces the fixed
+// label column, the same 9rem-label shape the D2 stack ladder uses —
+// this device appears in exactly these two places.
+.technologies__extended__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--space-2);
+
+  @include from($bp-md) {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    column-gap: var(--space-6);
+  }
+}
+
+.technologies__extended__label {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+// Each term is its own flex child so the gap does the separating —
+// plain text, no glyph, no middot, no border. A bordered chip would
+// render this 33-item set as 33 discrete objects; this renders it as
+// wrapped prose.
+.technologies__extended__items {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-3;
+  column-gap: var(--space-5);
+  row-gap: var(--space-2);
 }
 
-.technology__item {
+.technologies__extended__item {
+  font-size: var(--fs-base);
+  color: var(--text-body);
+}
+
+// --- Tier 3: languages ---------------------------------------------------
+// This is the render site for `cv.languages` — populated by PR1's task
+// 1.7 but never rendered until this component (see the
+// data-without-renderer cross-cutting rule).
+.technologies__languages {
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--line-hairline);
+}
+
+.technologies__languages__title {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.technologies__languages__list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: $space-2;
-  padding: $space-4 $space-2;
-  background: $glass-bg;
-  border: 1px solid $glass-border;
-  border-radius: 10px;
-  backdrop-filter: blur(8px);
-  min-width: 72px;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  gap: var(--space-2);
+}
 
-  &:hover {
-    transform: translateY(-3px);
-    border-color: $border-accent;
-    box-shadow:
-      0 8px 24px rgba(0, 0, 0, 0.3),
-      0 0 12px rgba(59, 218, 212, 0.08);
-  }
+.technologies__language {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
 
-  img {
-    width: 32px;
-    height: 32px;
-  }
+.technologies__language__name {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-strong);
+}
 
-  div {
-    color: $text-secondary;
-    font-size: 0.7rem;
-    text-align: center;
-  }
+.technologies__language__level {
+  font-size: var(--fs-base);
+  color: var(--text-body);
 }

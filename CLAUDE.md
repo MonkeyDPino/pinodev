@@ -18,7 +18,7 @@ There are no tests configured in this project.
 Personal portfolio site (Juan Esteban Pino) built with React 18 + TypeScript + Vite. Single-page app with scroll-based sections.
 
 **Section order** (defined in `src/App.tsx`):
-`Header → Home → Experience → Projects → AboutMe → Certifications → Technologies → Footer`
+`Header → Home → Experience → Projects → AboutMe → Contact → Education → Certifications → Technologies → Footer`
 
 Each component is co-located with its SCSS file under `src/components/<Name>/`.
 

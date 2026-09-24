@@ -1,0 +1,69 @@
+@use "../../styles/variables.scss" as *;
+
+// ============================================================
+// D6 — Education: the Marquee. One entry owns the full column: a
+// single 2px `--line-strong` top rule (the only 2px rule on the page
+// that is not the ramp), `--space-8` block padding, and the heavier
+// full-column `--fs-xl` issuer scale — deliberately senior, distinct
+// from Certifications' multi-column `--fs-md`.
+// ============================================================
+.education__list {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.education__entry {
+  padding-block: var(--space-8);
+  border-top: 2px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.education__entry__issuer {
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.education__entry__name {
+  font-size: var(--fs-lg);
+  color: var(--text-body);
+}
+
+.education__entry__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.education__entry__verify {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  width: fit-content;
+  color: var(--accent);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+
+  // E5a — link underline grows from the left on hover/focus.
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-2) var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1.5px;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}

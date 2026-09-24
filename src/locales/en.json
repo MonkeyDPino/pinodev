@@ -67,10 +67,12 @@
   "about_p3_post": ", from the client conversation through to production.",
 
   "education_title": "Education",
+  "education_action_verify": "Verify",
   "education_0_name": "B.S. in Systems and Computing Engineering",
   "education_0_status": "Degree awarded",
 
   "certifications_title": "Titles & Certifications",
+  "certifications_action_verify": "Verify",
   "certifications_0_name": "Programming Skills Diploma",
   "certifications_1_name": "Web Application Development",
   "certifications_2_name": "Python Data Structures",
