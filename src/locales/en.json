@@ -111,6 +111,12 @@
   "footer_copyright": "© 2026 {{name}}. All rights reserved.",
   "footer_made_with": "Made with ♥",
 
-  "cube_experience_hook": "Building the platform that onboarded about 200 insurance intermediaries.",
-  "cube_about_manifesto": "I care about software that works quietly and holds up under real use."
+  "cube_fact_home": "{{location}}",
+  "cube_fact_experience": "{{company}} since {{year}}",
+  "cube_fact_projects": "{{count}} projects shipped",
+  "cube_fact_about": "Systems & Computing Engineer",
+  "cube_fact_contact": "LinkedIn, GitHub, email",
+  "cube_fact_education": "Awarded {{year}}",
+  "cube_fact_certifications": "{{count}} certifications earned",
+  "cube_fact_technologies": "{{count}} skill categories"
 }

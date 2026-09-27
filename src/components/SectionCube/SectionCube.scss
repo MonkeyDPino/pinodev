@@ -1,0 +1,122 @@
+@use "../../styles/variables.scss" as *;
+
+// ============================================================
+// The section cube — a sticky, decorative mirror of whichever section
+// is currently being read (left column of `.layout`, App.scss). It is
+// the grid column itself, so it stretches to the full row height by
+// default grid `align-items: stretch`; the sticky stage inside then
+// pins within that tall box as the reader scrolls the sections column
+// beside it.
+// ============================================================
+.section-cube {
+  display: none;
+
+  @include from($bp-lg) {
+    display: block;
+  }
+}
+
+.section-cube__stage {
+  --cube-size: min(15rem, 20vw);
+  --cube-perspective: 64rem;
+
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100svh - var(--header-h));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: var(--cube-perspective);
+}
+
+// The permanent resting pose (parent review): a static pitch + yaw on this
+// wrapper is what keeps the cube reading as a cube at rest instead of a
+// flat card facing the viewer straight on. Sized to match `.section-cube__
+// cube` exactly so the stage's own flex centering is unaffected by
+// introducing this extra layer. Never animated — only the ring inside
+// (`.section-cube__cube`, task's `m.div`) ever moves.
+.section-cube__tilt {
+  width: var(--cube-size);
+  height: var(--cube-size);
+  transform-style: preserve-3d;
+  transform: rotateX(-12deg) rotateY(-20deg);
+}
+
+.section-cube__cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+// One radius, one border, no shadow (task brief) — only the surface
+// tone alternates between the two token tiers for a little depth
+// between faces, the same restrained treatment the previous cube used.
+.section-cube__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: calc(var(--cube-size) * 0.06);
+  padding: calc(var(--cube-size) * 0.12);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--radius-surface);
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.section-cube__face--1,
+.section-cube__face--3 {
+  background: var(--surface-tint);
+}
+
+// Ring mapping (task report) — 4 physical faces at 0/90/180/270deg,
+// pushed out by half the cube's own size. The outer `rotateY` (component
+// `animate`) walks in one continuous direction as the active section
+// changes, so a face's own local rotation cancels exactly at its rest
+// plateau.
+.section-cube__face--0 {
+  transform: rotateY(0deg) translateZ(calc(var(--cube-size) / 2));
+}
+.section-cube__face--1 {
+  transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+.section-cube__face--2 {
+  transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2));
+}
+.section-cube__face--3 {
+  transform: rotateY(270deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+// The single accent rule for this component (design-taste-frontend
+// 4.2/6.F): the icon alone carries `--accent`, title and fact stay
+// neutral. Sized off `--cube-size` with `calc()`, never `cqi` — inside
+// this `perspective` + `preserve-3d` stack container-query units resolve
+// against a bogus, much-too-small size (T2 gotcha carried over from the
+// rejected cube hero).
+.section-cube__icon {
+  width: calc(var(--cube-size) * 0.22);
+  height: calc(var(--cube-size) * 0.22);
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.section-cube__title {
+  font-size: clamp(1rem, calc(var(--cube-size) * 0.12), 1.5rem);
+  font-weight: 600;
+  font-variation-settings: "wdth" 112;
+  line-height: 1.15;
+  color: var(--text-strong);
+}
+
+.section-cube__fact {
+  font-family: var(--font-mono);
+  font-size: clamp(0.8125rem, calc(var(--cube-size) * 0.07), 0.9375rem);
+  line-height: 1.4;
+  color: var(--text-muted);
+}

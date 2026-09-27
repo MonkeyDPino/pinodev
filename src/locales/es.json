@@ -111,6 +111,12 @@
   "footer_copyright": "© 2026 {{name}}. Todos los derechos reservados.",
   "footer_made_with": "Hecho con ♥",
 
-  "cube_experience_hook": "Construyendo la plataforma que vinculó cerca de 200 intermediarios de seguros.",
-  "cube_about_manifesto": "Me importa el software que funciona en silencio y resiste el uso real."
+  "cube_fact_home": "{{location}}",
+  "cube_fact_experience": "En {{company}} desde {{year}}",
+  "cube_fact_projects": "{{count}} proyectos entregados",
+  "cube_fact_about": "Ingeniero de Sistemas y Computación",
+  "cube_fact_contact": "LinkedIn, GitHub, correo",
+  "cube_fact_education": "Título obtenido en {{year}}",
+  "cube_fact_certifications": "{{count}} certificaciones obtenidas",
+  "cube_fact_technologies": "{{count}} categorías de habilidades"
 }

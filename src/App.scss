@@ -64,67 +64,21 @@
 }
 
 // ============================================================
-// D1 — The spine: the page's one structural mark, replacing the two
-// ambient blur blobs. Below `$bp-lg` there is no gutter for it and it
-// carries no information a heading doesn't already, so it simply isn't
-// rendered there.
+// Layout — wraps `<main>` in a two-column grid from `$bp-lg`: a sticky
+// section cube on the left, the normally-scrolling sections on the
+// right. Below `$bp-lg`, `SectionCube` renders nothing (its own
+// `useMediaQuery` mirrors this same breakpoint) and this stays a plain
+// block wrapper so `<main>` takes the full width.
 // ============================================================
-.spine {
-  display: none;
-
+.layout {
   @include from($bp-lg) {
-    display: block;
-    position: fixed;
-    pointer-events: none;
-    left: calc(50% - (var(--width-content) / 2) - var(--space-8));
-    top: var(--header-h);
-    bottom: 0;
-    width: 2px;
-    background: var(--line-hairline);
+    display: grid;
+    grid-template-columns: clamp(16rem, 26vw, 24rem) 1fr;
+    gap: var(--space-8);
   }
 }
 
-.spine__fill {
-  height: 100%;
-  transform-origin: top;
-  transform: scaleY(1);
-  // The mid-stop is required, not slack: a two-stop gradient between
-  // these two ends interpolates through a muted brownish-rose with no
-  // magenta in it. With `--ramp-mid` at 45% this traverses the full
-  // violet -> magenta -> amber ramp in dark, and the ramp's dark half
-  // only in light — the half that reads on a pale ground.
-  background: linear-gradient(
-    180deg,
-    var(--ramp-a) 0%,
-    var(--ramp-mid) 45%,
-    var(--ramp-b) 100%
-  );
-}
-
-// E4 — the spine fills as the reader scrolls down the document. Its
-// resting state (above) is already a full-length gradient rule, a
-// complete rendering on its own per A4 — this is additive only.
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
-    @include from($bp-lg) {
-      .spine__fill {
-        animation: spine-fill linear both;
-        animation-timeline: scroll(root block);
-      }
-
-      @keyframes spine-fill {
-        from {
-          transform: scaleY(0);
-        }
-        to {
-          transform: scaleY(1);
-        }
-      }
-    }
-  }
-}
-
-// Ensure all page content sits above the spine.
+// Ensure all page content sits above the page ground (body::before/after).
 .section,
 .header,
 footer {

@@ -11,6 +11,7 @@ import Education from "./components/Education/Education";
 import Technologies from "./components/Technologies/Technologies";
 import Certifications from "./components/Certifications/Certifications";
 import Footer from "./components/Footer/Footer";
+import SectionCube from "./components/SectionCube/SectionCube";
 
 function App() {
   const { t } = useTranslation();
@@ -21,20 +22,20 @@ function App() {
         <a className="skip-link" href="#main">
           {t("skip_to_content")}
         </a>
-        <div className="spine" aria-hidden="true">
-          <div className="spine__fill" />
-        </div>
         <Header />
-        <main id="main" tabIndex={-1}>
-          <Home />
-          <Experience />
-          <Projects />
-          <AboutMe />
-          <Contact />
-          <Education />
-          <Certifications />
-          <Technologies />
-        </main>
+        <div className="layout">
+          <SectionCube />
+          <main id="main" tabIndex={-1}>
+            <Home />
+            <Experience />
+            <Projects />
+            <AboutMe />
+            <Contact />
+            <Education />
+            <Certifications />
+            <Technologies />
+          </main>
+        </div>
         <Footer />
       </MotionConfig>
     </LazyMotion>
