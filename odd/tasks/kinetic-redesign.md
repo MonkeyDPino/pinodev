@@ -37,14 +37,17 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Add `--font-mono` token.
   - Remove em-dashes / en-dash separators from visible copy in `en.json` and `es.json`.
   - Acceptance: build + lint pass; no `fonts.googleapis.com` request; no `—`/`–` in locale values; site renders identically in structure in both themes.
-- [x] **T2 Cube hero** (route: delegated writer) - commit `b0f030d` on `feat/kinetic-cube`
-  - Sticky stage inside a ~6-viewport container; faces Front=Home, Right=Experience, Back=Projects, Left=About, Top=Credentials, Bottom=Contact.
-  - `useScroll` -> `useTransform` -> `useSpring` drives `rotateY` through the 4 side faces, then `rotateX` for top/bottom; CSS scroll-snap point per face.
-  - Faces not facing the viewer are `inert`; clicking a face scrolls to its full section.
-  - Fallback: reduced motion or below `$bp-md` renders a flat hero + preview link list (no 3D).
-  - Acceptance: rotation smooth, rests square at every snap, keyboard focus only reaches the visible face, fallback verified.
+- [ ] **T2 Side section cube** (route: delegated writer; trigger: 2+ non-trivial files) - REOPENED
+  - Reopen reason: the user rejected the cube hero (`b0f030d`, never pushed) after review: it delays recruiters (scroll spent rotating before content) and is not intuitive. User chose option B: a sticky cube on the left that shows the current section and rotates as the full sections scroll by beside it.
+  - From `$bp-lg`: two-column layout, sticky cube column on the left (replaces the `.spine` indicator), sections on the right scrolling natively.
+  - Each visible face: Phosphor icon, section title, one key fact (JetBrains Mono). All 8 sections supported: ring-only `rotateY` (-90deg per section) on 4 physical faces, with the upcoming slots' content swapped before they turn into view.
+  - Active section from `IntersectionObserver` (no scroll listeners); rotation animated with a Motion spring so it is interruptible in both scroll directions.
+  - Cube is decorative (`aria-hidden`); the header nav stays the navigation. Below `$bp-lg`: no cube. Reduced motion: face content swaps without rotation (`MotionConfig reducedMotion="user"`).
+  - Home returns to a normal hero with the pointer-driven kinetic name (rest `wdth 112, wght 700`); the cube hero, snap markers and preview list are removed.
+  - Acceptance: the cube always matches the section being read (forward and backward), no overlap with wide bands (Projects, Footer), build + lint pass, both themes, reduced motion, 1024 and 1440 widths, no cube at 390px.
+  - History: first implementation (cube hero) `b0f030d`; kept in branch history and replaced by the rework commit.
 - [ ] **T3 Experience timeline** (StoryStream-style rail: sticky dates, ramp-filled rail, word-by-word outcome reveal).
-- [ ] **T4 Projects** (horizontal scroll pan inside a sticky section; `layoutId` shared-element expansion into the gallery; vertical scroll-snap fallback on mobile / reduced motion).
+- [ ] **T4 Projects** (large asymmetric project grid; `layoutId` shared-element expansion into the gallery). Horizontal scroll pan dropped: it would compete with the rotating side cube.
 - [ ] **T5 About / Technologies / Credentials** (scroll word reveal manifesto; single velocity-reactive marquee; offset credentials list replacing the 3-equal-card row).
 - [ ] **T6 Header / Footer / Contact** (header face indicator while inside the cube; sticky reveal footer; magnetic contact CTA).
 
@@ -74,5 +77,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - RDD assess (`--base-ref main --committed-only`, untracked excluded): risk `medium`, 1269 lines, `review_due: true` (`slice_budget_reached`). Preflight STATUS returned `collect: intended_untracked_selection_required`; two submissions of an empty selection were refused (`invalid_request: must be exact gentle-ai.review-intended-untracked-selection/v1 JSON`) and the schema shape is not documented locally. Native review treated as unavailable for this slice; followed the off path at tier `medium` (writer self-verification + parent spot check). Reviewed boundary not advanced (still `main`).
   - Size: `size:exception` for the T2 PR (cube + flat fallback share one component; no cohesive smaller cut).
 
+- User rejected the cube hero; T2 reopened as the side section cube (see T2). T4 horizontal pan dropped.
+
 ## Next step
-Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
+T2 rework (side section cube) on `feat/kinetic-cube`, then push + T2 PR into `feat/kinetic-foundation`.
