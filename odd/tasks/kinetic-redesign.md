@@ -87,5 +87,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 
 - T2 user-feedback fix (`4efc15c`): user found the resting yaw confusing (next section visible on first look) and the rounded corners un-cube-like. Rest pose is now `rotateX(-16deg)` only; top/bottom caps (`--surface-sunken`) inside the ring; `border-radius: 0` with `--line-strong` edges. Writer: build + lint pass, rest/mid-turn/light/1024 screenshots, 0 console errors. Parent: build pass, reviewed experience rest and mid-turn screenshots.
 
+- T2 user request (`ba2108a`): on mobile the cube shows in the header. `useActiveSection` hook extracted (shared by both instances); `SectionCube` `variant: "side" | "compact"`; compact icon-only cube `clamp(1.75rem, 6vw, 2.25rem)` next to the wordmark below `$bp-lg`; header gap `--space-3` below `$bp-sm`. Writer: build + lint pass; single-line header and `scrollWidth <= innerWidth` at 320/360/390/544/768 (EN + ES spot checks); icon tracks home/experience/projects at 390; light theme; reduced motion; no compact cube at 1440; 0 console errors. Parent: build pass, reviewed 390 experience and 320 ES screenshots.
+
 ## Next step
 Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
