@@ -91,5 +91,8 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 
 - T2 user feedback (`734a2fb`, route: direct inline, 2 small mechanical edits): compact cube moved to the end of the header row; `.header__brand` takes `margin-inline-end: auto` below `$bp-lg` so the controls no longer leave a blank strip; gap `--space-2` below `$bp-sm`. Parent: build + lint pass; header row ends flush with the container (`rightGap 0`) at 320/360/390/544/768; no compact cube and unchanged layout at 1440.
 
+- T2 user request (`f7a414e`, direct inline): desktop header had the same blank strip on the right; `.header__brand` now takes the free space at every width. Parent: build + lint pass; `rightGap 0` at 1024/1280/1440/390; screenshot at 1440 reviewed.
+- User authorized: push `feat/kinetic-cube`, open the T2 PR into `feat/kinetic-foundation`, continue with T3.
+
 ## Next step
-Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
+T3 Experience timeline on `feat/kinetic-experience` (from `feat/kinetic-cube`).
