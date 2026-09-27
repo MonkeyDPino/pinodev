@@ -46,7 +46,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Home returns to a normal hero with the pointer-driven kinetic name (rest `wdth 112, wght 700`); the cube hero, snap markers and preview list are removed.
   - Acceptance: the cube always matches the section being read (forward and backward), no overlap with wide bands (Projects, Footer), build + lint pass, both themes, reduced motion, 1024 and 1440 widths, no cube at 390px.
   - History: first implementation (cube hero) `b0f030d`; kept in branch history and replaced by the rework commit.
-- [ ] **T3 Experience timeline** (StoryStream-style rail: sticky dates, ramp-filled rail, word-by-word outcome reveal).
+- [x] **T3 Experience timeline** (route: delegated writer; trigger: prep reading + 2 non-trivial files) - commit `ae96b94` on `feat/kinetic-experience`. Word-by-word reveal dropped for the long description (readability for recruiters); outcomes became counting metrics instead.
 - [ ] **T4 Projects** (large asymmetric project grid; `layoutId` shared-element expansion into the gallery). Horizontal scroll pan dropped: it would compete with the rotating side cube.
 - [ ] **T5 About / Technologies / Credentials** (scroll word reveal manifesto; single velocity-reactive marquee; offset credentials list replacing the 3-equal-card row).
 - [ ] **T6 Header / Footer / Contact** (header face indicator while inside the cube; sticky reveal footer; magnetic contact CTA).
@@ -94,5 +94,11 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 - T2 user request (`f7a414e`, direct inline): desktop header had the same blank strip on the right; `.header__brand` now takes the free space at every width. Parent: build + lint pass; `rightGap 0` at 1024/1280/1440/390; screenshot at 1440 reviewed.
 - User authorized: push `feat/kinetic-cube`, open the T2 PR into `feat/kinetic-foundation`, continue with T3.
 
+- T2 PR #13 opened (`feat/kinetic-cube` -> `feat/kinetic-foundation`, 758+299, `size:exception`).
+- T3 (`ae96b94`): rail = hairline track + `::after` ramp fill `scaleY` on a named `view-timeline` (`--experience-scroll`) on the section; square nodes lit via their own `view()` timeline; sticky meta column from `$bp-md` (`top: calc(var(--header-h) + var(--space-6))`), dates in `--font-mono`; `OutcomeMetric` counts up via `useInView` + `animate()` writing `textContent`, final value rendered first, gated by `useReducedMotion()`. 2 files, +215/-32.
+  - Writer: build + lint pass, no dashes in locales; 1440 at 3 positions (rail fill + nodes + sticky confirmed), metrics mid-count and final `textContent` equal source (`~200`, `~15%`, `1`), 1024, 390 (no horizontal scroll), light theme, reduced motion (static rail, final values, nothing hidden), 0 console errors.
+  - Parent: build pass; reviewed middle and metrics-final screenshots.
+  - RDD assess: `medium`, 1541 lines cumulative, `review_due` (`slice_budget_reached`); native review still blocked by the untracked-selection preflight; off path at tier `medium`.
+
 ## Next step
-T3 Experience timeline on `feat/kinetic-experience` (from `feat/kinetic-cube`).
+Push `feat/kinetic-experience`, open T3 PR into `feat/kinetic-cube`, then T4 Projects on `feat/kinetic-projects`.
