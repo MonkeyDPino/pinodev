@@ -51,6 +51,8 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 ## Progress
 - Branch `feat/kinetic-foundation` created from `main`; integration branch `feat/kinetic-redesign` created at the same `main` commit.
 - T1 delegated to one writer (trigger: 2+ non-trivial files: index.html, main/App entry, index.scss, variables.scss, locales).
+- Pushed `feat/kinetic-redesign` (seeded with an empty commit so the tracker PR can open) and `feat/kinetic-foundation`. Tracker PR #11 (draft, into `main`); T1 PR #12 (into `feat/kinetic-redesign`, 289 changed lines).
+- T2 branch `feat/kinetic-cube` created from `feat/kinetic-foundation`; T2 delegated to one writer (trigger: 2+ non-trivial files: Home rebuild, SCSS, locales, hook).
 
 ## Verification evidence
 - T1 (`b810bbf`):
@@ -62,5 +64,8 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - RDD assess (`--base-ref main --committed-only`, untracked excluded): risk `medium` (`executable_change: index.html`), 282 changed lines, `review_due: false`, reason `under_budget`. Slice stays pending; reviewed boundary remains `main`.
 - Note: dropping Newsreader leaves the hero positioning line with its old serif-tuned line-height; revisit in T2 (hero is being rebuilt).
 
+- T2 first pass (uncommitted): mechanics verified by writer and parent spot check (build pass; 6 upright rest poses; inert gating; flat fallback under reduced motion and at 390px; 0 console errors; rotation keyframes documented in writer report). Parent visual review rejected composition: face too large and clipped under the header, content in left half only, name not bold/wide at rest. One scoped correction sent to the same writer (size below header, full-face poster composition with `cqi` type, bold wide rest state).
+- T2 size: ~867 changed lines after first pass (over the 400 budget). Slicing pass: cube and its flat fallback share one component and one stylesheet; splitting would ship a half-built hero. Plan: PR with `size:exception` rationale unless the correction shrinks it.
+
 ## Next step
-T2 Cube hero.
+T2 Cube hero: verify the correction, commit, RDD assess, PR into `feat/kinetic-foundation`.
