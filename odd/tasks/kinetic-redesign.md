@@ -37,7 +37,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Add `--font-mono` token.
   - Remove em-dashes / en-dash separators from visible copy in `en.json` and `es.json`.
   - Acceptance: build + lint pass; no `fonts.googleapis.com` request; no `—`/`–` in locale values; site renders identically in structure in both themes.
-- [ ] **T2 Side section cube** (route: delegated writer; trigger: 2+ non-trivial files) - REOPENED
+- [x] **T2 Side section cube** (route: delegated writer; trigger: 2+ non-trivial files) - rework commit `7b78d74` on `feat/kinetic-cube`
   - Reopen reason: the user rejected the cube hero (`b0f030d`, never pushed) after review: it delays recruiters (scroll spent rotating before content) and is not intuitive. User chose option B: a sticky cube on the left that shows the current section and rotates as the full sections scroll by beside it.
   - From `$bp-lg`: two-column layout, sticky cube column on the left (replaces the `.spine` indicator), sections on the right scrolling natively.
   - Each visible face: Phosphor icon, section title, one key fact (JetBrains Mono). All 8 sections supported: ring-only `rotateY` (-90deg per section) on 4 physical faces, with the upcoming slots' content swapped before they turn into view.
@@ -79,5 +79,11 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 
 - User rejected the cube hero; T2 reopened as the side section cube (see T2). T4 horizontal pan dropped.
 
+- T2 rework (`7b78d74`): `SectionCube` (sticky left column from `$bp-lg`, 4-face ring, `rotateY -90deg * active`, spring `bounce 0.15, visualDuration 0.6`, slot `s % 4` pre-fill for neighbours, `IntersectionObserver` band `-45% 0px -50% 0px`, `aria-hidden`, Phosphor regular icons, `cube_fact_*` keys from `cv.ts`, resting tilt `rotateX(-12deg) rotateY(-20deg)` on a wrapper); `.spine` removed; Home is a single-viewport hero with the kinetic name; `@phosphor-icons/react` added. Net vs T1: 12 files, +571/-297.
+  - Writer: build pass, lint pass, 8 sections forward + 3 reverse at 1440 match, 1024 no overlap, 390 no cube and no horizontal scroll, light theme, reduced motion instant swap, name rest `wdth 112 / wght 700`, 0 console errors; one correction round (resting tilt).
+  - Parent spot check: build pass; reviewed home, experience (rest) and technologies (mid-turn) screenshots.
+  - RDD assess: `medium`, 1105 lines, `review_due: true` (`slice_budget_reached`). Same preflight blocker as before (intended-untracked selection refused, schema undocumented); native review unavailable, off path at tier `medium`. Unblock option: resolve the 4 untracked files (commit or ignore `.mcp.json`; move or ignore the 3 personal assets) so the untracked inventory is empty.
+  - Size: T2 PR over 400 lines; `size:exception` rationale: layout grid, new component, hero rewrite and cube-hero removal are one cohesive swap.
+
 ## Next step
-T2 rework (side section cube) on `feat/kinetic-cube`, then push + T2 PR into `feat/kinetic-foundation`.
+Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
