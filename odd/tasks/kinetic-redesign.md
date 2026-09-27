@@ -30,7 +30,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 
 ## Tasks
 
-- [ ] **T1 Foundation** (route: delegated writer; trigger: 2+ non-trivial files)
+- [x] **T1 Foundation** (route: delegated writer; trigger: 2+ non-trivial files) - commit `b810bbf` on `feat/kinetic-foundation`
   - Install `motion`; wrap the app in `LazyMotion` (`domAnimation` or `domMax` as needed) + `MotionConfig reducedMotion="user"`.
   - Self-host fonts: Archivo variable (with `wdth` + `wght` axes) and JetBrains Mono; remove the Google Fonts `<link>`s; keep metric-adjusted fallbacks.
   - Retire Newsreader: single display/body family (Archivo); JetBrains Mono only for technical labels (dates, stack tags).
@@ -53,7 +53,14 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 - T1 delegated to one writer (trigger: 2+ non-trivial files: index.html, main/App entry, index.scss, variables.scss, locales).
 
 ## Verification evidence
-(none yet)
+- T1 (`b810bbf`):
+  - `npm run build`: pass (writer + parent spot check); Archivo `wdth` and JetBrains Mono woff2 emitted to `dist/assets`.
+  - `npm run lint`: pass (writer).
+  - `rg "fonts.googleapis|fonts.gstatic|Newsreader" index.html src`: no matches; `rg "—|–" src/locales`: no matches.
+  - Browser (`vite preview`, playwright-cli): loaded faces `Archivo Variable 62%-125%` + fallback; 0 Google Fonts requests; 0 console errors; dark and light screenshots render.
+  - Not yet checked: reduced-motion emulation (no motion added in T1, nothing to gate).
+  - RDD assess (`--base-ref main --committed-only`, untracked excluded): risk `medium` (`executable_change: index.html`), 282 changed lines, `review_due: false`, reason `under_budget`. Slice stays pending; reviewed boundary remains `main`.
+- Note: dropping Newsreader leaves the hero positioning line with its old serif-tuned line-height; revisit in T2 (hero is being rebuilt).
 
 ## Next step
-T1 Foundation.
+T2 Cube hero.
