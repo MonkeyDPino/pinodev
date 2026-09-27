@@ -1,4 +1,4 @@
-import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
+import { LazyMotion, MotionConfig, domMax } from "motion/react";
 import { useTranslation } from "react-i18next";
 import "./App.scss";
 import Experience from "./components/Experience/Experience";
@@ -17,7 +17,7 @@ function App() {
   const { t } = useTranslation();
 
   return (
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={domMax} strict>
       <MotionConfig reducedMotion="user">
         <a className="skip-link" href="#main">
           {t("skip_to_content")}
