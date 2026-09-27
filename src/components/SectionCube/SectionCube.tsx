@@ -165,16 +165,25 @@ export default function SectionCube() {
   return (
     <div className="section-cube" aria-hidden="true">
       <div className="section-cube__stage">
-        {/* Permanent resting 3D pose — a static tilt on this wrapper, never
-            animated, so the ring always reads as a cube (not a flat card)
-            even at rest. The spring below only ever animates the ring's own
-            `rotateY`, composed on top of this fixed pitch/yaw. */}
+        {/* Permanent resting 3D pose — a static top-down pitch on this
+            wrapper, never animated, so the ring reads as a cube (lid
+            visible) at rest instead of a flat card. No yaw: the active
+            face stays square-on horizontally and no neighbour face is
+            visible at rest, only during the turn. The spring below only
+            ever animates the ring's own `rotateY`, composed on top of
+            this fixed pitch. */}
         <div className="section-cube__tilt">
           <m.div
             className="section-cube__cube"
             animate={{ rotateY: -90 * activeIndex }}
             transition={{ type: "spring", bounce: 0.15, visualDuration: 0.6 }}
           >
+            {/* Decorative top/bottom caps — part of the ring, so they turn
+                with it, but rotationally invariant around Y (a square
+                centred on that axis), so they never need slot content. */}
+            <div className="section-cube__cap section-cube__cap--top" />
+            <div className="section-cube__cap section-cube__cap--bottom" />
+
             {slotSections.map((sectionIndex, slot) => {
               if (sectionIndex === null) return null;
               const section = SECTIONS[sectionIndex];

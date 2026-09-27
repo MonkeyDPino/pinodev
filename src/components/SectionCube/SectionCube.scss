@@ -30,17 +30,19 @@
   perspective: var(--cube-perspective);
 }
 
-// The permanent resting pose (parent review): a static pitch + yaw on this
-// wrapper is what keeps the cube reading as a cube at rest instead of a
-// flat card facing the viewer straight on. Sized to match `.section-cube__
-// cube` exactly so the stage's own flex centering is unaffected by
-// introducing this extra layer. Never animated — only the ring inside
-// (`.section-cube__cube`, task's `m.div`) ever moves.
+// The permanent resting pose (parent review): a static top-down pitch on
+// this wrapper is what keeps the cube reading as a cube at rest (the lid
+// catches light) instead of a flat card facing the viewer straight on. No
+// yaw — the active face stays square-on horizontally and no neighbour
+// face is visible at rest, only during the turn. Sized to match
+// `.section-cube__cube` exactly so the stage's own flex centering is
+// unaffected by introducing this extra layer. Never animated — only the
+// ring inside (`.section-cube__cube`, task's `m.div`) ever moves.
 .section-cube__tilt {
   width: var(--cube-size);
   height: var(--cube-size);
   transform-style: preserve-3d;
-  transform: rotateX(-12deg) rotateY(-20deg);
+  transform: rotateX(-16deg);
 }
 
 .section-cube__cube {
@@ -51,12 +53,23 @@
   will-change: transform;
 }
 
-// One radius, one border, no shadow (task brief) — only the surface
-// tone alternates between the two token tiers for a little depth
-// between faces, the same restrained treatment the previous cube used.
-.section-cube__face {
+// Sharp cube (parent review): zero radius on every face and cap, so the
+// hairline borders read as the cube's own crisp edges instead of a
+// rounded card. `--line-strong` rather than `--line-hairline` — against
+// these near-neutral surface tones a hairline was too faint to read as an
+// edge once the rounded corners (which used to imply "card") were
+// removed. No shadow (task brief); only the surface tone alternates
+// between token tiers for a little depth between faces.
+.section-cube__face,
+.section-cube__cap {
   position: absolute;
   inset: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  backface-visibility: hidden;
+}
+
+.section-cube__face {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -64,9 +77,6 @@
   gap: calc(var(--cube-size) * 0.06);
   padding: calc(var(--cube-size) * 0.12);
   background: var(--surface-raised);
-  border: 1px solid var(--line-hairline);
-  border-radius: var(--radius-surface);
-  backface-visibility: hidden;
   overflow: hidden;
 }
 
@@ -91,6 +101,23 @@
 }
 .section-cube__face--3 {
   transform: rotateY(270deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+// Decorative top/bottom caps (parent review) — plain token surface, one
+// step darker than the side faces (`--surface-sunken`, consistently the
+// darkest of the three tones in both themes) so the lid reads as its own
+// plane. No text, no icon: they are part of the ring (`.section-cube__
+// cube`) so they turn with it, but a square centred on the Y axis is
+// rotation-invariant around that axis, so they never need slot content.
+.section-cube__cap {
+  background: var(--surface-sunken);
+}
+
+.section-cube__cap--top {
+  transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+.section-cube__cap--bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2));
 }
 
 // The single accent rule for this component (design-taste-frontend
