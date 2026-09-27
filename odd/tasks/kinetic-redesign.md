@@ -47,7 +47,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Acceptance: the cube always matches the section being read (forward and backward), no overlap with wide bands (Projects, Footer), build + lint pass, both themes, reduced motion, 1024 and 1440 widths, no cube at 390px.
   - History: first implementation (cube hero) `b0f030d`; kept in branch history and replaced by the rework commit.
 - [x] **T3 Experience timeline** (route: delegated writer; trigger: prep reading + 2 non-trivial files) - commit `ae96b94` on `feat/kinetic-experience`. Word-by-word reveal dropped for the long description (readability for recruiters); outcomes became counting metrics instead.
-- [ ] **T4 Projects** (large asymmetric project grid; `layoutId` shared-element expansion into the gallery). Horizontal scroll pan dropped: it would compete with the rotating side cube.
+- [x] **T4 Projects** (route: delegated writer) - commit `3a9d116` on `feat/kinetic-projects`. Horizontal scroll pan dropped: it would compete with the rotating side cube.
 - [ ] **T5 About / Technologies / Credentials** (scroll word reveal manifesto; single velocity-reactive marquee; offset credentials list replacing the 3-equal-card row).
 - [ ] **T6 Header / Footer / Contact** (header face indicator while inside the cube; sticky reveal footer; magnetic contact CTA).
 
@@ -100,5 +100,11 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Parent: build pass; reviewed middle and metrics-final screenshots.
   - RDD assess: `medium`, 1541 lines cumulative, `review_due` (`slice_budget_reached`); native review still blocked by the untracked-selection preflight; off path at tier `medium`.
 
+- T3 PR #14 opened (`feat/kinetic-experience` -> `feat/kinetic-cube`, 223+34).
+- T4 (`3a9d116`): 6-cell bento via `grid-column: span` rows 7/5, 5/7, 6/6; mockups at native aspect ratio (`object-fit: contain`; gallery mockups 4:3, Giphy 1963x1116, Blog 1421x1104), text below the image, 2-line description clamp; Giphy + Blog are the two ramp spotlight tiles; radius 0 in cells; `layoutId="project-image-{slug}"` cover image shared between cell and modal inside `AnimatePresence` (portal stays mounted, condition inside); `LazyMotion` `domMax` (JS gzip 156.7 -> 172.8 kB); tokens `--on-media`, `--on-media-muted`. Parent added a DEV assertion that `BENTO_SLOTS` covers every `cv.ts` project (a renamed project would otherwise vanish silently).
+  - Writer: build + lint pass; 1440/1024/390 (no horizontal scroll) + light; gallery by click and Enter, mid-transition frame, prev/next/dots, Escape, focus return, focus trap; external links `target=_blank rel=noreferrer`; reduced motion instant; 0 console errors. One correction round (mockups were cropped by `object-fit: cover`, text overlaid on images).
+  - Parent: build + lint pass; reviewed grid, spotlight row and modal mid-transition screenshots. Known trade-off: narrower cells letterbox their 4:3 mockup (dark mat strip) instead of cropping.
+  - Size: 456+242 (over 400); `size:exception`: grid, cells and the modal share one component and stylesheet rewrite.
+
 ## Next step
-Push `feat/kinetic-experience`, open T3 PR into `feat/kinetic-cube`, then T4 Projects on `feat/kinetic-projects`.
+Push `feat/kinetic-projects`, open T4 PR into `feat/kinetic-experience`, then T5 About / Technologies / Credentials.
