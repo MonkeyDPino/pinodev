@@ -37,7 +37,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Add `--font-mono` token.
   - Remove em-dashes / en-dash separators from visible copy in `en.json` and `es.json`.
   - Acceptance: build + lint pass; no `fonts.googleapis.com` request; no `—`/`–` in locale values; site renders identically in structure in both themes.
-- [ ] **T2 Cube hero** (route: delegated writer)
+- [x] **T2 Cube hero** (route: delegated writer) - commit `b0f030d` on `feat/kinetic-cube`
   - Sticky stage inside a ~6-viewport container; faces Front=Home, Right=Experience, Back=Projects, Left=About, Top=Credentials, Bottom=Contact.
   - `useScroll` -> `useTransform` -> `useSpring` drives `rotateY` through the 4 side faces, then `rotateX` for top/bottom; CSS scroll-snap point per face.
   - Faces not facing the viewer are `inert`; clicking a face scrolls to its full section.
@@ -67,5 +67,12 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 - T2 first pass (uncommitted): mechanics verified by writer and parent spot check (build pass; 6 upright rest poses; inert gating; flat fallback under reduced motion and at 390px; 0 console errors; rotation keyframes documented in writer report). Parent visual review rejected composition: face too large and clipped under the header, content in left half only, name not bold/wide at rest. One scoped correction sent to the same writer (size below header, full-face poster composition with `cqi` type, bold wide rest state).
 - T2 size: ~867 changed lines after first pass (over the 400 budget). Slicing pass: cube and its flat fallback share one component and one stylesheet; splitting would ship a half-built hero. Plan: PR with `size:exception` rationale unless the correction shrinks it.
 
+- T2 correction (`b0f030d`): stage pinned below the header (`top: var(--header-h)`), cube `min(62vmin, 34rem)`, face-relative sizes via `calc(var(--cube-size) * n)` because `cqi` resolved wrongly inside the `perspective` + `preserve-3d` stack (gotcha for T3-T6), name rests at `wdth 112, wght 700` and springs back on pointer leave.
+  - Writer: `npm run build` pass, `npm run lint` pass; 6 rest poses + 3 mid-transition frames (incl. X tip) with no clipping; light theme; reduced-motion flat; 390px flat; inert focus gating; hash navigation; 0 console errors.
+  - Parent spot check: `npm run build` pass; reviewed front rest, left-to-top mid-transition and top rest screenshots.
+  - Follow-up for T5: Credentials face shows 5 logos in a 3-column grid (one empty cell; Taste Skill bento cell-count rule).
+  - RDD assess (`--base-ref main --committed-only`, untracked excluded): risk `medium`, 1269 lines, `review_due: true` (`slice_budget_reached`). Preflight STATUS returned `collect: intended_untracked_selection_required`; two submissions of an empty selection were refused (`invalid_request: must be exact gentle-ai.review-intended-untracked-selection/v1 JSON`) and the schema shape is not documented locally. Native review treated as unavailable for this slice; followed the off path at tier `medium` (writer self-verification + parent spot check). Reviewed boundary not advanced (still `main`).
+  - Size: `size:exception` for the T2 PR (cube + flat fallback share one component; no cohesive smaller cut).
+
 ## Next step
-T2 Cube hero: verify the correction, commit, RDD assess, PR into `feat/kinetic-foundation`.
+Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
