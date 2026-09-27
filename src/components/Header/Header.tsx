@@ -115,7 +115,6 @@ export default function Header() {
         <div className="header__content">
           <div className="header__brand">
             <span className="header__logo">{cv.shortName}</span>
-            {!isDesktop && <SectionCube variant="compact" />}
           </div>
 
           <nav className="header__nav" aria-label={t("nav_main_label")}>
@@ -193,6 +192,8 @@ export default function Header() {
               </svg>
             )}
           </button>
+
+          {!isDesktop && <SectionCube variant="compact" />}
         </div>
       </header>
       {overlay}
