@@ -40,10 +40,10 @@
   "projects_modal_next": "Next image",
   "projects_modal_goto": "Go to image {{index}}",
   "projects_0_description": "A web app for searching and browsing GIFs through the Giphy API.",
-  "projects_1_description": "Real-time quote comparator for insurance advisors. After completing a client form, live offers from all major Colombian insurers — Sura, Allianz, HDI, Mapfre, and more — are fetched and updated instantly via WebSocket.",
-  "projects_2_description": "Backoffice configuration panel for the insurance advisor platform. Manage insurer API credentials, customize the quote comparator, control product availability, and administer platform users — all from a single dashboard.",
+  "projects_1_description": "Real-time quote comparator for insurance advisors. After completing a client form, live offers from all major Colombian insurers (Sura, Allianz, HDI, Mapfre, and more) are fetched and updated instantly via WebSocket.",
+  "projects_2_description": "Backoffice configuration panel for the insurance advisor platform. Manage insurer API credentials, customize the quote comparator, control product availability, and administer platform users, all from a single dashboard.",
   "projects_3_description": "Full-featured web app and PWA for insurance clients. Users can request quotes, track policy issuance with their advisor, and receive push notifications for SOAT renewals, technomechanical inspections, and other policy deadlines.",
-  "projects_4_description": "SOAT insurance quotation form embedded in a customer portal, integrated end-to-end with MercadoPago for payment and Previsora's API for policy issuance — from quote to issued policy in a single seamless flow.",
+  "projects_4_description": "SOAT insurance quotation form embedded in a customer portal, integrated end-to-end with MercadoPago for payment and Previsora's API for policy issuance: from quote to issued policy in a single seamless flow.",
   "projects_5_description": "Full-stack blog with AI-generated summaries and category tags.",
 
   "about_title": "About Me",
@@ -67,7 +67,7 @@
   "certifications_2_name": "Python Data Structures",
   "certifications_0_description": "Equips individuals with foundational and advanced programming skills, focusing on developing dynamic and responsive web applications.",
   "certifications_1_description": "Learn to design, code, and deploy web solutions using modern frameworks and technologies.",
-  "certifications_2_description": "Covered core data structure concepts in Python — arrays, linked lists, stacks, queues, and trees — as part of a broader Python specialization.",
+  "certifications_2_description": "Covered core data structure concepts in Python (arrays, linked lists, stacks, queues, and trees) as part of a broader Python specialization.",
 
   "languages_title": "Languages",
   "language_spanish": "Spanish",

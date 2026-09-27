@@ -29,7 +29,7 @@ export default function Experience() {
             >
               <div className="experience__entry__rail">
                 <span className="experience__entry__date">
-                  {formatYearMonth(item.start)} –{" "}
+                  {formatYearMonth(item.start)} -{" "}
                   {item.end ? formatYearMonth(item.end) : t("experience_current")}
                 </span>
                 {item.end === null && (

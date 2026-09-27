@@ -1,10 +1,12 @@
 @use "../../styles/variables.scss" as *;
 
 // ============================================================
-// D5 — AboutMe: the Column. Left-aligned Newsreader prose, no card,
-// no border, no indent. Newsreader marks "Juan speaking" — the same
-// semantic device Home's positioning sentence (D2) uses — a different
-// voice from the Archivo grotesque every other section renders in.
+// D5 — AboutMe: the Column. Left-aligned prose, no card, no border,
+// no indent. No second family: "Juan speaking" — the same semantic
+// device Home's positioning sentence (D2) uses — is carried by the
+// variable axes alone (narrower `wdth`, regular weight), a different
+// voice from the wide/bold Archivo display type every heading renders
+// in, without introducing a second typeface.
 //
 // The section previously duplicated Home's own portrait here as a
 // second, circular, glow-lit photo (`box-shadow` teal glow — the
@@ -21,9 +23,9 @@
   gap: var(--space-6);
 
   p {
-    font-family: "Newsreader", "Newsreader Fallback", Georgia, serif;
     font-size: var(--fs-lg);
     font-weight: 400;
+    font-variation-settings: "wdth" 87;
     line-height: 1.7;
     color: var(--text-body);
   }

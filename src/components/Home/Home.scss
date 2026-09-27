@@ -83,13 +83,16 @@
   color: var(--text-muted);
 }
 
-// The positioning sentence — Newsreader marks "Juan speaking", the same
-// semantic device D5 uses for the AboutMe column.
+// The positioning sentence — "Juan speaking", the same semantic device
+// D5 uses for the AboutMe column. No second family anymore: the voice
+// shift comes from the variable axes alone — narrower (`wdth` 87, the
+// same compressed end `name-resolve` animates from) and regular weight,
+// against every heading's wide/bold (`wdth` 112) display voice.
 .home__positioning {
   max-width: 34ch;
-  font-family: "Newsreader", "Newsreader Fallback", Georgia, serif;
   font-size: var(--fs-xl);
   font-weight: 400;
+  font-variation-settings: "wdth" 87;
   line-height: 1.7;
   color: var(--text-body);
 

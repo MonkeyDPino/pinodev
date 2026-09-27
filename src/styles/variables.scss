@@ -84,6 +84,17 @@ $bp-xl: 80rem;  // 1280px  max widths comfortably reached
   --icon-md: 1.25rem;
   --icon-lg: 1.75rem;
 
+  // --- C2: type families. The body/display family is set directly on
+  // `body` (index.scss) since it needs no semantic indirection — there
+  // is only one. `--font-mono` exists for technical labels (dates,
+  // stack tags) that want a monospaced rhythm; nothing consumes it yet.
+  --font-mono:
+    "JetBrains Mono Variable",
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+
   // --- C2: type scale — dual ratio (1.333 perfect-fourth above 1rem,
   // 1.125 major-second at and below), same in both themes. Specified in
   // the design's typography section but never wired into this file by
