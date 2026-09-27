@@ -89,5 +89,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
 
 - T2 user request (`ba2108a`): on mobile the cube shows in the header. `useActiveSection` hook extracted (shared by both instances); `SectionCube` `variant: "side" | "compact"`; compact icon-only cube `clamp(1.75rem, 6vw, 2.25rem)` next to the wordmark below `$bp-lg`; header gap `--space-3` below `$bp-sm`. Writer: build + lint pass; single-line header and `scrollWidth <= innerWidth` at 320/360/390/544/768 (EN + ES spot checks); icon tracks home/experience/projects at 390; light theme; reduced motion; no compact cube at 1440; 0 console errors. Parent: build pass, reviewed 390 experience and 320 ES screenshots.
 
+- T2 user feedback (`734a2fb`, route: direct inline, 2 small mechanical edits): compact cube moved to the end of the header row; `.header__brand` takes `margin-inline-end: auto` below `$bp-lg` so the controls no longer leave a blank strip; gap `--space-2` below `$bp-sm`. Parent: build + lint pass; header row ends flush with the container (`rightGap 0`) at 320/360/390/544/768; no compact cube and unchanged layout at 1440.
+
 ## Next step
 Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
