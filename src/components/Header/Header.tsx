@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 import HeaderSection from "../HeaderSection/HeaderSection";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import SectionCube, { DESKTOP_MEDIA_QUERY } from "../SectionCube/SectionCube";
 import { cv } from "../../data/cv";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import "./Header.scss";
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled])';
@@ -17,6 +19,11 @@ export default function Header() {
   const overlayLabelId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  // Complementary to `SectionCube`'s own "side" gate: below `$bp-lg` the
+  // side cube isn't rendered at all, so its compact mirror sits in the
+  // header instead. Same query, so there is never a moment with both or
+  // neither mounted.
+  const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
 
   const cvUrl = cv.cvUrls[i18n.language as "en" | "es"] ?? cv.cvUrls.en;
 
@@ -106,7 +113,10 @@ export default function Header() {
     <>
       <header className="header">
         <div className="header__content">
-          <span className="header__logo">{cv.shortName}</span>
+          <div className="header__brand">
+            <span className="header__logo">{cv.shortName}</span>
+            {!isDesktop && <SectionCube variant="compact" />}
+          </div>
 
           <nav className="header__nav" aria-label={t("nav_main_label")}>
             <HeaderSection title={t("nav_home")} hash="home" />

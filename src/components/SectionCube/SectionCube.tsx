@@ -13,14 +13,18 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import { cv } from "../../data/cv";
+import { useActiveSection } from "../../hooks/useActiveSection";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import type { I18nKey } from "../../types/cv.type";
 import "./SectionCube.scss";
 
 // Mirrors `$bp-lg` (variables.scss, 64rem/1024px) — kept in JS as a
 // media-query string since Sass variables don't exist at runtime (same
-// pattern the previous cube used for its own breakpoint gate).
-const SECTION_CUBE_MEDIA_QUERY = "(min-width: 64rem)";
+// pattern the previous cube used for its own breakpoint gate). Only the
+// `"side"` variant self-gates on it: the `"compact"` variant is mounted
+// or not by its caller (`Header`), which already decides from the
+// complementary `!isDesktop` check.
+export const DESKTOP_MEDIA_QUERY = "(min-width: 64rem)";
 
 // One weight used consistently across every face (design-taste-frontend
 // 3.C — one icon family, one weight for the whole tree).
@@ -100,6 +104,8 @@ const SECTIONS: readonly CubeSection[] = [
   },
 ];
 
+const SECTION_IDS = SECTIONS.map((section) => section.id);
+
 function slotFor(sectionIndex: number): number {
   return ((sectionIndex % FACE_COUNT) + FACE_COUNT) % FACE_COUNT;
 }
@@ -120,50 +126,39 @@ function assignSlots(active: number, previous: readonly (number | null)[]) {
   return next;
 }
 
+export type SectionCubeVariant = "side" | "compact";
+
+interface SectionCubeProps {
+  /** `"side"` (default) — the sticky left-column indicator from `$bp-lg`,
+   * full face content (icon, title, fact), self-gated on its own
+   * breakpoint check. `"compact"` — the small header mirror below
+   * `$bp-lg`, icon only, mounted/unmounted by its caller. */
+  variant?: SectionCubeVariant;
+}
+
 /**
- * The sticky, decorative section indicator (left column from `$bp-lg`).
- * Purely a mirror of the header nav's own current position — never
- * focusable, never the only way to reach a section.
+ * The decorative section indicator: a mirror of whichever section is
+ * currently being read. Purely cosmetic — the header nav (desktop) and
+ * the anchor links (mobile overlay) stay the actual navigation. Never
+ * focusable, always `aria-hidden`.
  */
-export default function SectionCube() {
+export default function SectionCube({ variant = "side" }: SectionCubeProps) {
   const { t } = useTranslation();
-  const enabled = useMediaQuery(SECTION_CUBE_MEDIA_QUERY);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const isSide = variant === "side";
+  const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
+  const activeIndex = useActiveSection(SECTION_IDS, isSide ? isDesktop : true);
   const [slotSections, setSlotSections] = useState<readonly (number | null)[]>(
     () => assignSlots(0, [null, null, null, null]),
   );
 
   useEffect(() => {
-    if (!enabled) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const index = SECTIONS.findIndex((section) => section.id === entry.target.id);
-          if (index === -1) continue;
-          setActiveIndex((previous) => (previous === index ? previous : index));
-        }
-      },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
-    );
-
-    const elements = SECTIONS.map((section) => document.getElementById(section.id)).filter(
-      (element): element is HTMLElement => element !== null,
-    );
-    elements.forEach((element) => observer.observe(element));
-
-    return () => observer.disconnect();
-  }, [enabled]);
-
-  useEffect(() => {
     setSlotSections((previous) => assignSlots(activeIndex, previous));
   }, [activeIndex]);
 
-  if (!enabled) return null;
+  if (isSide && !isDesktop) return null;
 
   return (
-    <div className="section-cube" aria-hidden="true">
+    <div className={`section-cube section-cube--${variant}`} aria-hidden="true">
       <div className="section-cube__stage">
         {/* Permanent resting 3D pose — a static top-down pitch on this
             wrapper, never animated, so the ring reads as a cube (lid
@@ -195,10 +190,14 @@ export default function SectionCube() {
                     weight={ICON_WEIGHT}
                     aria-hidden="true"
                   />
-                  <p className="section-cube__title">{t(section.titleKey)}</p>
-                  <p className="section-cube__fact">
-                    {t(section.factKey, section.factValues)}
-                  </p>
+                  {isSide && (
+                    <>
+                      <p className="section-cube__title">{t(section.titleKey)}</p>
+                      <p className="section-cube__fact">
+                        {t(section.factKey, section.factValues)}
+                      </p>
+                    </>
+                  )}
                 </div>
               );
             })}
