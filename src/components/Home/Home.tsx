@@ -1,6 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  m,
+  useMotionTemplate,
+  useMotionValue,
+  useMotionValueEvent,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
 import { cv } from "../../data/cv";
+import { svgsConstants } from "../../constants/svgs";
+import { techLabels } from "../../constants/techLabels";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
+import type { svgs } from "../../types/svgs.type";
 import "./Home.scss";
 
 type SocialKind = (typeof cv.socials)[number]["kind"];
@@ -76,87 +91,457 @@ function SocialIcon({ kind }: { kind: SocialKind }) {
   }
 }
 
-export default function Home() {
+// Five core-stack marks for the Credentials face. All five already render
+// correctly as a plain `<img>` in both themes (Technologies.tsx's own
+// audit only flags a different subset — express/github/aws/linux/
+// postgresql/nextjs/cicd and the AI-tooling marks — as needing the
+// `currentColor` treatment); none of these five are in that list.
+const CREDENTIAL_ICONS: readonly svgs[] = [
+  "react",
+  "typescript",
+  "nodejs",
+  "docker",
+  "python",
+];
+
+// ============================================================
+// Rotation keyframe table — see the T2 report for the derivation. The
+// cube's outer transform is `rotateX(rx) rotateY(ry)`; each face is
+// authored with a single local `rotateY`/`rotateX` + `translateZ`, and
+// the rest value below is exactly the negative of that local rotation
+// (mod 360, walked in one continuous direction so the tumble never
+// snaps backwards): that is what makes every face land upright with
+// zero net rotation at its own plateau, by construction rather than by
+// per-face fudging.
+//
+//   progress   0     .13   .20   .30   .37   .47   .54   .64   .71   .79   .90   1.00
+//   face       front front right right back  back  left  left  top   top   bottom bottom
+//   rotateY    0     0     -90   -90   -180  -180  -270  -270  -360  -360  -360   -360
+//   rotateX    0     0     0     0     0     0     0     0     -90   -90   90     90
+//
+// Paired values hold the face at rest (a flat plateau); the gap between
+// pairs is the turn to the next face. The final turn (top -> bottom) is
+// a 180 deg rotateX sweep at fixed rotateY, so it visibly passes back
+// through the front face's own orientation at its midpoint — the "ring
+// face" the task brief allows.
+// ============================================================
+const PROGRESS_STOPS = [
+  0, 0.13, 0.2, 0.3, 0.37, 0.47, 0.54, 0.64, 0.71, 0.79, 0.9, 1,
+];
+const ROTATE_Y_STOPS = [
+  0, 0, -90, -90, -180, -180, -270, -270, -360, -360, -360, -360,
+];
+const ROTATE_X_STOPS = [0, 0, 0, 0, 0, 0, 0, 0, -90, -90, 90, 90];
+
+// Midpoints of each face's transition into the next — the thresholds
+// that decide which face is "active" (and therefore focusable) at a
+// given scroll progress.
+const FACE_BOUNDARIES = [0.165, 0.335, 0.505, 0.675, 0.845];
+
+// Centers of each face's own plateau — where its scroll-snap marker
+// sits, expressed as a fraction of the track's scrollable distance
+// (trackHeight 600svh - viewport 100svh = 500svh).
+const SNAP_OFFSETS = [0.065, 0.25, 0.42, 0.59, 0.75, 0.95];
+const FACE_IDS = ["front", "right", "back", "left", "top", "bottom"] as const;
+
+function faceIndexForProgress(progress: number): number {
+  for (let index = 0; index < FACE_BOUNDARIES.length; index += 1) {
+    if (progress < FACE_BOUNDARIES[index]) return index;
+  }
+  return FACE_BOUNDARIES.length;
+}
+
+function clamp01(value: number): number {
+  return Math.min(1, Math.max(0, value));
+}
+
+/**
+ * Front-face content, shared verbatim between the cube (where it sits on
+ * `home__face--front`) and the flat fallback (where it is the page's
+ * first section). `nameVariation` is only ever passed by the cube: the
+ * pointer-driven Archivo axes are a cube-only flourish, gated at the
+ * call site rather than here, so the flat hero never subscribes to a
+ * pointer listener it has nowhere to attach anyway (task 5.D — no
+ * continuous value ever needs a plain resting default in the flat
+ * fallback). `revealRef` is only ever passed by the flat hero, whose
+ * entrance reuses the same `reveal`/`stagger-children` mechanism as
+ * every other section instead of a bespoke mount animation.
+ */
+function HeroIntro({
+  nameVariation,
+  revealRef,
+}: {
+  nameVariation?: MotionValue<string>;
+  revealRef?: React.RefObject<HTMLDivElement>;
+}) {
   const { t, i18n } = useTranslation();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
   const cvUrl = cv.cvUrls[i18n.language as "en" | "es"] ?? cv.cvUrls.en;
+  const animated = Boolean(revealRef);
 
   return (
-    <section className="section home-section" id="home">
-      <div className="content">
-        <div className={`home ${mounted ? "home--visible" : ""}`}>
-          <div className="home__hero">
-            <div className="home__intro">
-              <p className="home__greeting home-item" style={{ "--i": 0 } as React.CSSProperties}>
-                {t("home_greeting")}
-              </p>
+    <div
+      className={`home__intro${animated ? " reveal stagger-children" : ""}`}
+      ref={revealRef}
+    >
+      {/* Top and footer clusters (rather than six flat siblings) so the
+          cube face can anchor one to the top edge and one to the bottom
+          edge (`justify-content: space-between` on `.home__face--front
+          .home__intro`) instead of one centered clump leaving the lower
+          half of the face empty. The flat hero just stacks the two
+          clusters in normal flow — no visual change there. */}
+      <div className="home__intro__top">
+        <p className="home__greeting" style={{ "--i": 0 } as React.CSSProperties}>
+          {t("home_greeting")}
+        </p>
 
-              <h1 className="home__name">
-                {cv.nameLines.map((line) => (
-                  <span className="home__name-line" key={line}>{line}</span>
-                ))}
-              </h1>
+        <m.h1
+          className="home__name"
+          style={
+            nameVariation ? { fontVariationSettings: nameVariation } : undefined
+          }
+        >
+          {cv.nameLines.map((line) => (
+            <span className="home__name-line" key={line}>
+              {line}
+            </span>
+          ))}
+        </m.h1>
 
-              <p className="home__role home-item" style={{ "--i": 1 } as React.CSSProperties}>
-                {t("home_role")}
-              </p>
+        <p className="home__role" style={{ "--i": 1 } as React.CSSProperties}>
+          {t("home_role")}
+        </p>
 
-              <p className="home__positioning home-item" style={{ "--i": 2 } as React.CSSProperties}>
-                {t("home_positioning")}
-              </p>
+        <p
+          className="home__positioning"
+          style={{ "--i": 2 } as React.CSSProperties}
+        >
+          {t("home_positioning")}
+        </p>
+      </div>
 
-              <p className="home__location home-item" style={{ "--i": 3 } as React.CSSProperties}>
-                {cv.location}
-              </p>
-
-              <div className="home__actions home-item" style={{ "--i": 4 } as React.CSSProperties}>
-                <div className="home__socials">
-                  {cv.socials.map((social) => (
-                    <a
-                      key={social.kind}
-                      href={social.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="home__social-link"
-                      aria-label={t(social.labelKey)}
-                    >
-                      <SocialIcon kind={social.kind} />
-                    </a>
-                  ))}
-                </div>
-                <a
-                  href={cvUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="home__cv-button"
-                >
-                  {t("home_cv_button")}
-                </a>
-              </div>
-            </div>
-
-            <div className="home__portrait home-item" style={{ "--i": 5 } as React.CSSProperties}>
-              <a href="#about_me">
-                <span className="home__portrait-frame">
-                  <img
-                    src={cv.portrait}
-                    alt={cv.fullName}
-                    width={128}
-                    height={128}
-                    className="home__portrait-image"
-                  />
-                </span>
+      <div className="home__intro__footer" style={{ "--i": 3 } as React.CSSProperties}>
+        <div className="home__actions">
+          <div className="home__socials">
+            {cv.socials.map((social) => (
+              <a
+                key={social.kind}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                className="home__social-link"
+                aria-label={t(social.labelKey)}
+              >
+                <SocialIcon kind={social.kind} />
               </a>
-            </div>
+            ))}
           </div>
+          <a href={cvUrl} target="_blank" rel="noreferrer" className="home__cv-button">
+            {t("home_cv_button")}
+          </a>
+        </div>
+
+        <div className="home__portrait">
+          <a href="#about_me">
+            <span className="home__portrait-frame">
+              <img
+                src={cv.portrait}
+                alt={cv.fullName}
+                width={80}
+                height={80}
+                className="home__portrait-image"
+              />
+            </span>
+          </a>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ExperiencePreview() {
+  const { t } = useTranslation();
+  const current = cv.experience[0];
+
+  return (
+    <div className="home__preview">
+      <h3 className="home__preview__heading">
+        {t(current.roleKey)} · {current.company}
+      </h3>
+      <p className="home__preview__line">{t("cube_experience_hook")}</p>
+      <a className="home__preview__link" href="#experience">
+        {t("nav_experience")}
+      </a>
+    </div>
+  );
+}
+
+function ProjectsPreview() {
+  const { t } = useTranslation();
+  const project =
+    cv.projects.find((item) => item.title === "Customer Insurance Portal") ??
+    cv.projects[0];
+
+  return (
+    <div className="home__preview">
+      <img
+        className="home__preview__image"
+        src={project.image}
+        alt={t(project.descriptionKey)}
+        width={480}
+        height={300}
+      />
+      <h3 className="home__preview__heading">{project.title}</h3>
+      <a className="home__preview__link" href="#projects">
+        {t("nav_projects")}
+      </a>
+    </div>
+  );
+}
+
+function AboutPreview() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="home__preview">
+      <p className="home__preview__line">{t("cube_about_manifesto")}</p>
+      <a className="home__preview__link" href="#about_me">
+        {t("nav_about")}
+      </a>
+    </div>
+  );
+}
+
+function CredentialsPreview() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="home__preview">
+      <div className="home__preview__icons">
+        {CREDENTIAL_ICONS.map((icon) => (
+          <img
+            key={icon}
+            className="home__preview__icon"
+            src={svgsConstants[icon]}
+            alt={techLabels[icon]}
+          />
+        ))}
+      </div>
+      <a className="home__preview__link" href="#technologies">
+        {t("technologies_title")}
+      </a>
+    </div>
+  );
+}
+
+function ContactPreview() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="home__preview">
+      <p className="home__preview__line">{t("contact_cta_sub")}</p>
+      <a className="home__preview__link" href="#contact">
+        {t("nav_contact")}
+      </a>
+    </div>
+  );
+}
+
+/**
+ * The scroll-driven 3D cube. Only ever mounted once `Home` has confirmed
+ * full motion is both allowed (`prefers-reduced-motion: no-preference`)
+ * and has the width to show a square this size (`$bp-md`) — see
+ * `CUBE_MEDIA_QUERY` below.
+ */
+function CubeHero() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const faceRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Kinetic name (task 6) — pointer position over the stage drives the
+  // Archivo `wdth`/`wght` axes through a motion value -> spring chain,
+  // written into one CSS custom property via `useMotionTemplate`. Never
+  // `useState` for either continuous input. Rest state (mount, and after
+  // the pointer leaves the stage) is the bold wide cut — the same
+  // striking corner the static `.home__name` rule uses everywhere it
+  // isn't kinetic — so the name never idles at a flat, unremarkable
+  // mid-point; the pointer only ever pulls it away from that corner.
+  const wdth = useMotionValue(112);
+  const wght = useMotionValue(700);
+  const wdthSpring = useSpring(wdth, { stiffness: 140, damping: 18, mass: 0.4 });
+  const wghtSpring = useSpring(wght, { stiffness: 140, damping: 18, mass: 0.4 });
+  const nameVariation = useMotionTemplate`"wdth" ${wdthSpring}, "wght" ${wghtSpring}`;
+
+  // Scroll mapping (task 3) — raw progress across the tall track, smoothed
+  // just enough to settle quickly without overshoot, then mapped through
+  // the keyframe table above onto the two rotation axes and composed into
+  // one `transform` string.
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start start", "end end"],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 260,
+    damping: 34,
+    mass: 1,
+  });
+  const rotateY = useTransform(smoothProgress, PROGRESS_STOPS, ROTATE_Y_STOPS);
+  const rotateX = useTransform(smoothProgress, PROGRESS_STOPS, ROTATE_X_STOPS);
+  const cubeTransform = useMotionTemplate`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  // Active face (task 5) — derived from the raw (unsmoothed) progress so
+  // focus availability tracks true scroll position, and only written to
+  // state when the discrete index actually changes.
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const index = faceIndexForProgress(latest);
+    setActiveIndex((previous) => (previous === index ? previous : index));
+  });
+
+  useEffect(() => {
+    faceRefs.current.forEach((face, index) => {
+      face?.toggleAttribute("inert", index !== activeIndex);
+    });
+  }, [activeIndex]);
+
+  // Snap (task 4) — the root scroller only snaps while this component is
+  // mounted, so the rest of the page keeps scrolling normally once the
+  // cube track ends.
+  useEffect(() => {
+    document.documentElement.classList.add("has-cube-snap");
+    return () => document.documentElement.classList.remove("has-cube-snap");
+  }, []);
+
+  function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relativeX = clamp01((event.clientX - rect.left) / rect.width);
+    const relativeY = clamp01((event.clientY - rect.top) / rect.height);
+    wdth.set(87 + relativeX * (112 - 87));
+    wght.set(400 + relativeY * (700 - 400));
+  }
+
+  function handlePointerLeave() {
+    wdth.set(112);
+    wght.set(700);
+  }
+
+  function setFaceRef(index: number) {
+    return (element: HTMLDivElement | null) => {
+      faceRefs.current[index] = element;
+    };
+  }
+
+  return (
+    <div className="home__cube-track" ref={trackRef}>
+      {SNAP_OFFSETS.map((offset, index) => (
+        <span
+          key={FACE_IDS[index]}
+          className="home__cube-marker"
+          style={{ top: `${offset * 500}svh` }}
+        />
+      ))}
+
+      <div
+        className="home__cube-stage"
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
+        <m.div className="home__cube" style={{ transform: cubeTransform }}>
+          <div
+            className="home__face home__face--front"
+            ref={setFaceRef(0)}
+            aria-hidden={activeIndex !== 0}
+          >
+            <HeroIntro nameVariation={nameVariation} />
+          </div>
+          <div
+            className="home__face home__face--right"
+            ref={setFaceRef(1)}
+            aria-hidden={activeIndex !== 1}
+          >
+            <ExperiencePreview />
+          </div>
+          <div
+            className="home__face home__face--back"
+            ref={setFaceRef(2)}
+            aria-hidden={activeIndex !== 2}
+          >
+            <ProjectsPreview />
+          </div>
+          <div
+            className="home__face home__face--left"
+            ref={setFaceRef(3)}
+            aria-hidden={activeIndex !== 3}
+          >
+            <AboutPreview />
+          </div>
+          <div
+            className="home__face home__face--top"
+            ref={setFaceRef(4)}
+            aria-hidden={activeIndex !== 4}
+          >
+            <CredentialsPreview />
+          </div>
+          <div
+            className="home__face home__face--bottom"
+            ref={setFaceRef(5)}
+            aria-hidden={activeIndex !== 5}
+          >
+            <ContactPreview />
+          </div>
+        </m.div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Reduced-motion / narrow-viewport fallback (task 7): the same front-face
+ * content as a normal first section, plus the other five faces as a plain
+ * card list underneath. No 3D, no tall track, normal document height.
+ */
+function FlatHero() {
+  const introRef = useScrollReveal<HTMLDivElement>();
+  const listRef = useScrollReveal<HTMLUListElement>();
+
+  return (
+    <div className="content">
+      <HeroIntro revealRef={introRef} />
+      <ul className="home__preview-list reveal stagger-children" ref={listRef}>
+        <li className="home__preview-card" style={{ "--i": 0 } as React.CSSProperties}>
+          <ExperiencePreview />
+        </li>
+        <li className="home__preview-card" style={{ "--i": 1 } as React.CSSProperties}>
+          <ProjectsPreview />
+        </li>
+        <li className="home__preview-card" style={{ "--i": 2 } as React.CSSProperties}>
+          <AboutPreview />
+        </li>
+        <li className="home__preview-card" style={{ "--i": 3 } as React.CSSProperties}>
+          <CredentialsPreview />
+        </li>
+        <li className="home__preview-card" style={{ "--i": 4 } as React.CSSProperties}>
+          <ContactPreview />
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+// Mirrors `$bp-md` (variables.scss) — kept in JS as a media-query string
+// since Sass variables don't exist at runtime.
+const CUBE_MEDIA_QUERY =
+  "(prefers-reduced-motion: no-preference) and (min-width: 48rem)";
+
+export default function Home() {
+  const cubeEnabled = useMediaQuery(CUBE_MEDIA_QUERY);
+
+  return (
+    <section
+      className={`section home-section ${
+        cubeEnabled ? "home-section--cube" : "home-section--flat"
+      }`}
+      id="home"
+    >
+      {cubeEnabled ? <CubeHero /> : <FlatHero />}
     </section>
   );
 }

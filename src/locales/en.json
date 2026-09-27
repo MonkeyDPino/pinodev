@@ -109,5 +109,8 @@
   "footer_navigate": "Navigate",
   "footer_contact_col": "Contact",
   "footer_copyright": "© 2026 {{name}}. All rights reserved.",
-  "footer_made_with": "Made with ♥"
+  "footer_made_with": "Made with ♥",
+
+  "cube_experience_hook": "Building the platform that onboarded about 200 insurance intermediaries.",
+  "cube_about_manifesto": "I care about software that works quietly and holds up under real use."
 }
