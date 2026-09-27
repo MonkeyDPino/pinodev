@@ -85,5 +85,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - RDD assess: `medium`, 1105 lines, `review_due: true` (`slice_budget_reached`). Same preflight blocker as before (intended-untracked selection refused, schema undocumented); native review unavailable, off path at tier `medium`. Unblock option: resolve the 4 untracked files (commit or ignore `.mcp.json`; move or ignore the 3 personal assets) so the untracked inventory is empty.
   - Size: T2 PR over 400 lines; `size:exception` rationale: layout grid, new component, hero rewrite and cube-hero removal are one cohesive swap.
 
+- T2 user-feedback fix (`4efc15c`): user found the resting yaw confusing (next section visible on first look) and the rounded corners un-cube-like. Rest pose is now `rotateX(-16deg)` only; top/bottom caps (`--surface-sunken`) inside the ring; `border-radius: 0` with `--line-strong` edges. Writer: build + lint pass, rest/mid-turn/light/1024 screenshots, 0 console errors. Parent: build pass, reviewed experience rest and mid-turn screenshots.
+
 ## Next step
 Push `feat/kinetic-cube` and open the T2 PR into `feat/kinetic-foundation` (awaiting user OK), then T3 Experience timeline.
