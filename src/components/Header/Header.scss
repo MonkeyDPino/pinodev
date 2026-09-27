@@ -37,14 +37,11 @@
     gap: var(--space-2);
     flex-shrink: 0;
     min-width: 0;
-    // Below `$bp-lg` there is no inline nav between the wordmark and the
-    // controls, so push the controls (and the compact section cube that
-    // closes the row) to the far end instead of leaving a blank strip.
+    // The wordmark takes the free space so everything after it (the
+    // inline nav from `$bp-lg`, the controls, and the compact section
+    // cube that closes the row below `$bp-lg`) sits at the far end
+    // instead of leaving a blank strip.
     margin-inline-end: auto;
-
-    @include from($bp-lg) {
-      margin-inline-end: 0;
-    }
   }
 
   .header__logo {
