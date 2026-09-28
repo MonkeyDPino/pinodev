@@ -8,10 +8,56 @@
 // relative; z-index: 1` for the spine is already applied globally to
 // `footer` by App.scss's shared selector list.
 // ============================================================
+
+// T6 — sticky reveal. `.footer-reveal` is the footer's own containing
+// block for `position: sticky`'s clamping (`position: relative`, no
+// other layout role): a `position: sticky; bottom: 0` element only
+// renders "stuck" (flush with the viewport) within ITS OWN containing
+// block's bounds. Left at the default (`#root`, spanning the entire
+// ~8-9k px document), the footer paints stuck-and-visible over every
+// section for the FULL scroll range, not just the final reveal
+// (confirmed against a live repro before landing this fix) — scoping
+// the containing block to just this wrapper is what keeps the footer
+// correctly out of view until the reveal.
+.footer-reveal {
+  position: relative;
+}
+
+// The spacer immediately before the footer, same measured height
+// (`--footer-h`, `useFooterReveal`) and no other content — inert
+// (`aria-hidden`, `Footer.tsx`), not part of the footer's own content
+// or tab order. Because both the spacer and the footer sit inside the
+// same short containing block above, sticky positioning gives the
+// footer room to hold still at the viewport bottom for exactly one
+// spacer's height of additional scroll while the spacer's own trailing
+// edge scrolls up and off above it — that is the reveal. Same
+// `--surface-page` fill as the body ground (index.scss), so the spacer
+// itself reads as an unremarkable continuation of the page while it is
+// still on screen. `--footer-h` is `0px` — collapsing this to nothing,
+// so the footer settles into plain static flow — below `$bp-md`, or
+// whenever the footer is taller than the viewport (both handled in
+// `useFooterReveal`).
+.footer-reveal-spacer {
+  height: var(--footer-h, 0px);
+  background: var(--surface-page);
+}
+
 .footer {
   background: var(--surface-sunken);
   border-top: 1px solid var(--line-hairline);
   padding-block: var(--space-16);
+
+  // `$bp-md`+ only (below it the 3-column grid below stacks to one
+  // column and grows too tall for the effect; `.footer-reveal-spacer`
+  // above also collapses to 0 there, via `useFooterReveal`, as a
+  // second, JS-side guard). A trailing sticky element with nothing
+  // ahead of it in its own containing block — the spacer's height is 0
+  // whenever the reveal is disabled — settles into plain static flow
+  // on its own, so no separate "static" branch is needed here.
+  @include from($bp-md) {
+    position: sticky;
+    bottom: 0;
+  }
 }
 
 .footer__content {
@@ -166,9 +212,13 @@
     text-align: left;
   }
 
+  // Mono meta (the same technical-label treatment as `Experience`'s
+  // dates and `SectionCube`'s fact line) — the copyright year and the
+  // colophon line read as page metadata, not body prose.
   span {
     color: var(--text-muted);
     font-size: var(--fs-sm);
+    font-family: var(--font-mono);
   }
 
   .footer__made-with {

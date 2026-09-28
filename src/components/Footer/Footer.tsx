@@ -1,6 +1,8 @@
+import { useRef } from "react";
 import "./Footer.scss";
 import { useTranslation } from "react-i18next";
 import { cv } from "../../data/cv";
+import { useFooterReveal } from "../../hooks/useFooterReveal";
 
 type SocialKind = (typeof cv.socials)[number]["kind"];
 
@@ -115,71 +117,87 @@ function PhoneIcon() {
 export default function Footer() {
   const { t } = useTranslation();
   const whatsappHref = `https://wa.me/${cv.phone.replace(/\D/g, "")}`;
+  const footerRef = useRef<HTMLElement>(null);
+  useFooterReveal(footerRef);
+
   return (
-    <footer className="footer">
-      <div className="footer__content">
-        <div className="footer__grid">
+    // T6 — sticky reveal: `.footer-reveal` is the footer's own
+    // containing block for `position: sticky`'s clamping, scoped to
+    // just itself and `.footer-reveal-spacer` (a plain, inert block the
+    // same height as the footer) — not the whole page. That scoping is
+    // what keeps `bottom: 0` sticky positioning inert (footer stays out
+    // of flow, off-screen) until the reveal, and the spacer immediately
+    // above the footer is what gives sticky room to hold the footer
+    // still while the spacer's own trailing edge scrolls up and away
+    // above it, uncovering it (see `Footer.scss` for the full mechanics
+    // and the live-repro findings that ruled out the alternatives).
+    <div className="footer-reveal">
+      <div className="footer-reveal-spacer" aria-hidden="true" />
+      <footer className="footer" ref={footerRef}>
+        <div className="footer__content">
+          <div className="footer__grid">
 
-          {/* Column 1: Brand */}
-          <div className="footer__brand">
-            <span className="footer__logo">pinodev</span>
-            <p className="footer__tagline">
-              {t("footer_tagline")}
-            </p>
-            <div className="footer__socials">
-              {cv.socials.map((social) => (
-                <a
-                  key={social.kind}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="footer__social-link"
-                  aria-label={t(social.labelKey)}
-                >
-                  <SocialIcon kind={social.kind} />
-                  <span>{t(social.labelKey)}</span>
-                </a>
-              ))}
+            {/* Column 1: Brand */}
+            <div className="footer__brand">
+              <span className="footer__logo">pinodev</span>
+              <p className="footer__tagline">
+                {t("footer_tagline")}
+              </p>
+              <div className="footer__socials">
+                {cv.socials.map((social) => (
+                  <a
+                    key={social.kind}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="footer__social-link"
+                    aria-label={t(social.labelKey)}
+                  >
+                    <SocialIcon kind={social.kind} />
+                    <span>{t(social.labelKey)}</span>
+                  </a>
+                ))}
+              </div>
             </div>
+
+            {/* Column 2: Quick Links */}
+            <div className="footer__links">
+              <span className="footer__col-title">{t("footer_navigate")}</span>
+              <nav className="footer__nav">
+                <a href="#home">{t("nav_home")}</a>
+                <a href="#experience">{t("nav_experience")}</a>
+                <a href="#projects">{t("nav_projects")}</a>
+                <a href="#about_me">{t("nav_about")}</a>
+                <a href="#contact">{t("nav_contact")}</a>
+              </nav>
+            </div>
+
+            {/* Column 3: Contact */}
+            <div className="footer__contact">
+              <span className="footer__col-title">{t("footer_contact_col")}</span>
+              <ul className="footer__contact-list">
+                <li>
+                  <MailIcon />
+                  <a href={`mailto:${cv.email}`}>{cv.email}</a>
+                </li>
+                <li>
+                  <PhoneIcon />
+                  <a href={whatsappHref} target="_blank" rel="noreferrer">
+                    {cv.phone}
+                  </a>
+                </li>
+              </ul>
+            </div>
+
           </div>
 
-          {/* Column 2: Quick Links */}
-          <div className="footer__links">
-            <span className="footer__col-title">{t("footer_navigate")}</span>
-            <nav className="footer__nav">
-              <a href="#home">{t("nav_home")}</a>
-              <a href="#experience">{t("nav_experience")}</a>
-              <a href="#projects">{t("nav_projects")}</a>
-              <a href="#about_me">{t("nav_about")}</a>
-              <a href="#contact">{t("nav_contact")}</a>
-            </nav>
+          {/* Bottom bar */}
+          <div className="footer__bottom">
+            <span>{t("footer_copyright", { name: cv.shortName })}</span>
+            <span className="footer__made-with">{t("footer_made_with")}</span>
           </div>
-
-          {/* Column 3: Contact */}
-          <div className="footer__contact">
-            <span className="footer__col-title">{t("footer_contact_col")}</span>
-            <ul className="footer__contact-list">
-              <li>
-                <MailIcon />
-                <a href={`mailto:${cv.email}`}>{cv.email}</a>
-              </li>
-              <li>
-                <PhoneIcon />
-                <a href={whatsappHref} target="_blank" rel="noreferrer">
-                  {cv.phone}
-                </a>
-              </li>
-            </ul>
-          </div>
-
         </div>
-
-        {/* Bottom bar */}
-        <div className="footer__bottom">
-          <span>{t("footer_copyright", { name: cv.shortName })}</span>
-          <span className="footer__made-with">{t("footer_made_with")}</span>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }
