@@ -1,24 +1,48 @@
 @use "../../styles/variables.scss" as *;
 
 // ============================================================
-// D3 — Experience: the Rail. No box, no radius, no shadow, no hover.
-// Entries are separated by a single hairline rule; the differentiator
-// is the outcome rows, not a card recipe.
+// D3 — Experience: the Rail. StoryStream-style timeline: a hairline
+// rail that fills with the brand ramp on scroll (CSS-only, no JS) plus
+// a small square node per entry that lights up as its entry reaches
+// the reading band. Entries stay separated by a single hairline rule;
+// the differentiator is the outcome metrics, not a card recipe.
 // ============================================================
 .experience__rail {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-top: var(--space-6);
+  // Gutter reserved for the rail track + node. Kept at every breakpoint
+  // (the rail marks true chronological position, not just a desktop
+  // enhancement).
+  padding-left: var(--space-6);
+}
+
+// Base rendering: a static hairline, fully visible with zero JS and
+// zero motion — this is what both reduced motion and no
+// `animation-timeline: view()` support fall back to (A4: never gate
+// content or its structure behind an enhancement).
+.experience__rail-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc((var(--space-6) - 2px) / 2);
+  width: 2px;
+  background: var(--line-hairline);
 }
 
 .experience__entry {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   row-gap: var(--space-4);
   padding-block: var(--space-10);
   border-top: 1px solid var(--line-hairline);
 
-  &:first-child {
+  // `:first-of-type` (not `:first-child`) — the rail track above is a
+  // preceding sibling `<span>`, so the first `<article>` is no longer
+  // the first child.
+  &:first-of-type {
     border-top: none;
   }
 
@@ -31,16 +55,39 @@
   }
 }
 
-.experience__entry__rail {
+// The node marks this entry's true position on the timeline — it is
+// never sticky, only the meta column beside it moves. Base state is
+// already lit (`--accent`), never hidden; the enhanced dim-then-reveal
+// plate below is layered on only as a progressive enhancement.
+.experience__entry__node {
+  position: absolute;
+  top: var(--space-10);
+  left: calc(-1 * var(--space-6) + (var(--space-6) - 0.625rem) / 2);
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--accent);
+}
+
+.experience__entry__meta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-2);
+
+  // Sticky meta column: stays beside long descriptions from `$bp-md`+.
+  // Below it, this is single-column flow (meta above content), no
+  // sticky.
+  @include from($bp-md) {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-6));
+    align-self: start;
+  }
 }
 
 .experience__entry__date {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums lining-nums;
   white-space: nowrap;
 }
@@ -83,32 +130,103 @@
   color: var(--text-body);
 }
 
-// The outcome rows are the differentiator — evidence inside an entry at
-// 18px, deliberately not a big-number-plus-gradient stats hero. No
-// bullets (the global `ul[class]` reset already strips the marker), no
-// cards, just a fixed figure column beside its label.
-.experience__entry__outcomes {
+// ============================================================
+// Outcome metrics — a stat row, not a card recipe: large display
+// figures in Archivo's wide axis, label below. The count-up
+// (Experience.tsx) always renders the final value first — motion never
+// gates content (A4).
+// ============================================================
+.experience__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: var(--space-6) var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.experience__metric {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
+  gap: var(--space-1);
 }
 
-.experience__entry__outcome {
-  display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr);
-  column-gap: var(--space-3);
-  align-items: baseline;
-}
-
-.experience__entry__outcome__figure {
-  font-size: var(--fs-md);
-  font-weight: 600;
-  color: var(--text-strong);
+.experience__metric__figure {
+  font-size: clamp(var(--fs-xl), 1.6rem + 1vw, var(--fs-2xl));
+  font-weight: 700;
+  font-variation-settings: "wdth" 118;
   font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1;
+  color: var(--text-strong);
 }
 
-.experience__entry__outcome__label {
-  font-size: var(--fs-base);
-  color: var(--text-body);
+.experience__metric__label {
+  max-width: 18ch;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+// ============================================================
+// Enhanced motion — layered on only when the reader has not asked for
+// less of it AND the browser supports scroll-driven CSS animation.
+// Both gates are required so neither the rail fill nor the node
+// lighting is ever a prerequisite for content to be visible (A4).
+// Constraints: only `transform`, `opacity` and the pseudo-elements'
+// `background` (a static gradient/color, not an animated property) are
+// touched — no layout properties, no JS.
+// ============================================================
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    // Named view timeline anchored on the section itself, so the fill
+    // tracks the whole Experience section scrolling through the
+    // viewport rather than just the track element's own bounds.
+    .experience {
+      view-timeline: --experience-scroll block;
+    }
+
+    @keyframes experience-rail-fill {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .experience__rail-track::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform-origin: top;
+      background: linear-gradient(
+        to bottom,
+        var(--ramp-a),
+        var(--ramp-mid),
+        var(--ramp-b)
+      );
+      animation: experience-rail-fill linear both;
+      animation-timeline: --experience-scroll;
+    }
+
+    @keyframes experience-node-reveal {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    // Each node covers itself with a dim plate at rest and fades it
+    // away as its OWN entry reaches the reading band — a self `view()`
+    // timeline, not the shared section one above, because every node
+    // lights up at its own scroll position, independently.
+    .experience__entry__node::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--surface-sunken);
+      animation: experience-node-reveal linear both;
+      animation-timeline: view();
+      animation-range: contain 0% contain 55%;
+    }
+  }
 }

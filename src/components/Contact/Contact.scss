@@ -83,6 +83,18 @@
 
 // Right column — form. `--surface-raised` inputs, no glass, no card
 // shadow (A3: content never casts a shadow).
+//
+// T6 radius decision — every control in this section (inputs, textarea,
+// submit button) uses `--radius-control` (8px), not 0. `radius: 0` on
+// this codebase is reserved for surfaces/plates (SectionCube's faces,
+// Projects' bento cells, Technologies' tiles — Projects.scss documents
+// this exact split); `--radius-control` is the sitewide rule for
+// interactive controls (Header's nav pill and CV button, ThemeToggle,
+// LanguageSwitcher, Experience's marker, Home's CV button). Contact's
+// fields and button are controls, so they keep the existing token
+// rather than flipping to 0 — that would make this the only sharp-cornered
+// control on the page (design-taste-frontend 4.4's shape-consistency
+// lock: one documented rule, followed everywhere).
 .contact__form {
   display: flex;
   flex-direction: column;
@@ -181,6 +193,16 @@
 // Submit — one of exactly two filled `--accent` buttons on the page
 // (the other is the header CV download). E5b: a 1px lift and a fill
 // shift, never a shadow.
+//
+// T6 — magnetic pointer effect on hover-capable, fine-pointer devices
+// with motion allowed (`Contact.tsx`'s `magneticEnabled`): the button
+// becomes an `m.button` driven by `x`/`y` motion springs at that point,
+// so the plain `transform: translateY()` lift/press below is scoped out
+// via `:not(.contact__submit--magnetic)` — otherwise the stylesheet
+// transform and Motion's own inline transform would fight over the same
+// CSS property (motion/react "independent transforms" guidance). The
+// magnetic button's own `:active` feedback is `whileTap` (Contact.tsx),
+// composed independently alongside the pointer-follow `x`/`y`.
 .contact__submit {
   background: var(--accent);
   border: none;
@@ -199,10 +221,14 @@
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
     background: var(--accent-hover);
+  }
+
+  &:hover:not(:disabled):not(.contact__submit--magnetic),
+  &:focus-visible:not(:disabled):not(.contact__submit--magnetic) {
     transform: translateY(-1px);
   }
 
-  &:active:not(:disabled) {
+  &:active:not(:disabled):not(.contact__submit--magnetic) {
     transform: translateY(0);
   }
 
