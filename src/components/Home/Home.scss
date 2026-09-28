@@ -1,53 +1,52 @@
 @use "../../styles/variables.scss" as *;
 
-// The hero owns the first view: it fills the viewport below the sticky
-// header (which sits in flow, so its height is subtracted) and centers
-// its content vertically, so the next section never peeks in above the
-// fold. `svh` keeps mobile browser chrome from pushing it past the fold.
-// Centering replaces the shared `--section-gap` padding, which only
-// remains as a floor on viewports too short to fit the hero.
+// ============================================================
+// Hero — a normal single-viewport section, centered vertically between
+// the header and the fold. No tall track, no sticky stage: the section
+// cube (left column from `$bp-lg`, `SectionCube.scss`) carries the
+// per-section indicator instead.
+// ============================================================
 .home-section {
+  padding-block: var(--section-gap);
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100svh - var(--header-h));
-  padding-block: var(--space-8);
-
-  // Restated because `margin-inline: auto` on a flex item shrinks it to
-  // its content width instead of stretching it.
-  > .content {
-    width: min(100% - (var(--space-6) * 2), var(--width-content));
-  }
 }
 
-// A single child (`.home__hero`) since Change 1 removed the Stack —
-// no gap needed between siblings that no longer exist.
-.home {
-  display: block;
+.home-section > .content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
 }
 
 // ============================================================
-// D2 — the hero block. Mobile-first: single column, portrait first;
-// `$bp-md`+ introduces the two-column grid (text / portrait).
+// Hero intro — greeting, kinetic name, role, positioning line, then the
+// actions/portrait row.
 // ============================================================
-.home__hero {
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: var(--space-8);
-
-  @include from($bp-md) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: var(--space-8);
-    align-items: start;
-  }
-}
-
 .home__intro {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-3);
   min-width: 0;
+}
+
+.home__intro__top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.home__intro__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
 }
 
 .home__greeting {
@@ -56,23 +55,15 @@
   color: var(--text-muted);
 }
 
-// E1 — "the name resolves". Static styling only; the entrance itself
-// (name-wipe / name-resolve) lives below, entirely inside the
-// `no-preference` query, so the resting state below already is the
-// final, correct rendering with zero JS and zero motion.
 .home__name {
   font-size: clamp(var(--fs-2xl), 1.2rem + 5.85vw, var(--fs-display));
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: -0.02em;
   color: var(--text-strong);
-  font-variation-settings: "wdth" 112;
+  font-variation-settings: "wdth" 112, "wght" 700;
 }
 
-// One block-level `<span>` per `cv.nameLines` entry — this is what makes
-// the no-reflow guarantee structural: a block can never merge with its
-// sibling, so the two-line -> one-line collapse E1 depends on avoiding
-// is impossible at every axis position, at every viewport.
 .home__name-line {
   display: block;
 }
@@ -83,25 +74,13 @@
   color: var(--text-muted);
 }
 
-// The positioning sentence — Newsreader marks "Juan speaking", the same
-// semantic device D5 uses for the AboutMe column.
 .home__positioning {
   max-width: 34ch;
-  font-family: "Newsreader", "Newsreader Fallback", Georgia, serif;
-  font-size: var(--fs-xl);
+  font-size: var(--fs-base);
   font-weight: 400;
-  line-height: 1.7;
+  font-variation-settings: "wdth" 87;
+  line-height: 1.5;
   color: var(--text-body);
-
-  b {
-    color: var(--text-strong);
-    font-weight: 600;
-  }
-}
-
-.home__location {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
 }
 
 .home__actions {
@@ -109,7 +88,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-6);
-  margin-top: var(--space-3);
 }
 
 .home__socials {
@@ -134,8 +112,6 @@
   }
 }
 
-// Everything that isn't one of the two filled `--accent` buttons (D8) is
-// a text link or an outlined control — this is the latter.
 .home__cv-button {
   display: inline-flex;
   align-items: center;
@@ -157,28 +133,10 @@
   }
 }
 
-// Squared portrait, not circular — a document photograph, not a social
-// avatar.
-.home__portrait {
-  justify-self: center;
-
-  @include from($bp-md) {
-    justify-self: end;
-  }
-
-  a {
-    display: inline-block;
-  }
+.home__portrait a {
+  display: inline-block;
 }
 
-// Change 2 — matted-photograph treatment, built only from existing
-// tokens. The new portrait has a near-black background with a soft
-// radial glow, which would otherwise read as a hard dark block against
-// the light theme's pale ground (#F4F6FB). A mat (padding in
-// `--surface-raised`) plus a hard 1px outer frame gives it a deliberate
-// border in both themes instead. No shadow (content never casts one,
-// A3), no hover lift — only a border-color shift on hover/focus,
-// matching the same feedback the rest of the page gives on links.
 .home__portrait-frame {
   display: inline-flex;
   padding: var(--space-2);
@@ -188,14 +146,10 @@
   transition: border-color var(--dur-2) var(--ease-out);
 }
 
-// Explicit width/height on the `<img>` (JSX) still guards against CLS;
-// `--radius-plate` here reads as "the printed photo", `--radius-control`
-// above as "the frame holding it" — the same two-radius language D4
-// uses for a project image inside its own frame.
 .home__portrait-image {
   display: block;
-  width: 128px;
-  height: 128px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: var(--radius-plate);
 }
@@ -203,72 +157,4 @@
 .home__portrait a:hover .home__portrait-frame,
 .home__portrait a:focus-visible .home__portrait-frame {
   border-color: var(--accent);
-}
-
-// ============================================================
-// Motion — reduced motion is the base rendering (A4). Nothing above
-// this query has a resting opacity/transform offset; every entrance
-// below runs from an offset keyframe to the already-correct resting
-// state, so content is never dependent on this block to be visible.
-// ============================================================
-@media (prefers-reduced-motion: no-preference) {
-  // Generic hero-text entrance — the same `arrive` language every other
-  // section uses (index.scss), triggered by `.home--visible` (load,
-  // via the existing `mounted` state) rather than scroll, since the
-  // hero is always initially in view. E1's `<h1>` uses its own bespoke
-  // moment below instead of this generic fade.
-  @keyframes home-arrive {
-    from {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  .home--visible .home-item {
-    animation: home-arrive var(--dur-3) var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * var(--stagger));
-  }
-
-  // E1 — "the name resolves". Below `$bp-md` this is the `name-wipe`
-  // fallback (no axis animation); the reflow risk that gate exists for
-  // is now structurally impossible either way (see `.home__name-line`).
-  .home--visible .home__name {
-    animation: name-wipe var(--dur-4) var(--ease-out) both;
-  }
-
-  @keyframes name-wipe {
-    from {
-      opacity: 0;
-      clip-path: inset(0 0 45% 0);
-    }
-    to {
-      opacity: 1;
-      clip-path: inset(0 0 0 0);
-    }
-  }
-
-  @include from($bp-md) {
-    // The one variable-axis animation on the page (A4/C1) — one
-    // element, one run, never looping, never scroll-linked.
-    .home--visible .home__name {
-      animation: name-resolve var(--dur-4) var(--ease-out) both;
-    }
-
-    @keyframes name-resolve {
-      from {
-        opacity: 0;
-        clip-path: inset(0 0 45% 0);
-        font-variation-settings: "wdth" 87, "wght" 400;
-      }
-      to {
-        opacity: 1;
-        clip-path: inset(0 0 0 0);
-        font-variation-settings: "wdth" 112, "wght" 700;
-      }
-    }
-  }
 }

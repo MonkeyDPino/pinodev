@@ -3,19 +3,17 @@
 // ============================================================
 // A5 — Font loading
 //
-// Metric-adjusted fallback stacks, so the FOUT reflow between the
+// Metric-adjusted fallback stack, so the FOUT reflow between the
 // fallback and the real webfont is minimized. `size-adjust` scales the
-// fallback's average glyph width to Archivo's/Newsreader's; the
-// ascent/descent overrides make its line box match too.
+// fallback's average glyph width to Archivo's; the ascent/descent
+// overrides make its line box match too.
 //
-// MEASURED, not invented: both fallbacks were computed by downloading
-// the real variable font files (Archivo `wght=400 wdth=100` — the
-// static "everything else" instance per the type spec; Newsreader
-// `wght=400 opsz=18`) and reading their `hhea`/`OS/2` tables with
-// fontTools, then comparing against a metric-compatible local
-// substitute measured the same way: Liberation Sans (Red Hat's
-// metric clone of Arial) for the sans fallback, Gelasio (Google's
-// metric clone of Georgia) for the serif fallback.
+// MEASURED, not invented: computed by downloading the real variable
+// font file (Archivo `wght=400 wdth=100` — the static "everything
+// else" instance per the type spec) and reading its `hhea`/`OS/2`
+// tables with fontTools, then comparing against a metric-compatible
+// local substitute measured the same way: Liberation Sans (Red Hat's
+// metric clone of Arial).
 //   size-adjust      = (real avgCharWidth/unitsPerEm) / (fallback avgCharWidth/unitsPerEm)
 //   ascent-override  = (real ascent/unitsPerEm) / size-adjust
 //   descent-override = (real |descent|/unitsPerEm) / size-adjust
@@ -30,18 +28,6 @@
   size-adjust: 96.45%;
   ascent-override: 91.03%;
   descent-override: 21.77%;
-  line-gap-override: 0%;
-}
-
-@font-face {
-  font-family: "Newsreader Fallback";
-  src:
-    local("Georgia"),
-    local("Gelasio"),
-    local("Times New Roman");
-  size-adjust: 92.45%;
-  ascent-override: 79.5%;
-  descent-override: 28.66%;
   line-gap-override: 0%;
 }
 
@@ -74,7 +60,7 @@ body {
   background: var(--surface-page);
   color: var(--text-body);
   font-family:
-    "Archivo",
+    "Archivo Variable",
     "Archivo Fallback",
     Arial,
     sans-serif;

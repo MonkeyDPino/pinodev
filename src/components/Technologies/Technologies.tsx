@@ -1,3 +1,13 @@
+import { useRef } from "react";
+import {
+  m,
+  useAnimationFrame,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { useTranslation } from "react-i18next";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { svgsConstants } from "../../constants/svgs";
@@ -290,6 +300,19 @@ function MonoIcon({ kind }: { kind: MonoIconKey }) {
   }
 }
 
+// Decorative: the visible label beside it (or, in the marquee, nothing —
+// see CoreSkillMarquee's own `aria-hidden` band) already carries the name,
+// so the icon is marked purely presentational rather than duplicating an
+// accessible name via `alt`/`aria-hidden`. Shared by the scannable grid and
+// the marquee so both render the exact same mark for a given skill.
+function SkillIcon({ item }: { item: svgs }) {
+  return isMonoIconKey(item) ? (
+    <MonoIcon kind={item} />
+  ) : (
+    <img src={svgsConstants[item]} alt="" />
+  );
+}
+
 function CoreSkillGroup({ labelKey, items }: CvCoreSkillGroup) {
   const { t } = useTranslation();
   const gridRef = useScrollReveal<HTMLDivElement>();
@@ -307,23 +330,122 @@ function CoreSkillGroup({ labelKey, items }: CvCoreSkillGroup) {
             className="technologies__group__item"
             style={{ "--i": i } as React.CSSProperties}
           >
-            {/* Decorative: the visible label beside it already carries the
-                name, so the icon is marked purely presentational rather
-                than duplicating an accessible name via `alt`/`aria-hidden`. */}
             <span className="technologies__group__item__icon">
-              {isMonoIconKey(item) ? (
-                <MonoIcon kind={item} />
-              ) : (
-                <img src={svgsConstants[item]} alt="" />
-              )}
+              <SkillIcon item={item} />
             </span>
-            <span>{techLabels[item]}</span>
+            <span className="technologies__group__item__label">
+              {techLabels[item]}
+            </span>
           </div>
         ))}
       </div>
     </div>
   );
 }
+
+// T5 — the page's one marquee (Taste Skill 5: marquee max-one-per-page),
+// a purely decorative band of the core stack's logos above the scannable
+// grid. Motivated: recruiters scan the grid below for keywords, so the
+// marquee never carries unique content — it is `aria-hidden` and the real
+// names stay in the grid. Direction and speed react to scroll velocity
+// (Motion `useScroll` + `useSpring` driving an `x` motion value from
+// `useAnimationFrame`, never a `window` scroll listener or per-frame
+// `useState`) so scrolling fast visibly speeds the band up and scrolling
+// the other way flips its direction — feedback that ties it to the
+// reader's own scrolling instead of running as pure decoration.
+//
+// Velocity is sampled by hand each frame (`scrollY.get()` diffed against
+// the previous frame's reading) rather than through Motion's `useVelocity`:
+// that hook only recomputes on the source's own "change" events, so it
+// relies on repeatedly re-scheduling itself to notice the source went
+// idle. Sampling unconditionally every animation frame instead is simpler
+// to reason about and guarantees a stationary `scrollY` reads as exactly
+// 0 velocity on the very next frame, so the band reliably settles back to
+// its calm base creep rather than depending on that internal scheduling.
+const MARQUEE_BASE_SPEED = 3.4; // %-of-track per second at rest
+const MARQUEE_VELOCITY_RANGE = 1600; // px/s of page scroll mapped below
+const MARQUEE_VELOCITY_FACTOR_MAX = 5; // peak speed multiplier at that range
+
+function wrapPercent(min: number, max: number, value: number): number {
+  const range = max - min;
+  return ((((value - min) % range) + range) % range) + min;
+}
+
+function CoreSkillMarquee({ items }: { items: readonly svgs[] }) {
+  const motionAllowed = useReducedMotion() === false;
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const instantVelocity = useMotionValue(0);
+  const smoothVelocity = useSpring(instantVelocity, { damping: 50, stiffness: 400 });
+  const velocityFactor = useTransform(
+    smoothVelocity,
+    [-MARQUEE_VELOCITY_RANGE, 0, MARQUEE_VELOCITY_RANGE],
+    [-MARQUEE_VELOCITY_FACTOR_MAX, 0, MARQUEE_VELOCITY_FACTOR_MAX],
+    { clamp: false }
+  );
+  const x = useTransform(baseX, (v) => `${wrapPercent(-50, 0, v)}%`);
+  const direction = useRef(1);
+  const lastScrollY = useRef<number | null>(null);
+
+  // Runs every frame regardless (hooks can't be called conditionally), but
+  // is a no-op under reduced motion since `baseX` then never changes —
+  // the track stays static, satisfying "collapses to static under reduced
+  // motion" without branching the hook itself.
+  useAnimationFrame((_time, delta) => {
+    const current = scrollY.get();
+    if (lastScrollY.current === null) lastScrollY.current = current;
+    const dt = delta / 1000;
+    if (dt > 0) {
+      instantVelocity.set((current - lastScrollY.current) / dt);
+      lastScrollY.current = current;
+    }
+
+    if (!motionAllowed) return;
+    const factor = velocityFactor.get();
+    if (factor < 0) direction.current = -1;
+    else if (factor > 0) direction.current = 1;
+
+    let moveBy = direction.current * MARQUEE_BASE_SPEED * dt;
+    moveBy += direction.current * moveBy * Math.abs(factor);
+    baseX.set(baseX.get() + moveBy);
+  });
+
+  if (!motionAllowed) {
+    return (
+      <div className="technologies__marquee" aria-hidden="true">
+        <div className="technologies__marquee__track technologies__marquee__track--static">
+          {items.map((item) => (
+            <span key={item} className="technologies__marquee__icon">
+              <SkillIcon item={item} />
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="technologies__marquee" aria-hidden="true">
+      <m.div className="technologies__marquee__track" style={{ x }}>
+        {[0, 1].map((copy) => (
+          <div className="technologies__marquee__group" key={copy}>
+            {items.map((item) => (
+              <span key={item} className="technologies__marquee__icon">
+                <SkillIcon item={item} />
+              </span>
+            ))}
+          </div>
+        ))}
+      </m.div>
+    </div>
+  );
+}
+
+// Flattened, de-duplicated across every core-skill group — the marquee is
+// one band for the whole core stack, not per-group.
+const CORE_LOGO_ITEMS: readonly svgs[] = Array.from(
+  new Set(cv.coreSkills.flatMap((group) => group.items))
+);
 
 // D7 tier 2 — the 33 extended skills as a labelled text register. Each
 // item is its own flex child (not one joined string) so the flex-wrap
@@ -369,6 +491,8 @@ export default function Technologies() {
     <section className="section technologies" id="technologies">
       <div className="content">
         <h2 className="title">{t("technologies_title")}</h2>
+
+        <CoreSkillMarquee items={CORE_LOGO_ITEMS} />
 
         <div className="technologies__core">
           {cv.coreSkills.map((group) => (

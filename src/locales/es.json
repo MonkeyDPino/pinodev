@@ -40,10 +40,10 @@
   "projects_modal_next": "Imagen siguiente",
   "projects_modal_goto": "Ir a la imagen {{index}}",
   "projects_0_description": "App web para buscar y explorar GIFs con la API de Giphy.",
-  "projects_1_description": "Comparador de cotizaciones en tiempo real para asesores de seguros. Tras completar un formulario del cliente, las ofertas de las principales aseguradoras colombianas — Sura, Allianz, HDI, Mapfre y más — se obtienen y actualizan en vivo por WebSocket.",
+  "projects_1_description": "Comparador de cotizaciones en tiempo real para asesores de seguros. Tras completar un formulario del cliente, las ofertas de las principales aseguradoras colombianas (Sura, Allianz, HDI, Mapfre y más) se obtienen y actualizan en vivo por WebSocket.",
   "projects_2_description": "Panel de configuración backoffice para la plataforma de asesores. Gestiona credenciales de API de aseguradoras, personaliza el comparador, controla la disponibilidad de productos y administra usuarios desde un único panel.",
   "projects_3_description": "Aplicación web y PWA para clientes de seguros. Los usuarios pueden solicitar cotizaciones, hacer seguimiento a sus pólizas con el asesor y recibir notificaciones push para renovaciones de SOAT, revisión tecnomecánica y vencimientos.",
-  "projects_4_description": "Formulario de cotización SOAT integrado en un portal de clientes, con MercadoPago para el pago y la API de Previsora para la emisión de la póliza — del formulario a la póliza emitida en un solo flujo.",
+  "projects_4_description": "Formulario de cotización SOAT integrado en un portal de clientes, con MercadoPago para el pago y la API de Previsora para la emisión de la póliza: del formulario a la póliza emitida en un solo flujo.",
   "projects_5_description": "Blog full-stack con resúmenes y etiquetas generados por IA.",
 
   "about_title": "Sobre Mí",
@@ -67,7 +67,7 @@
   "certifications_2_name": "Estructuras de Datos en Python",
   "certifications_0_description": "Dota a los individuos de habilidades de programación fundamentales y avanzadas, con enfoque en el desarrollo de aplicaciones web dinámicas y responsivas.",
   "certifications_1_description": "Aprende a diseñar, codificar y desplegar soluciones web usando frameworks y tecnologías modernas.",
-  "certifications_2_description": "Cubrió los conceptos fundamentales de estructuras de datos en Python — arreglos, listas enlazadas, pilas, colas y árboles — dentro de una especialización más amplia en Python.",
+  "certifications_2_description": "Cubrió los conceptos fundamentales de estructuras de datos en Python (arreglos, listas enlazadas, pilas, colas y árboles) dentro de una especialización más amplia en Python.",
 
   "languages_title": "Idiomas",
   "language_spanish": "Español",
@@ -109,5 +109,14 @@
   "footer_navigate": "Navegar",
   "footer_contact_col": "Contacto",
   "footer_copyright": "© 2026 {{name}}. Todos los derechos reservados.",
-  "footer_made_with": "Hecho con ♥"
+  "footer_made_with": "Hecho con ♥",
+
+  "cube_fact_home": "{{location}}",
+  "cube_fact_experience": "En {{company}} desde {{year}}",
+  "cube_fact_projects": "{{count}} proyectos entregados",
+  "cube_fact_about": "Ingeniero de Sistemas y Computación",
+  "cube_fact_contact": "LinkedIn, GitHub, correo",
+  "cube_fact_education": "Título obtenido en {{year}}",
+  "cube_fact_certifications": "{{count}} certificaciones obtenidas",
+  "cube_fact_technologies": "{{count}} categorías de habilidades"
 }

@@ -1,10 +1,12 @@
 @use "../../styles/variables.scss" as *;
 
 // ============================================================
-// D5 — AboutMe: the Column. Left-aligned Newsreader prose, no card,
-// no border, no indent. Newsreader marks "Juan speaking" — the same
-// semantic device Home's positioning sentence (D2) uses — a different
-// voice from the Archivo grotesque every other section renders in.
+// D5 — AboutMe: the Column. Left-aligned prose, no card, no border,
+// no indent. No second family: "Juan speaking" — the same semantic
+// device Home's positioning sentence (D2) uses — is carried by the
+// variable axes alone (narrower `wdth`, regular weight), a different
+// voice from the wide/bold Archivo display type every heading renders
+// in, without introducing a second typeface.
 //
 // The section previously duplicated Home's own portrait here as a
 // second, circular, glow-lit photo (`box-shadow` teal glow — the
@@ -18,18 +20,28 @@
   max-width: var(--measure-prose);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-
-  p {
-    font-family: "Newsreader", "Newsreader Fallback", Georgia, serif;
-    font-size: var(--fs-lg);
-    font-weight: 400;
-    line-height: 1.7;
-    color: var(--text-body);
-  }
+  gap: var(--space-8);
 
   strong {
     color: var(--text-strong);
     font-weight: 600;
   }
+}
+
+// The manifesto — larger editorial size than the previous static prose
+// (T5), since the word-brighten reveal is the section's one motivated
+// motion moment (Taste Skill 5: "motion must be motivated") and wants room
+// to read as a considered statement rather than dense body copy.
+.about_me__manifesto {
+  font-size: clamp(var(--fs-lg), 1rem + 1.1vw, var(--fs-xl));
+  font-weight: 400;
+  font-variation-settings: "wdth" 87;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+// Each word is its own inline animation target; a trailing literal space
+// (AboutMe.tsx) keeps natural prose wrapping instead of a flex/gap layout.
+.about_me__word {
+  display: inline;
 }

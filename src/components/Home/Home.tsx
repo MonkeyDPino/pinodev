@@ -1,6 +1,13 @@
-import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  m,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "motion/react";
 import { cv } from "../../data/cv";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 import "./Home.scss";
 
 type SocialKind = (typeof cv.socials)[number]["kind"];
@@ -8,9 +15,9 @@ type SocialKind = (typeof cv.socials)[number]["kind"];
 /**
  * Inline, theme-aware social glyphs. The source assets in `src/assets/`
  * bake in a fixed white fill, which is exactly why they read as
- * near-invisible in the light theme (PR2 browser verification) — inlined
- * here with `currentColor` instead, the same pattern already used for the
- * CV-download/menu icons in this component's own header sibling.
+ * near-invisible in the light theme — inlined here with `currentColor`
+ * instead, the same pattern used for the CV-download/menu icons in this
+ * component's own header sibling.
  */
 function SocialIcon({ kind }: { kind: SocialKind }) {
   switch (kind) {
@@ -76,84 +83,115 @@ function SocialIcon({ kind }: { kind: SocialKind }) {
   }
 }
 
+function clamp01(value: number): number {
+  return Math.min(1, Math.max(0, value));
+}
+
+/**
+ * Kinetic name rest state — Archivo `wdth 112`, `wght 700`, the same
+ * bold, wide corner the CSS default in `Home.scss` renders when JS never
+ * runs or the reader asked for less motion.
+ */
+const REST_WDTH = 112;
+const REST_WGHT = 700;
+
 export default function Home() {
   const { t, i18n } = useTranslation();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
   const cvUrl = cv.cvUrls[i18n.language as "en" | "es"] ?? cv.cvUrls.en;
+  const introRef = useScrollReveal<HTMLDivElement>();
+  const prefersReducedMotion = useReducedMotion();
+
+  // Kinetic name — pointer position over the hero drives the Archivo
+  // `wdth`/`wght` axes through a motion value -> spring chain, written
+  // into one CSS custom property via `useMotionTemplate`. Never
+  // `useState` for a continuous input (design-taste-frontend 3.B). Rest
+  // state (mount, and after the pointer leaves the hero) is the bold
+  // wide cut; the pointer only ever pulls it away from that corner.
+  const wdth = useMotionValue(REST_WDTH);
+  const wght = useMotionValue(REST_WGHT);
+  const wdthSpring = useSpring(wdth, { stiffness: 140, damping: 18, mass: 0.4 });
+  const wghtSpring = useSpring(wght, { stiffness: 140, damping: 18, mass: 0.4 });
+  const nameVariation = useMotionTemplate`"wdth" ${wdthSpring}, "wght" ${wghtSpring}`;
+
+  function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relativeX = clamp01((event.clientX - rect.left) / rect.width);
+    const relativeY = clamp01((event.clientY - rect.top) / rect.height);
+    wdth.set(87 + relativeX * (REST_WDTH - 87));
+    wght.set(400 + relativeY * (REST_WGHT - 400));
+  }
+
+  function handlePointerLeave() {
+    wdth.set(REST_WDTH);
+    wght.set(REST_WGHT);
+  }
 
   return (
     <section className="section home-section" id="home">
-      <div className="content">
-        <div className={`home ${mounted ? "home--visible" : ""}`}>
-          <div className="home__hero">
-            <div className="home__intro">
-              <p className="home__greeting home-item" style={{ "--i": 0 } as React.CSSProperties}>
-                {t("home_greeting")}
-              </p>
+      <div
+        className="content home__intro reveal stagger-children"
+        ref={introRef}
+        onPointerMove={prefersReducedMotion ? undefined : handlePointerMove}
+        onPointerLeave={prefersReducedMotion ? undefined : handlePointerLeave}
+      >
+        <div className="home__intro__top">
+          <p className="home__greeting" style={{ "--i": 0 } as React.CSSProperties}>
+            {t("home_greeting")}
+          </p>
 
-              <h1 className="home__name">
-                {cv.nameLines.map((line) => (
-                  <span className="home__name-line" key={line}>{line}</span>
-                ))}
-              </h1>
+          <m.h1
+            className="home__name"
+            style={prefersReducedMotion ? undefined : { fontVariationSettings: nameVariation }}
+          >
+            {cv.nameLines.map((line) => (
+              <span className="home__name-line" key={line}>
+                {line}
+              </span>
+            ))}
+          </m.h1>
 
-              <p className="home__role home-item" style={{ "--i": 1 } as React.CSSProperties}>
-                {t("home_role")}
-              </p>
+          <p className="home__role" style={{ "--i": 1 } as React.CSSProperties}>
+            {t("home_role")}
+          </p>
 
-              <p className="home__positioning home-item" style={{ "--i": 2 } as React.CSSProperties}>
-                {t("home_positioning")}
-              </p>
+          <p className="home__positioning" style={{ "--i": 2 } as React.CSSProperties}>
+            {t("home_positioning")}
+          </p>
+        </div>
 
-              <p className="home__location home-item" style={{ "--i": 3 } as React.CSSProperties}>
-                {cv.location}
-              </p>
-
-              <div className="home__actions home-item" style={{ "--i": 4 } as React.CSSProperties}>
-                <div className="home__socials">
-                  {cv.socials.map((social) => (
-                    <a
-                      key={social.kind}
-                      href={social.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="home__social-link"
-                      aria-label={t(social.labelKey)}
-                    >
-                      <SocialIcon kind={social.kind} />
-                    </a>
-                  ))}
-                </div>
+        <div className="home__intro__footer" style={{ "--i": 3 } as React.CSSProperties}>
+          <div className="home__actions">
+            <div className="home__socials">
+              {cv.socials.map((social) => (
                 <a
-                  href={cvUrl}
+                  key={social.kind}
+                  href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="home__cv-button"
+                  className="home__social-link"
+                  aria-label={t(social.labelKey)}
                 >
-                  {t("home_cv_button")}
+                  <SocialIcon kind={social.kind} />
                 </a>
-              </div>
+              ))}
             </div>
+            <a href={cvUrl} target="_blank" rel="noreferrer" className="home__cv-button">
+              {t("home_cv_button")}
+            </a>
+          </div>
 
-            <div className="home__portrait home-item" style={{ "--i": 5 } as React.CSSProperties}>
-              <a href="#about_me">
-                <span className="home__portrait-frame">
-                  <img
-                    src={cv.portrait}
-                    alt={cv.fullName}
-                    width={128}
-                    height={128}
-                    className="home__portrait-image"
-                  />
-                </span>
-              </a>
-            </div>
+          <div className="home__portrait">
+            <a href="#about_me">
+              <span className="home__portrait-frame">
+                <img
+                  src={cv.portrait}
+                  alt={cv.fullName}
+                  width={80}
+                  height={80}
+                  className="home__portrait-image"
+                />
+              </span>
+            </a>
           </div>
         </div>
       </div>

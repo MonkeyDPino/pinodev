@@ -6,9 +6,72 @@
 // weight.
 // ============================================================
 
+// --- T5: the marquee — the page's one marquee (Taste Skill 5), a
+// decorative band of core-stack logos above the scannable grid. `overflow:
+// hidden` on the outer band clips the wide, `width: max-content` inner
+// track without ever growing the document's own scrollWidth; the mask
+// fades both edges so the loop point is never a hard cut.
+.technologies__marquee {
+  margin-top: var(--space-8);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--space-10),
+    black calc(100% - var(--space-10)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--space-10),
+    black calc(100% - var(--space-10)),
+    transparent
+  );
+}
+
+.technologies__marquee__track {
+  display: flex;
+  width: max-content;
+}
+
+// Two identical copies back to back; the track then moves by exactly one
+// copy's width (`x` in Technologies.tsx wraps between 0% and -50% of the
+// track's own total width) for a seamless loop.
+.technologies__marquee__group {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-10);
+  padding-inline-end: var(--space-10);
+}
+
+// Reduced motion: one static copy, wrapped rather than scrolling off —
+// nothing moves, nothing is clipped away.
+.technologies__marquee__track--static {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6) var(--space-10);
+}
+
+.technologies__marquee__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--icon-lg);
+  color: var(--text-muted);
+
+  img,
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 // --- Tier 1: core stack -------------------------------------------------
 .technologies__core {
-  margin-top: var(--space-6);
+  margin-top: var(--space-10);
   display: flex;
   flex-direction: column;
   gap: var(--space-10);
@@ -38,23 +101,33 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-
-  span {
-    font-size: var(--fs-base);
-    color: var(--text-body);
-  }
 }
 
-// Sizes both the `<img>` (vendored, self-contained-color logos) and the
-// inline `currentColor` `<svg>` (the seven marks the audit found baking
-// a theme-breaking fixed fill) through the same token — neither ever
-// gets a baked-in pixel dimension. `color` here is what the inline SVGs'
-// `currentColor` resolves against; matched to the label's own tone.
+.technologies__group__item__label {
+  font-size: var(--fs-base);
+  font-family: var(--font-mono);
+  color: var(--text-body);
+}
+
+// Radius-0 icon tile (T5 — matches the Experience rail's square nodes and
+// Projects' sharp geometry rather than a bare floating glyph): a small
+// bordered square the icon sits inside, tidy grid alignment regardless of
+// each source mark's own natural proportions. Sizes both the `<img>`
+// (vendored, self-contained-color logos) and the inline `currentColor`
+// `<svg>` (the seven marks the audit found baking a theme-breaking fixed
+// fill) through the same tokens. `color` is what the inline SVGs'
+// `currentColor` resolves against.
 .technologies__group__item__icon {
   display: inline-flex;
   flex-shrink: 0;
-  width: var(--icon-lg);
-  height: var(--icon-lg);
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  padding: var(--space-2);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-hairline);
+  border-radius: 0;
   color: var(--text-body);
 
   img,
