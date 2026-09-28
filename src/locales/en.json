@@ -109,5 +109,14 @@
   "footer_navigate": "Navigate",
   "footer_contact_col": "Contact",
   "footer_copyright": "© 2026 {{name}}. All rights reserved.",
-  "footer_made_with": "Made with ♥"
+  "footer_made_with": "Made with ♥",
+
+  "cube_fact_home": "{{location}}",
+  "cube_fact_experience": "{{company}} since {{year}}",
+  "cube_fact_projects": "{{count}} projects shipped",
+  "cube_fact_about": "Systems & Computing Engineer",
+  "cube_fact_contact": "LinkedIn, GitHub, email",
+  "cube_fact_education": "Awarded {{year}}",
+  "cube_fact_certifications": "{{count}} certifications earned",
+  "cube_fact_technologies": "{{count}} skill categories"
 }
