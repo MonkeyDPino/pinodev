@@ -78,6 +78,18 @@
   }
 }
 
+// T5 — without this, `<main>`'s automatic grid-item minimum width is its
+// subtree's min-content size. Technologies' marquee track is intrinsically
+// sized (`width: max-content`, so its two full-width logo copies never
+// wrap); `overflow: hidden` clips it visually but does not stop that
+// intrinsic width from bubbling up through ordinary block ancestors and
+// inflating `<main>`'s own minimum size, which blew out the whole grid
+// column (and every other section riding along inside `<main>`) well past
+// the viewport. `min-width: 0` on the grid item itself is the standard fix.
+#main {
+  min-width: 0;
+}
+
 // Ensure all page content sits above the page ground (body::before/after).
 .section,
 .header,
