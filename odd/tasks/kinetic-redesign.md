@@ -48,7 +48,7 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - History: first implementation (cube hero) `b0f030d`; kept in branch history and replaced by the rework commit.
 - [x] **T3 Experience timeline** (route: delegated writer; trigger: prep reading + 2 non-trivial files) - commit `ae96b94` on `feat/kinetic-experience`. Word-by-word reveal dropped for the long description (readability for recruiters); outcomes became counting metrics instead.
 - [x] **T4 Projects** (route: delegated writer) - commit `3a9d116` on `feat/kinetic-projects`. Horizontal scroll pan dropped: it would compete with the rotating side cube.
-- [ ] **T5 About / Technologies / Credentials** (scroll word reveal manifesto; single velocity-reactive marquee; offset credentials list replacing the 3-equal-card row).
+- [x] **T5 About / Technologies / Credentials** (route: delegated writer; trigger: 8 files) - sliced into three PRs: `3eb86bb` About on `feat/kinetic-about`, `54e6c63` Technologies on `feat/kinetic-technologies`, `f00e603` Credentials on `feat/kinetic-credentials`.
 - [ ] **T6 Header / Footer / Contact** (header face indicator while inside the cube; sticky reveal footer; magnetic contact CTA).
 
 ## Progress
@@ -106,5 +106,11 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Parent: build + lint pass; reviewed grid, spotlight row and modal mid-transition screenshots. Known trade-off: narrower cells letterbox their 4:3 mockup (dark mat strip) instead of cropping.
   - Size: 456+242 (over 400); `size:exception`: grid, cells and the modal share one component and stylesheet rewrite.
 
+- T4 PR #15 opened (`feat/kinetic-projects` -> `feat/kinetic-experience`, 456+242, `size:exception`).
+- T5: About = per-word `m.span` opacity 0.28 -> 1 via `useScroll` on `.about_me__content` (`offset ["start 0.85", "end 0.3"]`), aria-hidden split copy + visually hidden full sentence; Technologies = one aria-hidden logo marquee with per-frame scroll-velocity sampling in `useAnimationFrame` driving `x` (static under reduced motion), grouped skills kept as radius-0 tiles with mono labels; Credentials = hairline rail + square nodes + alternating indent (flush below `$bp-sm`) for Education and Certifications. Bug caught in browser: the marquee's `max-content` track widened the `.layout` grid column to ~4320px and blanked sections; fixed with `#main { min-width: 0 }`.
+  - Writer: build + lint pass; About reveal at 3 positions completes before the prose leaves the viewport; marquee motion measured (rest ~147 px/s, bursts ~750-817 px/s, direction follows scroll); credentials at 1440/1024/390 with no horizontal scroll; light theme per section; reduced motion (all words opacity 1, marquee `transform: none`); visually hidden copy equals EN and ES sentences; 0 console errors.
+  - Parent: build pass on each slice branch independently; reviewed About mid-reveal, Technologies grid + marquee and Certifications screenshots.
+  - Slicing: 736 changed lines split into three independent PRs (221, 251, 264), all under 400.
+
 ## Next step
-Push `feat/kinetic-projects`, open T4 PR into `feat/kinetic-experience`, then T5 About / Technologies / Credentials.
+Push T5 branches and open PRs (About -> `feat/kinetic-projects`, Technologies -> `feat/kinetic-about`, Credentials -> `feat/kinetic-technologies`), then T6 Footer / Contact.
