@@ -1,32 +1,66 @@
 @use "../../styles/variables.scss" as *;
 
 // ============================================================
-// D6 — Certifications: the Index. `repeat(auto-fit, minmax(16rem,1fr))`
-// with a `--space-8` (32px) gap in the 864px container: 3x256 + 2x32 =
-// 832 <= 864, so three columns at >=912px viewport; 2x256 + 32 = 544 <=
-// 720px content (768px viewport) gives two; below that, one. `auto-fit`
-// so a future fourth entry redistributes sanely — no column count here
-// is asserted, `auto-fit` computes it the same way at every width.
+// T5 — Certifications: the "Credentials" rail list, replacing the
+// previous `repeat(auto-fit, minmax(16rem,1fr))` grid (a de-facto
+// 3-equal-card row for the current 3 entries — banned by Taste Skill
+// 9.C). Shares the same rail + square-node device as Education and the
+// Experience timeline; the entry body alternates indent from `$bp-sm`
+// for the offset/staggered read (4.7). `--fs-md` (not `--fs-xl`) stays
+// the deliberate smaller scale versus Education's "senior" issuer size —
+// only the list shell is shared, not the type scale.
 // ============================================================
-.certifications__grid {
+.certifications__list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   margin-top: var(--space-6);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: var(--space-8);
+  padding-left: var(--space-6);
+}
+
+.certifications__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc((var(--space-6) - 2px) / 2);
+  width: 2px;
+  background: var(--line-hairline);
 }
 
 .certifications__entry {
-  padding-block: var(--space-6);
+  position: relative;
+  padding-block: var(--space-8);
   border-top: 1px solid var(--line-hairline);
+
+  &:first-of-type {
+    border-top: none;
+  }
+}
+
+.certifications__entry__node {
+  position: absolute;
+  top: var(--space-8);
+  left: calc(-1 * var(--space-6) + (var(--space-6) - 0.625rem) / 2);
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--accent);
+}
+
+.certifications__entry__body {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+
+  @include from($bp-sm) {
+    .certifications__entry:nth-of-type(even) & {
+      margin-inline-start: var(--space-12);
+    }
+  }
 }
 
-// `--fs-md` (18px), not `--fs-lg` — re-derived from the measured column
-// fit. At the desktop column of (864-64)/3 = 266.7px, 21.33px issuers
-// sit at the edge and wrap unpredictably across locales; 18px holds one
-// line with margin (D6).
+// `--fs-md` (18px), not `--fs-lg` — kept from the previous grid: at this
+// column's measure, 21.33px issuers sit at the edge and wrap unpredictably
+// across locales; 18px holds one line with margin.
 .certifications__entry__issuer {
   font-size: var(--fs-md);
   font-weight: 600;
