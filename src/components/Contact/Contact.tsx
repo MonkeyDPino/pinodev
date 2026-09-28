@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  m,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "motion/react";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { useEmailJS } from "../../hooks/useEmailJS";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { cv } from "../../data/cv";
 import "./Contact.scss";
+
+// Magnetic submit CTA (T6) — the pointer offset is clamped to this many
+// pixels in either axis, well inside the "6-8px" the brief asks for.
+const MAGNETIC_MAX_OFFSET = 7;
 
 interface FormState {
   name: string;
@@ -83,6 +94,36 @@ export default function Contact() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
   const whatsappHref = `https://wa.me/${cv.phone.replace(/\D/g, "")}`;
+
+  // Magnetic submit CTA — the form's own submit button is the section's
+  // primary CTA (design-taste-frontend 4.5's duplicate-CTA-intent audit:
+  // the only other page-level CTA is the header's "CV" download, a
+  // distinct "download" intent, so no duplicate "contact" intent exists
+  // to reconcile here). Gated to fine-pointer hover devices and to
+  // motion being allowed, per the brief; `useMotionValue` -> `useSpring`
+  // only, never `useState`, so the pointer handler never re-renders
+  // React (design-taste-frontend 3.B / motion/react best practices).
+  const canHoverFine = useMediaQuery("(hover: hover) and (pointer: fine)");
+  const prefersReducedMotion = useReducedMotion();
+  const magneticEnabled = canHoverFine && !prefersReducedMotion;
+  const ctaX = useMotionValue(0);
+  const ctaY = useMotionValue(0);
+  const ctaXSpring = useSpring(ctaX, { stiffness: 350, damping: 25, mass: 0.4 });
+  const ctaYSpring = useSpring(ctaY, { stiffness: 350, damping: 25, mass: 0.4 });
+
+  function handleCtaPointerMove(event: React.PointerEvent<HTMLButtonElement>) {
+    if (!magneticEnabled) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relativeX = (event.clientX - rect.left) / rect.width - 0.5;
+    const relativeY = (event.clientY - rect.top) / rect.height - 0.5;
+    ctaX.set(relativeX * MAGNETIC_MAX_OFFSET * 2);
+    ctaY.set(relativeY * MAGNETIC_MAX_OFFSET * 2);
+  }
+
+  function handleCtaPointerLeave() {
+    ctaX.set(0);
+    ctaY.set(0);
+  }
 
   useEffect(() => {
     if (status === "success") {
@@ -258,13 +299,27 @@ export default function Contact() {
               </p>
             )}
 
-            <button
-              type="submit"
-              className="contact__submit"
-              disabled={status === "loading"}
-            >
-              {status === "loading" ? t("contact_sending") : t("contact_submit")}
-            </button>
+            {magneticEnabled ? (
+              <m.button
+                type="submit"
+                className="contact__submit contact__submit--magnetic"
+                disabled={status === "loading"}
+                style={{ x: ctaXSpring, y: ctaYSpring }}
+                onPointerMove={handleCtaPointerMove}
+                onPointerLeave={handleCtaPointerLeave}
+                whileTap={{ scale: 0.97 }}
+              >
+                {status === "loading" ? t("contact_sending") : t("contact_submit")}
+              </m.button>
+            ) : (
+              <button
+                type="submit"
+                className="contact__submit"
+                disabled={status === "loading"}
+              >
+                {status === "loading" ? t("contact_sending") : t("contact_submit")}
+              </button>
+            )}
           </form>
         </div>
       </div>
