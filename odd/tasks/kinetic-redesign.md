@@ -47,9 +47,9 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Acceptance: the cube always matches the section being read (forward and backward), no overlap with wide bands (Projects, Footer), build + lint pass, both themes, reduced motion, 1024 and 1440 widths, no cube at 390px.
   - History: first implementation (cube hero) `b0f030d`; kept in branch history and replaced by the rework commit.
 - [x] **T3 Experience timeline** (route: delegated writer; trigger: prep reading + 2 non-trivial files) - commit `ae96b94` on `feat/kinetic-experience`. Word-by-word reveal dropped for the long description (readability for recruiters); outcomes became counting metrics instead.
-- [ ] **T4 Projects** (large asymmetric project grid; `layoutId` shared-element expansion into the gallery). Horizontal scroll pan dropped: it would compete with the rotating side cube.
-- [ ] **T5 About / Technologies / Credentials** (scroll word reveal manifesto; single velocity-reactive marquee; offset credentials list replacing the 3-equal-card row).
-- [ ] **T6 Header / Footer / Contact** (header face indicator while inside the cube; sticky reveal footer; magnetic contact CTA).
+- [x] **T4 Projects** (route: delegated writer) - commit `3a9d116` on `feat/kinetic-projects`. Horizontal scroll pan dropped: it would compete with the rotating side cube.
+- [x] **T5 About / Technologies / Credentials** (route: delegated writer; trigger: 8 files) - sliced into three PRs: `3eb86bb` About on `feat/kinetic-about`, `54e6c63` Technologies on `feat/kinetic-technologies`, `f00e603` Credentials on `feat/kinetic-credentials`.
+- [x] **T6 Contact / Footer** (route: delegated writer) - on `feat/kinetic-contact`. The header indicator item was delivered in T2 by the compact header cube.
 
 ## Progress
 - Branch `feat/kinetic-foundation` created from `main`; integration branch `feat/kinetic-redesign` created at the same `main` commit.
@@ -100,5 +100,30 @@ Recruiters and tech leads scan fast; the site must be memorable in the first vie
   - Parent: build pass; reviewed middle and metrics-final screenshots.
   - RDD assess: `medium`, 1541 lines cumulative, `review_due` (`slice_budget_reached`); native review still blocked by the untracked-selection preflight; off path at tier `medium`.
 
+- T3 PR #14 opened (`feat/kinetic-experience` -> `feat/kinetic-cube`, 223+34).
+- T4 (`3a9d116`): 6-cell bento via `grid-column: span` rows 7/5, 5/7, 6/6; mockups at native aspect ratio (`object-fit: contain`; gallery mockups 4:3, Giphy 1963x1116, Blog 1421x1104), text below the image, 2-line description clamp; Giphy + Blog are the two ramp spotlight tiles; radius 0 in cells; `layoutId="project-image-{slug}"` cover image shared between cell and modal inside `AnimatePresence` (portal stays mounted, condition inside); `LazyMotion` `domMax` (JS gzip 156.7 -> 172.8 kB); tokens `--on-media`, `--on-media-muted`. Parent added a DEV assertion that `BENTO_SLOTS` covers every `cv.ts` project (a renamed project would otherwise vanish silently).
+  - Writer: build + lint pass; 1440/1024/390 (no horizontal scroll) + light; gallery by click and Enter, mid-transition frame, prev/next/dots, Escape, focus return, focus trap; external links `target=_blank rel=noreferrer`; reduced motion instant; 0 console errors. One correction round (mockups were cropped by `object-fit: cover`, text overlaid on images).
+  - Parent: build + lint pass; reviewed grid, spotlight row and modal mid-transition screenshots. Known trade-off: narrower cells letterbox their 4:3 mockup (dark mat strip) instead of cropping.
+  - Size: 456+242 (over 400); `size:exception`: grid, cells and the modal share one component and stylesheet rewrite.
+
+- T4 PR #15 opened (`feat/kinetic-projects` -> `feat/kinetic-experience`, 456+242, `size:exception`).
+- T5: About = per-word `m.span` opacity 0.28 -> 1 via `useScroll` on `.about_me__content` (`offset ["start 0.85", "end 0.3"]`), aria-hidden split copy + visually hidden full sentence; Technologies = one aria-hidden logo marquee with per-frame scroll-velocity sampling in `useAnimationFrame` driving `x` (static under reduced motion), grouped skills kept as radius-0 tiles with mono labels; Credentials = hairline rail + square nodes + alternating indent (flush below `$bp-sm`) for Education and Certifications. Bug caught in browser: the marquee's `max-content` track widened the `.layout` grid column to ~4320px and blanked sections; fixed with `#main { min-width: 0 }`.
+  - Writer: build + lint pass; About reveal at 3 positions completes before the prose leaves the viewport; marquee motion measured (rest ~147 px/s, bursts ~750-817 px/s, direction follows scroll); credentials at 1440/1024/390 with no horizontal scroll; light theme per section; reduced motion (all words opacity 1, marquee `transform: none`); visually hidden copy equals EN and ES sentences; 0 console errors.
+  - Parent: build pass on each slice branch independently; reviewed About mid-reveal, Technologies grid + marquee and Certifications screenshots.
+  - Slicing: 736 changed lines split into three independent PRs (221, 251, 264), all under 400.
+
+- T5 PRs opened: #16 About (-> `feat/kinetic-projects`, 200+21), #17 Technologies (-> `feat/kinetic-about`, 230+21), #18 Credentials (-> `feat/kinetic-technologies`, 183+91).
+- T6: Contact keeps EmailJS fields, order, validation and states; `--radius-control` for the whole Contact section; submit is an `m.button` with spring `x`/`y` magnetic offset only for `(hover: hover) and (pointer: fine)` with motion allowed (plain button otherwise); CSS hover lift split so it does not fight the inline transform. Footer sticky reveal: `.footer-reveal` relative wrapper + spacer of `--footer-h` above a `position: sticky; bottom: 0` footer, height measured by `useFooterReveal` (ResizeObserver + resize, no scroll listener), enabled from `$bp-md`. Gotcha: a negative-margin cover never works for this pattern; the spacer construction does. 5 files, +278/-66.
+  - Writer: build + lint pass; contact rest/focus/error in both themes with no EmailJS request fired; magnetic transform `none` -> `(-6.58, -4.99)` -> back to `none` on leave, plain button under reduced motion; footer reveal frames at 1440, 1024, 390 (static, no horizontal scroll) and 1440x600; keyboard Tab through form and footer links; no duplicate CTA intent (header CV is a distinct download intent); contrast >= 7:1 for labels, errors and button; 0 console errors.
+  - Parent: build pass; reviewed footer reveal and light-theme error screenshots.
+
+## Status
+All six tasks are implemented. The chain is ready for review: #12 -> #13 -> #14 -> #15 -> #16 -> #17 -> #18 -> T6, integrated into `feat/kinetic-redesign`, then tracker #11 into `main` (merging is the user's decision).
+
+## Open items
+- Native RDD review never ran: every preflight stopped at the intended-untracked selection (schema not documented locally). Unblock by resolving the 4 untracked files (`.mcp.json`, `public/images/profile-256.webp`, the ChatGPT PNG, the CV PDF).
+- Projects: narrower bento cells letterbox their 4:3 mockup (accepted trade-off, no crop).
+- `.mcp.json` (free Motion MCP) is still uncommitted; decide whether it belongs in the repo.
+
 ## Next step
-Push `feat/kinetic-experience`, open T3 PR into `feat/kinetic-cube`, then T4 Projects on `feat/kinetic-projects`.
+Push `feat/kinetic-contact`, open the T6 PR into `feat/kinetic-credentials`; then the user reviews and merges the chain.
