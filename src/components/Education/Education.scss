@@ -1,24 +1,59 @@
 @use "../../styles/variables.scss" as *;
 
 // ============================================================
-// D6 — Education: the Marquee. One entry owns the full column: a
-// single 2px `--line-strong` top rule (the only 2px rule on the page
-// that is not the ramp), `--space-8` block padding, and the heavier
-// full-column `--fs-xl` issuer scale — deliberately senior, distinct
-// from Certifications' multi-column `--fs-md`.
+// T5 — Education: shares the "Credentials" rail language with
+// Certifications (hairline rail + square node per entry, the same device
+// as the Experience rail) instead of the previous one-off 2px top rule.
+// The entry body alternates indent from `$bp-sm` for the offset/staggered
+// read (Taste Skill 4.7); the node itself never moves — it stays anchored
+// to the rail regardless of which entries are indented.
 // ============================================================
 .education__list {
-  margin-top: var(--space-6);
+  position: relative;
   display: flex;
   flex-direction: column;
+  margin-top: var(--space-6);
+  padding-left: var(--space-6);
+}
+
+.education__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc((var(--space-6) - 2px) / 2);
+  width: 2px;
+  background: var(--line-hairline);
 }
 
 .education__entry {
+  position: relative;
   padding-block: var(--space-8);
-  border-top: 2px solid var(--line-strong);
+  border-top: 1px solid var(--line-hairline);
+
+  &:first-of-type {
+    border-top: none;
+  }
+}
+
+.education__entry__node {
+  position: absolute;
+  top: var(--space-8);
+  left: calc(-1 * var(--space-6) + (var(--space-6) - 0.625rem) / 2);
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--accent);
+}
+
+.education__entry__body {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+
+  @include from($bp-sm) {
+    .education__entry:nth-of-type(even) & {
+      margin-inline-start: var(--space-12);
+    }
+  }
 }
 
 .education__entry__issuer {
